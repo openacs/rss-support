@@ -14,7 +14,7 @@ select acs_sc_msg_type__new (
 
 select acs_sg_msg_type__new (
        'RssGenerationSubscriber.Datasource.OutputType',
-       'datasource:string'			-- ????
+       'version:string,channel_title:string,channel_link:uri,channel_description:string,image:string,items:string,channel_language:string,channel_copyright:string,channel_managingEditor:string,channel_webMaster:string,channel_rating:string,channel_pubDate:timestamp,channel_lastBuildDate:timestamp,channel_skipDays:integer,channel_skipHours:integer'
 );
 
 select acs_sc_operation__new (

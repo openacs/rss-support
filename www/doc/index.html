@@ -63,15 +63,17 @@ than once per hour.
 
 <p>
 
-The feed generation service contract consists of two operations.
+The feed generation service contract is called <code>RssGenerationSubscriber</code> and consists of two operations.
 
 <ol>
-<li><code>RssGenDatasource</code>.  The return value of RssGenDatasource
-contains all required metadata fields as well as configuration
-information such as the RSS version to be used (0.91 or 1.00 are
-supported at present).
-<li><code>RssLastUpdated</code>.  Used to determine if the live summary
-is out of date.
+<li><code>Datasource(context_identifier)</code> returns a data
+structure that contains all required metadata fields plus
+configuration information such as the RSS version to be used (0.91 or
+1.00 are supported at present).  This data structure contains
+everything needed to run <code>rss_gen</code>.
+
+<li><code>LastUpdated(context_identifier)</code> returns a timestamp
+that is used to determine if the live summary is out of date.
 </ol>
 
 <p>
@@ -97,13 +99,15 @@ Implementation suggestions:
 <li>A scheduled proc runs through all registered contexts, checking to see if the
     live summary is stale and also if the minimum "quiet time" has elapsed.
 
-<li>If the conditions for rebuild are met for a context, the scheduled proc pulls
-    out the context's summary data via <code>RssGenDatasource</code> and uses the
-    information to build a new summary page.  This generic and simple scheme
-    can be used to dispatch different versions of the summary builder as well 
-    as to support extensibility via modules. <font color=red>Warning:</font>
-    This design expects the output of RssGenDatasource to be reasonably small,
-    as we will have to parse this list-of-lists to generate a summary.
+<li>If the conditions for rebuild are met for a context, the scheduled
+    proc pulls out the context's summary data via
+    <code>Datasource</code> and uses the information to build a new
+    summary page.  This generic and simple scheme can be used to
+    dispatch different versions of the summary builder as well as to
+    support extensibility via modules. <font color=red>Warning:</font>
+    This design expects the output of <code>Datasource</code> to be
+    reasonably small, as we will have to parse this list-of-lists to
+    generate a summary.
 
 </ol>
 
