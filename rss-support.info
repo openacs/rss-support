@@ -9,7 +9,6 @@
 
     <version name="0.1d" url="http://openacs.org/repository/download/apm/rss-support-0.1d.apm">
     <database-support>
-        <database>oracle</database>
         <database>postgresql</database>
     </database-support>
         <owner url="mailto:aegrumet@alum.mit.edu">Andrew Grumet</owner>
