@@ -5,7 +5,7 @@ begin
 
    select MAX(subscr_id) into v_result from rss_gen_subscrs;
    While (v_result > 0) loop
-   	v_delete := rss_gen_subscr.delete(
+   	v_delete := rss_gen_subscr.del(
 		p_subscr_id => v_result
   	);
 	select MAX(subscr_id) into v_result from rss_gen_subscrs;

@@ -129,7 +129,7 @@ as
 	p_subscr_id		in rss_gen_subscrs.subscr_id%TYPE
     ) return varchar2;
 
-    function delete (
+    function del (
 	p_subscr_id		in rss_gen_subscrs.subscr_id%TYPE
     ) return number;
 
@@ -179,7 +179,7 @@ as
 	return 'RSS Generation Subscription #'||p_subscr_id;
     end name;
 
-    function delete (
+    function del (
 	p_subscr_id		in rss_gen_subscrs.subscr_id%TYPE
     ) return number
     is
@@ -188,10 +188,10 @@ as
 
 	delete from rss_gen_subscrs where subscr_id = p_subscr_id;
 
-	acs_object.delete(p_subscr_id);
+	acs_object.del(p_subscr_id);
 
 	return 0;
-    end delete;
+    end del;
 
 end rss_gen_subscr;
 /

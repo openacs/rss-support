@@ -6,7 +6,7 @@
   <fullquery name="delete_subscr">
     <querytext>
         begin
-            :1 := rss_gen_subscr.delete (:subscr_id);
+            :1 := rss_gen_subscr.del (:subscr_id);
         end;
     </querytext>
   </fullquery>
