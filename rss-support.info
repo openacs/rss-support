@@ -8,7 +8,7 @@
     <singleton-p>t</singleton-p>
     <auto-mount>rss-support</auto-mount>
 
-    <version name="0.3d5" url="http://openacs.org/repository/download/apm/rss-support-0.3d5.apm">
+    <version name="0.3d6" url="http://openacs.org/repository/download/apm/rss-support-0.3d6.apm">
         <owner url="mailto:dave@thedesignexperience.org">Dave Bauer</owner>
         <owner url="mailto:jerry@theashergroup.com">Jerry Asher</owner>
         <owner url="mailto:aegrumet@alum.mit.edu">Andrew Grumet</owner>
@@ -32,7 +32,7 @@ contracts and the RSS can be recreated from a scheduled procedure.
 &lt;/ul&gt;
 </description>
 
-        <provides url="rss-support" version="0.3d5"/>
+        <provides url="rss-support" version="0.3d6"/>
 
         <callbacks>
         </callbacks>
