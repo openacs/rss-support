@@ -1,3 +1,13 @@
+ad_library {
+    RSS feed service procs
+
+    @author jerry@theashergroup.com (jerry@theashergroup.com)
+    @author aegrumet@alum.mit.edu
+
+    @creation-date Fri Oct 26 11:43:26 2001
+    @cvs-id $Id$
+}
+
 ad_proc -private rss_gen_service {} {
 
     ns_log Debug "rss_gen_service: starting"
@@ -36,9 +46,7 @@ ad_proc -private rss_gen_service {} {
 }
 
 ad_proc -private rss_gen_report subscr_id {
-    <pre>
-    # Build a report, write it out, log it.
-    </pre>
+    Build a report, write it out, log it.
 } {
     set start [clock seconds]
 
@@ -88,12 +96,11 @@ ad_proc -private rss_gen_report subscr_id {
 }
 
 ad_proc -private rss_assert_dir path {
-    <pre>
-    # Steps through path creating each new directory as needed.
-    # Accepts full path or relative path, but you probably want
-    # to specify the full path.
-    # Makes no attempt to catch errors.
-    </pre>
+    Steps through path creating each new directory as needed.
+    Accepts full path or relative path, but you probably want
+    to specify the full path.
+    <p>
+    Makes no attempt to catch errors.
 } {
     set running_path ""
     foreach dir [split $path /] {
@@ -105,9 +112,7 @@ ad_proc -private rss_assert_dir path {
 }
 
 ad_proc -private rss_gen_bind {} {
-    <pre>
-    # Creates bindings for unbound implementations for RssGenerationSubscriber.
-    </pre>
+    Creates bindings for unbound implementations for RssGenerationSubscriber.
 } {
     set contract_id [db_string get_contract_id {
 	select acs_sc_contract__get_id('RssGenerationSubscriber')

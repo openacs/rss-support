@@ -1,18 +1,15 @@
-# /tcl/rss-defs.tcl
 ad_library {
-     procs to generate rss feeds
-     @author jerry@theashergroup.com [jerry@theashergroup.com]
-     @author aegrumet@alum.mit.edu
-     @creation-date Fri Oct 26 11:43:26 2001
-     @cvs-id $Id$
+    RSS feed generation procs
+    
+    generates an rss feed given channel information
+    and item information
+
+    @author jerry@theashergroup.com (jerry@theashergroup.com)
+    @author aegrumet@alum.mit.edu
+    @creation-date Fri Oct 26 11:43:26 2001
+    @cvs-id $Id$
 }
 
-
-###
-# rss
-# generates an rss feed given channel information
-# and item information
-###
 
 ad_proc rss_gen_100 {
     {

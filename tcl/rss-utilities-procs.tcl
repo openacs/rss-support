@@ -1,3 +1,15 @@
+ad_library { 
+    RSS support procs 
+    
+    @author Andrew Grumet (aegrumet@alum.mit.edu)
+    @author Jerry Asher (jerry@theashergroup.com)
+    @author Dave Bauer (dave@thedesignexperience.org)
+
+    @creation-date Fri Oct 26 11:43:26 2001
+    @cvs-id $Id$
+}
+
+
 ad_proc -public rss_package_id {} {
     <pre>
     # Returns the package_id for rss if it is rss is mounted.
