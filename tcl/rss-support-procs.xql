@@ -18,7 +18,7 @@
     </querytext>
   </fullquery>
 
-  <fullquery name="rss_support::del_subscription.get_subscr_id">
+  <fullquery name="rss_support::get_subscr_id.get_subscr_id">
     <querytext>
       select subscr_id
       from rss_gen_subscrs

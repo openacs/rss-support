@@ -88,11 +88,10 @@ ad_proc -public rss_support::del_subscription {
     
     @error 
 } {
-    set impl_id [acs_sc::impl::get_id \
-                     -name $impl_name \
-                     -contract RssGenerationSubscriber \
-                     -owner $owner]
-    set subscr_id [db_string get_subscr_id ""]
+    set subscr_id [rss_support::get_subscr_id \
+                       -summary_context_id $summary_context_id \
+                       -impl_name $impl_name]
+    
     set report_dir [rss_gen_report_dir -subscr_id $subscr_id]
     # remove generated RSS reports for this subscription
     file delete -force $report_dir
@@ -118,4 +117,31 @@ ad_proc -public rss_support::subscription_exists {
     @error 
 } {
     return [db_string subscription_exists "" -default 0]
+}
+
+ad_proc -public rss_support::get_subscr_id {
+    -summary_context_id
+    -impl_name
+    -owner
+} {
+    
+    Return subscription id
+    
+    @author Dave Bauer (dave@thedesignexperience.org)
+    @creation-date 2005-02-04
+    
+    @param summary_context_id Object_id subscribed to
+
+    @param impl_name Implementation (object_type) name 
+
+    @param owner Owner of implementation (package_key)
+    @return 
+    
+    @error 
+} {
+    set impl_id [acs_sc::impl::get_id \
+                     -name $impl_name \
+                     -contract RssGenerationSubscriber \
+                     -owner $owner]
+    return [db_string get_subscr_id ""]
 }
