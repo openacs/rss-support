@@ -61,6 +61,12 @@ ad_proc -private rss_gen_report subscr_id {
 
     set datasource [acs_sc_call RssGenerationSubscriber datasource \
 	    $summary_context_id $impl_name]
+
+    if { [empty_string_p $datasource] } {
+        ns_log Error "Empty datasource returned from $impl_name for context $summary_context_id in rss_gen_report. Probably because the implementation hasn't been bound."
+        return
+    }
+
     set args ""
     foreach {name val} $datasource {
 	regsub -all {[\]\[\{\}""\\$]} $val {\\&} val
