@@ -9,7 +9,7 @@
                r.timeout,
                r.summary_context_id,
                i.impl_name,
-               nvl2(r.lastbuild, r.lastbuild*60*60*24, 0) as lastbuild
+               nvl2(r.lastbuild, (r.lastbuild-to_date('1970-01-01'))*60*60*24, 0) as lastbuild
         from rss_gen_subscrs r,
              acs_sc_impls i
         where i.impl_id = r.impl_id
