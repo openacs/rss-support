@@ -15,6 +15,7 @@ namespace eval ::rss_support:: {}
 ad_proc -public ::rss_support::add_subscription {
     -summary_context_id:required
     -impl_name:required
+    -owner:required
     {-creation_user ""}
     {-creation_ip ""}
     {-object_type "rss_gen_subscr"}
@@ -46,7 +47,7 @@ ad_proc -public ::rss_support::add_subscription {
         set context_id $summary_context_id
     }
 
-    set impl_id [acs_sc::impl::get_id -name news -owner news -contract RssGenerationSubscriber]
+    set impl_id [db_string get_impl_id ""]
 
     set var_list [list \
                       [list subscr_id ""] \
@@ -139,10 +140,6 @@ ad_proc -public rss_support::get_subscr_id {
     
     @error 
 } {
-    set impl_id [acs_sc::impl::get_id \
-                     -name $impl_name \
-                     -contract RssGenerationSubscriber \
-                     -owner $owner]
     set impl_id [db_string get_impl_id ""]
     return [db_string get_subscr_id ""]
 }
