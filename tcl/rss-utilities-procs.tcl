@@ -49,8 +49,7 @@ ad_proc -private rss_first_url_for_package_id_helper {
 	    select s2.name
 	    from site_nodes s1, site_nodes s2
 	    where s1.node_id = :node_id
-	    and s2.tree_sortkey <= s1.tree_sortkey
-	    and s1.tree_sortkey like (s2.tree_sortkey || '%') 
+	    and s1.tree_sortkey between s2.tree_sortkey and tree_right(s2.tree_sortkey)
 	    order by s2.tree_sortkey;
 	} {
 	    append url ${name}/
