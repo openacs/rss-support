@@ -164,7 +164,7 @@ comment on column rss_gen_subscrs.channel_link is '
    Used for display purposes.
 ';
 
-create function rss_gen_subscr__new (integer,integer,varchar,integer,timestamp,varchar,timestamp,integer,varchar,integer)
+create function rss_gen_subscr__new (integer,integer,varchar,integer,timestamp with time zone,varchar,timestamp with time zone,integer,varchar,integer)
 returns integer as '
 declare
   p_subscr_id			alias for $1;
