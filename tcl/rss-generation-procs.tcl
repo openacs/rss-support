@@ -72,12 +72,16 @@ ad_proc rss_gen_200 {
         append rss "<link>[ad_quotehtml $iarray(link)]</link>" \n
         append rss {<guid isPermaLink="true">} [ad_quotehtml $iarray(link)] {</guid>} \n
 
-        if {[info exists iarray(description)]} {
+        if { [exists_and_not_null iarray(description) ]} {
             append rss "<description>[ad_quotehtml $iarray(description)]</description>" \n
         }
 
-        if {[info exists iarray(timestamp)]} {
+        if { [exists_and_not_null iarray(timestamp)] } {
             append rss "<pubDate>[ad_quotehtml $iarray(timestamp)]</pubDate>" \n
+        }
+        
+        if { [exists_and_not_null iarray(category)] } {
+            append rss "<category>[ad_quotehtml $iarray(category)]</category>" \n
         }
         
         append rss {</item>} \n
