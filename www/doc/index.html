@@ -1,0 +1,124 @@
+<html>
+<head>
+<title>RSS Support</title>
+</head>
+<body bgcolor=white>
+<h2>RSS Support</h2>
+by <a href="mailto:aegrumet@alum.mit.edu">Andrew Grumet</a>,
+<a href="mailto:jerry@theashergroup.com">Jerry Asher</a> and
+<a href="mailto:dave@thedesignexperience.org">Dave Bauer</a>
+<hr>
+
+<p>
+
+From the <a href="http://groups.yahoo.com/group/rss-dev/files/specification.html">specification</a>,
+
+<blockquote><em>
+RDF Site Summary (RSS) is a lightweight multipurpose extensible
+metadata description and syndication format. RSS is an XML
+application, conforms to the W3C's RDF Specification and is extensible
+via XML-namespace and/or RDF based modularization.
+</em></blockquote>
+
+This service package provides low-level support for generating and parsing RSS feeds.
+
+<h3>1. Feed generation</h3>
+
+Feed generation is the process of summarizing local content as RSS
+xml.  To generate a feed we need to know
+<ul>
+<li> the site context whose content is to be summarized,
+<li> how to retrieve the various required and optional metadata fields
+<li> whether any changes have been made since the last summary was built
+<li> how often to rebuild the summary (if changes are present)
+</ul>
+
+The last item is included with an eye toward performance.  In the
+event that a particular summary is expensive to produce, we may opt
+to rebuild at most every N minutes (or hours, or days).
+
+<p>
+
+<b>Usage scenarios</b>
+
+<ul>
+
+<li>Publisher wishes to syndicate the Bar Forum in the Foo Bboard package instance.
+
+<li>Luckily, the bboard package implements the summary service contract for
+    context type bboard:forum of which the Bar Forum is an example.
+
+<li>Programmer registers the context identifier for the Bar Forum with
+summary service, indicating that the summary should be built no more
+than once per hour.
+
+<li>Summary is available at /some/url/specific/to/bar/forum/summary.xml
+
+</ul>
+
+
+<p>
+
+<b>Service contract</b>
+
+<p>
+
+The feed generation service contract consists of two operations.
+
+<ol>
+<li><code>RssGenDatasource</code>.  The return value of RssGenDatasource
+contains all required metadata fields as well as configuration
+information such as the RSS version to be used (0.91 or 1.00 are
+supported at present).
+<li><code>RssLastUpdated</code>.  Used to determine if the live summary
+is out of date.
+</ol>
+
+<p>
+
+<b>Under the hood</b>
+
+<p>
+
+Implementation suggestions:
+
+<ol>
+<li>All summaries are static files.  We will devise an appropriate file-naming scheme.
+
+<li>A programmer registers a context with the summary service through API functions
+    (we can make it possible through web UI as well if that makes sense).
+
+<li>A summary context is a content-containing domain which implements
+    the summary service contract.  A summary context is not identical
+    to a package instance.  For example, a single bboard package
+    instance might contain 3 summary contexts, one for each of the
+    forums in the instance.
+
+<li>A scheduled proc runs through all registered contexts, checking to see if the
+    live summary is stale and also if the minimum "quiet time" has elapsed.
+
+<li>If the conditions for rebuild are met for a context, the scheduled proc pulls
+    out the context's summary data via <code>RssGenDatasource</code> and uses the
+    information to build a new summary page.  This generic and simple scheme
+    can be used to dispatch different versions of the summary builder as well 
+    as to support extensibility via modules. <font color=red>Warning:</font>
+    This design expects the output of RssGenDatasource to be reasonably small,
+    as we will have to parse this list-of-lists to generate a summary.
+
+</ol>
+
+<h3>2. Feed Parsing</h3>
+
+(aeg's vague ideas: needs can vary.  I can imagine slurping the content into
+the db or converting to includable ADPs using XSLT.  Service contract
+operations are used to generate mappings to RDBMS tables or stylesheets.
+
+
+<hr>
+<address>
+<a href="mailto:aegrumet@alum.mit.edu">aegrumet@alum.mit.edu</a>,
+<a href="mailto:jerry@theashergroup.com">jerry@theashergroup.com</a>,
+<a href="mailto:dave@thedesignexperience.org">dave@thedesignexperience.org</a>
+
+</body>
+</html>
