@@ -267,6 +267,14 @@ ad_proc rss_gen_100 {
             set element [ad_quotehtml $iarray(timestamp)]
             append rss "<dc:date>$element</dc:date>\n"
         }
+        if {[info exists iarray(author)]} {
+            set element [ad_quotehtml $iarray(author)]
+            append rss "<dc:creator>$element</dc:creator>\n"
+        }
+        if {[info exists iarray(category)]} {
+            set element [ad_quotehtml $iarray(category)]
+            append rss "<dc:subject>$element</dc:subject>\n"
+        }
 
         append rss "</item>\n"
     }
