@@ -405,7 +405,7 @@ ad_proc rss_gen_091 {
 
 ad_proc rss_gen {
     {
-        -version                        .91
+        -version                        "2.0"
         -channel_title                  ""
         -channel_link                   ""
         -channel_description            ""
@@ -458,6 +458,9 @@ ad_proc rss_gen {
     http://groups.yahoo.com/group/rss-dev/files/specification.html
     The 1.0 spec is very primitive: my needs are primitive as of yet,
     and I don't grok the rss 1.0 modules stuff as yet.  Whoops p'gazonga.
+
+    For 2.0, the spec is at 
+    http://blogs.law.harvard.edu/tech/rss
     
     </pre>
 } {
