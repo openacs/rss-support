@@ -44,8 +44,11 @@ ad_proc rss_gen_200 {
         error "argument channel_description not provided"
     }
 
-    set date_format "%a, %d %b %Y %H:%M:%S %Z"
-    set channel_date [clock format [clock seconds] -format $date_format]
+    if { [empty_string_p $channel_lastBuildDate] } {
+        set now_ansi [clock format [clock seconds] -format "%Y-%m-%d %H:%M:%S"]
+        set now_ansi [lc_time_tz_convert -from [lang::system::timezone] -to "Etc/GMT" -time_value $now_ansi]
+        set channel_lastBuildDate "[clock format [clock scan $now_ansi] -format "%a, %d %b %Y %H:%M:%S"] GMT"
+    }
 
     append rss {<rss version="2.0">} \n
     append rss {<channel>} \n
@@ -55,7 +58,8 @@ ad_proc rss_gen_200 {
     append rss "<description>[ad_quotehtml $channel_description]</description>" \n
 
     append rss {<generator>OpenACS 5.0</generator>} \n
-    append rss "<lastBuildDate>[ad_quotehtml $channel_date]</lastBuildDate>" \n
+    append rss "<lastBuildDate>[ad_quotehtml $channel_lastBuildDate]</lastBuildDate>" \n
+    append rss "<pubDate>[ad_quotehtml $channel_pubDate]</pubDate>" \n
 
     # now top level items
     foreach item $items {
