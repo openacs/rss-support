@@ -1,7 +1,7 @@
 <master>
 <property name="title">Add or Edit a Subcription</property>
 
-<h2>@action@ a Subscription</h2>
+<h2>@pretty_action@ a Subscription</h2>
 @context_bar@
 <hr>
 
@@ -19,7 +19,7 @@
 <input type=radio name=timeout_units value="h">hours
 <input type=radio name=timeout_units value="d">days
 </td></tr>
-<tr bgcolor=efefef><td colspan=2 align=center><input type=submit value="@action@"></tr>
+<tr bgcolor=efefef><td colspan=2 align=center><input type=submit value="@pretty_action@"></tr>
 </table>
 @formvars@
 </form>

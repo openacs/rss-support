@@ -22,6 +22,7 @@ set context_bar [ad_context_bar Delete]
 
 if [file exists [rss_gen_report_file -subscr_id $subscr_id]] {
     set offer_file 1
+    set report_url [rss_gen_report_file -subscr_id $subscr_id -url]
 } else {
     set offer_file 0
 }

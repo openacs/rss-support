@@ -40,7 +40,8 @@ if { [info exists impl_id] && [info exists summary_context_id] } {
 }
 
 if [info exists subscr_id] {
-    set action Edit
+    set action edit
+    set pretty_action Edit
     ad_require_permission $subscr_id admin
     db_1row subscr_info {
 	select impl_id,
@@ -52,7 +53,8 @@ if [info exists subscr_id] {
 	where subscr_id = :subscr_id
     }
 } else {
-    set action Add
+    set action add
+    set pretty_action Add
     ad_require_permission $summary_context_id admin
     set subscr_id [db_nextval acs_object_id_seq]
     set timeout 3600
@@ -69,7 +71,7 @@ process your request.  Please contact this site's technical team for
 assistance."
 }
 
-if { [string equal $channel_title ""] || [string equal $channel_link ""] } {
+if { ![info exists channel_title] || [string equal $channel_title ""] || [string equal $channel_link ""] } {
     if !$meta {
 	if [string equal $channel_title ""] {
 	    set channel_title "Summary Context $summary_context_id"

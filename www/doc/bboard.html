@@ -25,22 +25,18 @@ registers an implementation for bboard forums.
 
 <li>Define the implementation procs.  This <a href="bboard-rss-sc-procs-tcl.txt">example</a> implements the contracted procs.
 
-<li>Create a subscription for each context to be summarized.
-Until admin pages are available, do this by hand as follows:
+<li>Create a subscription for each forum to be summarized.
+This can be accomplished by querying for the implentation's
+<code>impl_id</code> as follows
+
 <blockquote><pre>
-select rss_gen_subscr__new (
-       null,				-- subscr_id
-       2752,				-- impl_id
-       2746,				-- summary_context_id (forum_id)
-       0,				-- timeout
-       null,				-- lastbuild
-       'rss_gen_subscr',		-- object_type
-       now(),				-- creation_date
-       null,				-- creation_user
-       null,				-- creation_ip
-       null				-- context_id
-);
+select acs_sc_impl__get_id('RssGenerationSubscriber','bboard_forum');
 </pre></blockquote>
+
+and navigating to
+/rss/subscr-ae?impl_id=$impl_id&summary_context_id=$forum_id (note
+that subscr-ae doesn't accept <code>impl_name</code> as a URL parameter
+for security reasons).
 
 <li>The scheduled proc <code>rss_gen_service</code> will create a
 binding for the implementation and generate summaries for each

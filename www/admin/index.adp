@@ -6,7 +6,7 @@
 <hr>
 
 <ul>
-<li><a href="subscrs">Report Generation Subscriptions</a>
+<li><a href="subscrs">All Report Generation Subscriptions</a>
 </ul>
 
 <br><br><br><br><br><br><br>

@@ -63,7 +63,7 @@ ad_proc -private rss_gen_report subscr_id {
     set xml [apply rss_gen $args]
 
     # Write report.
-    set report_file [rss_gen_report_file -summary_context_id $summary_context_id -impl_name $impl_name -assert -url]
+    set report_file [rss_gen_report_file -summary_context_id $summary_context_id -impl_name $impl_name -assert]
 
     set fh [open $report_file w]
     puts $fh $xml
@@ -140,11 +140,11 @@ ad_proc -private rss_gen_report_dir {
     -summary_context_id
     -impl_name
     -subscr_id
-    {-assert:boolean f}
+    -assert:boolean
 } {
     Return a directory path, relative to the pageroot, for the rss
     subscription with subscr_id or impl_name + summary_context_id
-    provided.
+    provided.  If the assert flag is set, create the directory.
 } {
     if {!([info exists summary_context_id] && \
 	    [info exists impl_name])} {
@@ -165,24 +165,24 @@ ad_proc -private rss_gen_report_dir {
     set report_dir /[ad_parameter -package_id [rss_package_id] RssGenOutputDirectory rss-support rss]/$impl_name/${summary_context_id}
 
     if $assert_p {
-	rss_assert_dir $report_dir
+	rss_assert_dir [ns_info pageroot]$report_dir
     }
 
     return $report_dir
 }
 
-ad_proc -private rss_gen_report_file {
+ad_proc -public rss_gen_report_file {
     -summary_context_id
     -impl_name
     -subscr_id
-    {-assert:boolean f}
-    {-url:boolean t}
+    -assert:boolean
+    -url:boolean
 } {
     Return a file path for the rss subscription with subscr_id
     or impl_name + summary_context_id provided.
     If the -assert flag is set, the parent directory is created if
-    it doesn't exist (default: false).
-    If the -url flag is set, return a url (default: true); otherwise
+    it doesn't exist
+    If the -url flag is set, return a url; otherwise
     return a Unix file path.  
 } {
     if {!([info exists summary_context_id] && \
