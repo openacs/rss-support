@@ -98,13 +98,13 @@ ad_proc -private rss_gen_bind {} {
     set contract_id [db_string get_contract_id {}]
 
     db_foreach get_unbound_impls {} {
-	ns_log Notice "rss_gen_bind: binding impl $impl_id for contract $contract_id"
+	ns_log Debug "rss_gen_bind: binding impl $impl_id for contract $contract_id"
 	# Don't ask me why, but bind variables don't appear to work
 	# in this nested db operation.  
 	if [catch {
 	    db_exec_plsql bind_impl {}
 	} errMsg] {
-	    ns_log Notice "rss_gen_bind: error binding impl $impl_id for contract $contract_id: $errMsg"
+	    ns_log Warning "rss_gen_bind: error binding impl $impl_id for contract $contract_id: $errMsg"
 	}
     }
 }
