@@ -72,6 +72,22 @@ begin
 	  ''f''					-- static_p
 	);
 
+    PERFORM acs_attribute__create_attribute (
+	  ''rss_gen_subscr'',			-- object_type
+	  ''LASTBUILD'',				-- attribute_name
+	  ''integer'',				-- datatype
+	  ''Last Build'',			-- pretty_name
+	  ''Last Builds'',			-- pretty_plural
+	  null,					-- table_name
+	  null,					-- column_name
+	  null,					-- default_value
+	  1,					-- min_n_values
+	  1,					-- max_n_values
+	  null,					-- sort_order
+	  ''type_specific'',			-- storage
+	  ''f''					-- static_p
+	);
+
     return 0;
 end;' language 'plpgsql';
 
@@ -95,7 +111,8 @@ create table rss_gen_subscrs (
 				  not null,
    timeout			  integer
 				  constraint rss_gen_subscrs_timeout_nn
-				  not null
+				  not null,
+   lastbuild			  timestamp
 );
 
 comment on table rss_gen_subscrs is '
@@ -124,18 +141,23 @@ comment on column rss_gen_subscrs.timeout is '
    The minimum number of seconds between summary builds. 
 ';
 
-create function rss_gen_subscr__new (integer,integer,varchar,integer,varchar,timestamp,integer,varchar,integer)
+comment on column rss_gen_subscrs.lastbuild is '
+   Accounting column for use by rss generation service.
+';
+
+create function rss_gen_subscr__new (integer,integer,varchar,integer,timestamp,varchar,timestamp,integer,varchar,integer)
 returns integer as '
 declare
   p_subscr_id			alias for $1;
   p_impl_id			alias for $2;
   p_summary_context_id		alias for $3;
   p_timeout			alias for $4;
-  p_object_type			alias for $5;           -- default ''rss_gen_subscr''
-  p_creation_date		alias for $6;		-- default now()
-  p_creation_user		alias for $7;		-- default null
-  p_creation_ip			alias for $8;		-- default null
-  p_context_id			alias for $9;		-- default null
+  p_lastbuild			alias for $5;
+  p_object_type			alias for $6;           -- default ''rss_gen_subscr''
+  p_creation_date		alias for $7;		-- default now()
+  p_creation_user		alias for $8;		-- default null
+  p_creation_ip			alias for $9;		-- default null
+  p_context_id			alias for $10;		-- default null
   v_subscr_id			rss_gen_subscrs.subscr_id%TYPE;
 begin
 	v_subscr_id := acs_object__new (
@@ -148,9 +170,9 @@ begin
 	);
 
 	insert into rss_gen_subscrs
-	  (subscr_id, impl_id, summary_context_id, timeout)
+	  (subscr_id, impl_id, summary_context_id, timeout, lastbuild)
 	values
-	  (v_subscr_id, p_impl_id, p_summary_context_id, p_timeout);
+	  (v_subscr_id, p_impl_id, p_summary_context_id, p_timeout, p_lastbuild);
 
 	return v_subscr_id;
 
