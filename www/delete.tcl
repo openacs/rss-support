@@ -8,7 +8,8 @@ ad_page_contract {
 ad_require_permission $subscr_id admin
 
 db_1row subscr_info {
-    select channel_title,
+    select summary_context_id,
+           channel_title,
            channel_link
     from rss_gen_subscrs
     where subscr_id = :subscr_id
