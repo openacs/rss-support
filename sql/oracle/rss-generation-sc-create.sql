@@ -22,7 +22,7 @@ begin
 
   foo := acs_sc_operation.new(
    	contract_name => 'RssGenerationSubscriber',
-        operation_name => 'Datasource',
+        operation_name => 'datasource',
         operation_desc => 'Data Source',
         operation_iscachable_p => 'f',
         operation_nargs => 1,
@@ -42,7 +42,7 @@ begin
 
   foo := acs_sc_operation.new(
    	contract_name => 'RssGenerationSubscriber',
-        operation_name => 'LastUpdated',
+        operation_name => 'lastUpdated',
         operation_desc => 'Last Updated',
         operation_iscachable_p => 'f',
         operation_nargs => 1,

@@ -31,27 +31,14 @@ ad_page_contract {
 }
 
 if { [info exists impl_id] && [info exists summary_context_id] } {
-    db_0or1row subscr_id_from_impl_and_context {
-	select subscr_id
-	from rss_gen_subscrs
-        where impl_id = :impl_id
-          and summary_context_id = :summary_context_id
-    }
+    db_0or1row subscr_id_from_impl_and_context {}
 }
 
 if [info exists subscr_id] {
     set action edit
     set pretty_action Edit
     ad_require_permission $subscr_id admin
-    db_1row subscr_info {
-	select impl_id,
-	       summary_context_id,
-	       timeout,
-               channel_title,
-               channel_link
-	from rss_gen_subscrs
-	where subscr_id = :subscr_id
-    }
+    db_1row subscr_info {}
 } else {
     set action add
     set pretty_action Add
@@ -61,11 +48,7 @@ if [info exists subscr_id] {
 }
 
 # Validate the impl_id and get its name
-if ![db_0or1row get_impl_name_and_count {
-    select acs_sc_impl__get_name(impl_id) as impl_name
-    from acs_sc_impls
-    where impl_id = :impl_id
-}] {
+if ![db_0or1row get_impl_name_and_count {}] {
     ad_return_error "No implementation found for this id." "We were unable to
 process your request.  Please contact this site's technical team for
 assistance."

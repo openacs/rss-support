@@ -16,7 +16,7 @@ ad_proc -public rss_package_id {} {
     # Returns 0 otherwise.
     </pre>
 } {
-    if ![db_0or1row get_package_id {select package_id from apm_packages where package_key = 'rss-support'}] {
+    if ![db_0or1row get_package_id {}] {
 	return 0
     } else {
 	return $package_id
@@ -30,7 +30,7 @@ ad_proc -public rss_package_url {} {
     </pre>
 } {
     set package_id [rss_package_id]
-    return [db_string rss_url {select site_node__url(node_id) from site_nodes where object_id = :package_id} -default ""]
+    return [db_string rss_url {} -default ""]
 
 }
 
@@ -52,19 +52,9 @@ ad_proc -private rss_first_url_for_package_id_helper {
 } {
     set url ""
 
-    if [db_0or1row first_node_id {
-	select node_id from site_nodes
-        where object_id = :package_id
-	order by node_id limit 1
-    }] {
-	db_foreach url_parts {
-	    select s2.name
-	    from site_nodes s1, site_nodes s2
-	    where s1.node_id = :node_id
-	    and s1.tree_sortkey between s2.tree_sortkey and tree_right(s2.tree_sortkey)
-	    order by s2.tree_sortkey;
-	} {
-	    append url ${name}/
+    if [db_0or1row first_node_id {}] {
+	db_foreach url_parts {} {
+	    append url ${name}
 	}
     }
 

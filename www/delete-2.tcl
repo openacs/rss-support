@@ -12,10 +12,6 @@ if [info exists delete_file_p] {
     ns_unlink -nocomplain [rss_gen_report_file -subscr_id $subscr_id]
 }
 
-db_exec_plsql delete_subscr {
-    select rss_gen_subscr__delete (
-        :subscr_id
-    )
-}
+db_exec_plsql delete_subscr {}
 
 ad_returnredirect $return_url
