@@ -164,7 +164,7 @@ comment on column rss_gen_subscrs.channel_link is '
    Used for display purposes.
 ';
 
-select define_function_args ('rss_gen_subscr__new','subscr_id,impl_id,summary_context_id,timeout,lastbuild,object_type,creation_date;now,creation_user,creation_ip,context_id');
+select define_function_args ('rss_gen_subscr__new','p_subscr_id,p_impl_id,p_summary_context_id,p_timeout,p_lastbuild;now,p_object_type,p_creation_date;now,p_creation_user,p_creation_ip,p_context_id');
 create function rss_gen_subscr__new (
     integer,                   -- subscr_id
     integer,                   -- impl_id
