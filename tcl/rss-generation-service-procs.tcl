@@ -30,7 +30,7 @@ ad_proc -private rss_gen_service {} {
              acs_sc_impls i
         where i.impl_id = r.impl_id
           and (r.lastbuild is null
-               or now() - r.lastbuild > interval r.timeout || ' seconds')
+               or now() - r.lastbuild > cast(r.timeout || ' seconds' as interval))
     } {
 	set lastupdate [acs_sc_call RssGenerationSubscriber lastUpdated \
 		$summary_context_id $impl_name]
