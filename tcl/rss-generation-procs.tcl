@@ -1,10 +1,10 @@
 # /tcl/rss-defs.tcl
 ad_library {
      procs to generate rss feeds
-     procs to help with rssness
      @author jerry@theashergroup.com [jerry@theashergroup.com]
+     @author aegrumet@alum.mit.edu
      @creation-date Fri Oct 26 11:43:26 2001
-     @cvs-id
+     @cvs-id $Id
 }
 
 
@@ -13,12 +13,6 @@ ad_library {
 # generates an rss feed given channel information
 # and item information
 ###
-
-#Convert to ad_register_proc if we plan to keep.
-#ns_register_proc GET /*.rss ns_sourceproc
-#ns_register_proc POST /*.rss ns_sourceproc
-#ns_register_proc HEAD /*.rss ns_sourceproc
-#ns_register_proc PUT /*.rss ns_putscript
 
 ad_proc rss_gen_100 {
     {
@@ -96,12 +90,12 @@ ad_proc rss_gen_100 {
 
 
     if {[empty_string_p $image]} {
-        set logo_rss "/graphics/openacs_logo_rss.gif"
-        set url      [ad_url]
-        append       url $logo_rss
+	set base     images/openacs_logo_rss.gif
+        set url      [ad_url][rss_package_url]$base
         set title    $channel_title
         set link     $channel_link
-        set size     [ns_gifsize [ns_url2file $logo_rss]]
+        set size     [ns_gifsize [get_server_root]/packages/rss-support/www/$base]
+
         set image [list                                          \
                 url $url                                         \
                 title $title                                     \
@@ -270,12 +264,12 @@ ad_proc rss_gen_091 {
     }
 
     if {[empty_string_p $image]} {
-        set logo_rss "/graphics/openacs_logo_rss.gif"
-        set url      [ad_url]
-        append       url $logo_rss
+	set base     images/openacs_logo_rss.gif
+        set url      [ad_url][rss_package_url]$base
         set title    $channel_title
         set link     $channel_link
-        set size     [ns_gifsize [ns_url2file $logo_rss]]
+        set size     [ns_gifsize [get_server_root]/packages/rss-support/www/$base]
+
         set image [list                                          \
                 url $url                                         \
                 title $title                                     \
@@ -402,7 +396,7 @@ ad_proc rss_gen {
         1.00 -
         1.0 -
         1 {
-            set rss [rss_gen_100                                         \
+            append rss [rss_gen_100                                      \
                     -channel_title           $channel_title              \
                     -channel_link            $channel_link               \
                     -channel_description     $channel_description        \
@@ -412,7 +406,7 @@ ad_proc rss_gen {
         }
         default {
 
-            set rss [rss_gen_091                                         \
+            append rss [rss_gen_091                                      \
                     -channel_title           $channel_title              \
                     -channel_link            $channel_link               \
                     -channel_description     $channel_description        \
@@ -434,204 +428,28 @@ ad_proc rss_gen {
     return $rss
 }
 
-proc_doc rss_lang_widget {{selected_lang en}} {
-    creates an html-select field widget with lots of html language
-    choices in it
+
+ad_proc rss_package_id {} {
+    <pre>
+    # Returns the package_id for rss if it is rss is mounted.
+    # Returns 0 otherwise.
+    </pre>
 } {
-    foreach {value lang} {
-        af {Afrikaans}
-        sq {Albanian}
-        eu {Basque}
-        be {Belarusian}
-        bg {Bulgarian}
-        ca {Catalan}
-        zh-cn {Chinese (Simplified)}
-        zh-tw {Chinese (Traditional)}
-        hr {Croatian}
-        cs {Czech}
-        da {Danish}
-        nl {Dutch}
-        nl-be {Dutch (Belgium)}
-        nl-nl {Dutch (Netherlands)}
-        en {English}
-        en-au {English (Australia)}
-        en-bz {English (Belize)}
-        en-ca {English (Canada)}
-        en-ie {English (Ireland)}
-        en-jm {English (Jamaica)}
-        en-nz {English (New Zealand)}
-        en-ph {English (Phillipines)}
-        en-za {English (South Africa)}
-        en-tt {English (Trinidad)}
-        en-gb {English (United Kingdom)}
-        en-us {English (United States)}
-        en-zw {English (Zimbabwe)}
-        fo {Faeroese}
-        fi {Finnish}
-        fr {French}
-        fr-be {French (Belgium)}
-        fr-ca {French (Canada)}
-        fr-fr {French (France)}
-        fr-lu {French (Luxembourg)}
-        fr-mc {French (Monaco)}
-        fr-ch {French (Switzerland)}
-        gl {Galician}
-        gd {Gaelic}
-        de {German}
-        de-at {German (Austria)}
-        de-de {German (Germany)}
-        de-li {German (Liechtenstein)}
-        de-lu {German (Luxembourg)}
-        de-ch {German (Switzerland)}
-        el {Greek}
-        hu {Hungarian}
-        is {Icelandic}
-        in {Indonesian}
-        ga {Irish}
-        it {Italian}
-        it-it {Italian (Italy)}
-        it-ch {Italian (Switzerland)}
-        ja {Japanese}
-        ko {Korean}
-        mk {Macedonian}
-        no {Norwegian}
-        pl {Polish}
-        pt {Portuguese}
-        pt-br {Portuguese (Brazil)}
-        pt-pt {Portuguese (Portugal)}
-        ro {Romanian}
-        ro-mo {Romanian (Moldova)}
-        ro-ro {Romanian (Romania)}
-        ru {Russian}
-        ru-mo {Russian (Moldova)}
-        ru-ru {Russian (Russia)}
-        sr {Serbian}
-        sk {Slovak}
-        sl {Slovenian}
-        es {Spanish}
-        es-ar {Spanish (Argentina)}
-        es-bo {Spanish (Bolivia)}
-        es-cl {Spanish (Chile)}
-        es-co {Spanish (Colombia)}
-        es-cr {Spanish (Costa Rica)}
-        es-do {Spanish (Dominican Republic)}
-        es-ec {Spanish (Ecuador)}
-        es-sv {Spanish (El Salvador)}
-        es-gt {Spanish (Guatemala)}
-        es-hn {Spanish (Honduras)}
-        es-mx {Spanish (Mexico)}
-        es-ni {Spanish (Nicaragua)}
-        es-pa {Spanish (Panama)}
-        es-py {Spanish (Paraguay)}
-        es-pe {Spanish (Peru)}
-        es-pr {Spanish (Puerto Rico)}
-        es-es {Spanish (Spain)}
-        es-uy {Spanish (Uruguay)}
-        es-ve {Spanish (Venezuela)}
-        sv {Swedish}
-        sv-fi {Swedish (Finland)}
-        sv-se {Swedish (Sweden)}
-        tr {Turkish}
-        uk {Ukranian}
-    } {
-        
-        if {[string equal $value $selected_lang]} {
-            set selected SELECTED
-        } else {
-            set selected ""
-        }
-        
-        lappend options "<option value='$value' $selected>$lang"
-        
-    }
-    return "\n\n<select name=lang>\n[join $options \n]\n</select>\n\n
-    "
-}
-
-###
-# simple httppost to weblogs
-###
-
-proc_doc rss_weblogUpdatesping {
-    blog_title
-    blog_url
-    {location http://rpc.weblogs.com/RPC2}
-    {timeout 30}
-    {depth 0}
-} {
-    sends the xml/rpc message weblogUpldates.ping to weblogs.com
-    returns 1 if successful and logs the result
-} {
-    ns_log notice rss_weblogupdatesping:
-    if [catch {
-        if {[incr depth] > 10} {
-            return -code error "rss_weblogUpdatesping:  Recursive redirection:  $location"
-        }
-        set req_hdrs [ns_set create]
-
-        set message "<?xml version=\"1.0\"?>
-<methodCall>
-  <methodName>weblogUpdates.ping</methodName>
-  <params>
-    <param>
-      <value>[ad_quotehtml $blog_title]</value>
-    </param>
-    <param>
-      <value>[ad_quotehtml $blog_url]</value>
-    </param>
-  </params>
-</methodCall>"
-
-        # headers necesary for a post and the form variables
-        ns_set put $req_hdrs "Content-type" "text/xml"
-        ns_set put $req_hdrs "Content-length" [string length $message]
-        set http [ns_httpopen POST $location $req_hdrs 30 $message]
-        set rfd [lindex $http 0]
-        set wfd [lindex $http 1]
-        set rpset [lindex $http 2]
-
-        flush $wfd
-        close $wfd
-
-    ns_log notice rss_weblogupdatesping: pinging for blog $blog_title and url $blog_url
-    ns_log notice message: \"$message\"
-
-        set headers $rpset
-        set response [ns_set name $headers]
-        set status [lindex $response 1]
-        if {$status == 302} {
-            set location [ns_set iget $headers location]
-            if {$location != ""} {
-                ns_set free $headers
-                close $rfd
-                return [rss_weblogUpdatesping $blog_title $blog_url $location $timeout $depth]
-            }
-        }
-        set length [ns_set iget $headers content-length]
-        if [string match "" $length] {set length -1}
-        set err [catch {
-            while 1 {
-                set buf [_ns_http_read $timeout $rfd $length]
-                append page $buf
-                if [string match "" $buf] break
-                if {$length > 0} {
-                    incr length -[string length $buf]
-                    if {$length <= 0} break
-                }
-            }
-        } errMsg]
-        ns_set free $headers
-        close $rfd
-        if $err {
-            global errorInfo
-            return -code error -errorinfo $errorInfo $errMsg
-        }
-    } errmsg ] {
-        ns_log error rss_weblogUpdatesping error: $errmsg
-        return -1
+    if ![db_0or1row get_package_id {select package_id from apm_packages where package_key = 'rss-support'}] {
+	return 0
     } else {
-        ns_log notice rss_weblogUpdatesping: $page
-        return 1
+	return $package_id
     }
+}   
+
+ad_proc rss_package_url {} {
+    <pre>
+    # Returns the rss package url if it is mounted.
+    # Returns the empty string otherwise.
+    </pre>
+} {
+    set package_id [rss_package_id]
+    return [db_string rss_url {select site_node__url(node_id) from site_nodes where object_id = :package_id} -default ""]
+
 }
 

@@ -73,7 +73,9 @@ configuration information such as the RSS version to be used (0.91 or
 everything needed to run <code>rss_gen</code>.
 
 <li><code>LastUpdated(summary_context_id)</code> returns a timestamp
-that is used to determine if the live summary is out of date.
+that is used to determine if the live summary is out of date.  The
+timestamp is given as the number of seconds since midnight on January
+1, 1970, i.e. Unix time.
 </ol>
 
 <p>

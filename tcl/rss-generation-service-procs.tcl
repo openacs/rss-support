@@ -1,5 +1,9 @@
 ad_proc -private rss_gen_service {} {
 
+    ns_log Debug "rss_gen_service: starting"
+
+    set n 0
+
     db_foreach timed_out_subscriptions {
 	select r.subscr_id,
                i.impl_name,
@@ -13,7 +17,7 @@ ad_proc -private rss_gen_service {} {
              acs_sc_impls i
         where i.impl_id = r.impl_id
           and (r.lastbuild is null
-               or age(r.lastbuild) > interval(r.timeout || ' seconds'))
+               or now() - r.lastbuild > interval(r.timeout || ' seconds'))
     } {
 	set lastupdate [acs_sc_call RssGenerationSubscriber lastUpdated \
 		$summary_context_id $impl_name]
@@ -36,11 +40,17 @@ ad_proc -private rss_gen_service {} {
 	    puts $fh $xml
 	    close $fh
 
-	    # TODO: update lastbuild for this subscr_id
-	    ns_log Notice "rssgen: created report"
-	    ns_log Notice "rssgen: $xml"
+	    db_dml update_timestamp {
+		update rss_gen_subscrs
+		set lastbuild = now()
+		where subscr_id = :subscr_id
+	    }
+	    incr n
 	}
     }
+
+    ns_log Debug "rss_gen_service: built $n reports"
+
 }
 
 ad_proc rss_assert_dir path {
@@ -59,29 +69,3 @@ ad_proc rss_assert_dir path {
 	}
     }
 }
-
-ad_proc rss_package_id {} {
-    <pre>
-    # Returns the package_id for rss if it is rss is mounted.
-    # Returns 0 otherwise.
-    </pre>
-} {
-    if ![db_0or1row get_package_id {select package_id from apm_packages where package_key = 'rss-support'}] {
-	return 0
-    } else {
-	return $package_id
-    }
-}   
-
-ad_proc rss_package_url {} {
-    <pre>
-    # Returns the rss package url if it is mounted.
-    # Returns the empty string otherwise.
-    </pre>
-} {
-    set package_id [rss_package_id]
-    return [db_string rss_url {select site_node__url(node_id) from site_nodes where object_id = :package_id} -default ""]
-
-}
-    
-# TODO: run as a scheduled proc
