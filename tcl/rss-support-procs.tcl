@@ -54,7 +54,6 @@ ad_proc -public ::rss_support::add_subscription {
                       [list p_impl_id $impl_id] \
                       [list p_summary_context_id $summary_context_id] \
                       [list p_timeout $timeout] \
-                      [list p_lastbuild $lastbuild] \
                       [list p_object_type $object_type] \
                       [list p_creation_user $creation_user ] \
                       [list p_creation_ip $creation_ip] \
@@ -63,6 +62,9 @@ ad_proc -public ::rss_support::add_subscription {
     if {[exists_and_not_null creation_date]} {
         lappend var_list [list creation_date $creation_date]
     }
+    if {[exists_and_not_null lastbuild]} {
+        lappend var_list [list p_lastbuild $lastbuild]
+    }    
     
     return [package_exec_plsql \
                 -var_list $var_list \
