@@ -91,8 +91,8 @@ ad_proc -public rss_support::del_subscription {
 } {
     set subscr_id [rss_support::get_subscr_id \
                        -summary_context_id $summary_context_id \
-                       -impl_name $impl_name]
-    
+                       -impl_name $impl_name \
+		       -owner $owner]   
     set report_dir [rss_gen_report_dir -subscr_id $subscr_id]
     # remove generated RSS reports for this subscription
     file delete -force $report_dir

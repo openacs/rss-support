@@ -18,6 +18,16 @@
     </querytext>
   </fullquery>
 
+  <fullquery name="rss_support::add_subscription.get_impl_id">
+    <querytext>
+      select impl_id
+      from acs_sc_impls
+      where impl_name=:impl_name
+      and impl_contract_name='RssGenerationSubscriber'
+      and impl_owner_name=:owner
+    </querytext>
+  </fullquery>
+
   <fullquery name="rss_support::get_subscr_id.get_impl_id">
     <querytext>
       select impl_id
