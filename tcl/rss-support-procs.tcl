@@ -96,15 +96,6 @@ ad_proc -public rss_support::del_subscription {
     set report_dir [rss_gen_report_dir -subscr_id $subscr_id]
     # remove generated RSS reports for this subscription
     file delete -force $report_dir
-    ns_log notice "
-DB --------------------------------------------------------------------------------
-DB DAVE debugging procedure rss_support::del_subscription
-DB --------------------------------------------------------------------------------
-DB impl_name = '${impl_name}'
-DB impl_id = '${impl_id}'
-DB subscr_id = '${subscr_id}'
-
-DB --------------------------------------------------------------------------------"
     package_exec_plsql \
         -var_list [list [list subscr_id $subscr_id]] \
         rss_gen_subscr del
