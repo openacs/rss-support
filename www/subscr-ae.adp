@@ -18,6 +18,6 @@
 </td></tr>
 <tr bgcolor=efefef><td colspan=2 align=center><input type=submit value="@pretty_action@"></tr>
 </table>
-@formvars@
+@formvars;noquote@
 </form>
 
