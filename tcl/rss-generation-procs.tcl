@@ -427,29 +427,3 @@ ad_proc rss_gen {
     }
     return $rss
 }
-
-
-ad_proc rss_package_id {} {
-    <pre>
-    # Returns the package_id for rss if it is rss is mounted.
-    # Returns 0 otherwise.
-    </pre>
-} {
-    if ![db_0or1row get_package_id {select package_id from apm_packages where package_key = 'rss-support'}] {
-	return 0
-    } else {
-	return $package_id
-    }
-}   
-
-ad_proc rss_package_url {} {
-    <pre>
-    # Returns the rss package url if it is mounted.
-    # Returns the empty string otherwise.
-    </pre>
-} {
-    set package_id [rss_package_id]
-    return [db_string rss_url {select site_node__url(node_id) from site_nodes where object_id = :package_id} -default ""]
-
-}
-
