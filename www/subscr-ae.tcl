@@ -2,19 +2,59 @@ ad_page_contract {
 
     Present an admin page for adding or editing subscriptions.
 
+    We should either get a subscr_id (editing) or
+    impl_id + summary_context_id (adding).
+
+    Set the meta urlarg to 0 to prevent generating a report from which
+    we pull out channel title and link.
+
     It would be very tempting to accept impl_name as an argument
     instead of impl_id.  However, the "apply" call in acs_sc_call
     raises the ugly possibility of code-smuggling through the url,
-    so we will force the use of the easily validated impl_id instead.
+    so we will force the use of the easily validated impl_id
+    instead.
 
 } {
-    impl_id:notnull,naturalnum
-    summary_context_id:notnull,naturalnum
+    subscr_id:optional,naturalnum
+    impl_id:optional,naturalnum
+    summary_context_id:optional,naturalnum
     return_url:optional
     {meta:optional 1}
+} -validate {
+    subscr_or_context {
+	if { !(([info exists subscr_id]) || ([info exists impl_id] && [info exists summary_context_id])) } {
+	    ad_complain "We were unable to
+	    process your request.  Please contact this site's
+	    technical team for assistance."
+	}
+    }
 }
 
-set context_bar [ad_context_bar]
+if { [info exists impl_id] && [info exists summary_context_id] } {
+    db_0or1row subscr_id_from_impl_and_context {
+	select subscr_id
+	from rss_gen_subscrs
+        where impl_id = :impl_id
+          and summary_context_id = :summary_context_id
+    }
+}
+
+if [info exists subscr_id] {
+    set action Edit
+    ad_require_permission $subscr_id admin
+    db_1row subscr_info {
+	select impl_id,
+	       summary_context_id,
+	       timeout
+	from rss_gen_subscrs
+	where subscr_id = :subscr_id
+    }
+} else {
+    set action Add
+    ad_require_permission $summary_context_id admin
+    set subscr_id [db_nextval acs_object_id_seq]
+    set timeout 3600
+}
 
 # Validate the impl_id and get its name
 if ![db_0or1row get_impl_name_and_count {
@@ -22,16 +62,10 @@ if ![db_0or1row get_impl_name_and_count {
     from acs_sc_impls
     where impl_id = :impl_id
 }] {
-    ad_return_complaint 1 "No implementation found for this id."
+    ad_return_error "No implementation found for this id." "We were unable to
+process your request.  Please contact this site's technical team for
+assistance."
 }
-
-# Get subscription timeout, if exists.
-set timeout [db_string susbcr_timeout {
-    select timeout
-    from rss_gen_subscrs
-    where summary_context_id = :summary_context_id
-      and impl_id = :impl_id
-} -default 3600]
 
 if !$meta {
     set channel_title "Summary Context $summary_context_id"
@@ -49,4 +83,11 @@ if !$meta {
     } 
 }
 
-set formvars [export_entire_form]
+set formvars [export_form_vars subscr_id           \
+			       impl_id             \
+			       summary_context_id  \
+			       return_url          \
+			       meta]
+
+set context_bar [ad_context_bar]
+

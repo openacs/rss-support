@@ -1,8 +1,9 @@
 ad_page_contract {
     Insert or update the subscription.
 } {
-    impl_id:notnull,naturalnum
-    summary_context_id:notnull,naturalnum
+    subscr_id:notnull,naturalnum
+    impl_id:optional,naturalnum
+    summary_context_id:optional,naturalnum
     return_url:optional
     timeout:notnull,naturalnum
     timeout_units:notnull
@@ -15,13 +16,13 @@ switch $timeout_units {
     d { set timeout [expr $timeout * 86400] }
 }
 
-if [db_0or1row get_susbcr_id {
-    select subscr_id
-    from rss_gen_subscrs
-    where summary_context_id = :summary_context_id
-      and impl_id = :impl_id
+if [db_0or1row subscr_exists_p {
+    select 1
+    from acs_objects
+    where object_id = :subscr_id
 }] {
     # Subscription exists
+    ad_require_permission $subscr_id admin
     db_dml update_subscr {
 	update rss_gen_subscrs
 	set timeout = :timeout
@@ -29,11 +30,13 @@ if [db_0or1row get_susbcr_id {
     }
 } else {
     # Create a new subscription.
+    ad_require_permission $summary_context_id admin
+
     set creation_user [ad_conn user_id]
     set creation_ip [ns_conn peeraddr]
     db_exec_plsql create_subscr {
 	select rss_gen_subscr__new (
-	    null,				-- subscr_id
+	    :subscr_id,				-- subscr_id
             :impl_id,				-- impl_id
             :summary_context_id,		-- summary_context_id
             :timeout,			        -- timeout

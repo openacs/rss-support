@@ -108,7 +108,9 @@ web UI as well if that makes sense).
 domain which implements the summary service contract.  A summary
 context is not identical to a package instance.  For example, a single
 bboard package instance might contain 3 summary contexts, one for each
-of the forums in the instance.
+of the forums in the instance.  The summary context must, however,
+be an acs_object for permissioning purposes (create a shell acs_object
+if necessary).  Only one subscription is allowed per summary context.
 
 <p>
 

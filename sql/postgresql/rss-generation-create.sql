@@ -108,11 +108,15 @@ create table rss_gen_subscrs (
 				  references acs_sc_impls(impl_id),
    summary_context_id		  varchar(100)
 				  constraint rss_gen_subscrs_ctx_nn
-				  not null,
+				  not null
+				  constraint rss_gen_subscrs_ctx_fk
+                                  references acs_objects(object_id),
    timeout			  integer
 				  constraint rss_gen_subscrs_timeout_nn
 				  not null,
-   lastbuild			  timestamp
+   lastbuild			  timestamp,
+   constraint rss_gen_subscrs_impl_con_un
+   unique (impl_id,summary_context_id)
 );
 
 comment on table rss_gen_subscrs is '
@@ -176,6 +180,14 @@ begin
 
 	return v_subscr_id;
 
+end;' language 'plpgsql';
+
+create function rss_gen_subscr__name (integer)
+returns varchar as '
+declare
+  p_subscr_id				alias for $1;
+begin
+	return ''RSS Generation Subscription #'' || p_subscr_id;
 end;' language 'plpgsql';
 
 create function rss_gen_subscr__delete (integer)
