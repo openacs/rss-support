@@ -143,5 +143,6 @@ ad_proc -public rss_support::get_subscr_id {
                      -name $impl_name \
                      -contract RssGenerationSubscriber \
                      -owner $owner]
+    set impl_id [db_string get_impl_id ""]
     return [db_string get_subscr_id ""]
 }
