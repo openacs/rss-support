@@ -21,7 +21,6 @@ ad_proc rss_gen_200 {
     {-channel_copyright ""}
     {-channel_managingEditor ""}
     {-channel_webMaster ""}
-    {-channel_pubDate ""}
     {-channel_rating ""}
     {-channel_pubDate ""}
     {-channel_lastBuildDate ""}
@@ -59,7 +58,46 @@ ad_proc rss_gen_200 {
 
     append rss {<generator>OpenACS 5.0</generator>} \n
     append rss "<lastBuildDate>[ad_quotehtml $channel_lastBuildDate]</lastBuildDate>" \n
-    append rss "<pubDate>[ad_quotehtml $channel_pubDate]</pubDate>" \n
+    if { ![empty_string_p $channel_pubDate] } {
+	append rss "<pubDate>[ad_quotehtml $channel_pubDate]</pubDate>" \n
+    }
+
+    if {[empty_string_p $image]} {
+	set base     images/openacs_logo_rss.gif
+        set url      [ad_url][rss_package_url]$base
+        set title    $channel_title
+        set link     $channel_link
+        set size     [ns_gifsize [get_server_root]/packages/rss-support/www/$base]
+
+        set image [list                                          \
+                url $url                                         \
+                title $title                                     \
+                link $link                                       \
+                width [lindex $size 0]                           \
+                height [lindex $size 1]]
+    }
+
+    # image handling
+    append rss "<image>\n"
+    array set iarray $image
+
+    append rss "<title>[ad_quotehtml $iarray(title)]</title>\n"
+    append rss "<url>$iarray(url)</url>\n"
+    append rss "<link>[ad_quotehtml $iarray(link)]</link>\n"
+    if {[info exists iarray(width)]} {
+        set element [ad_quotehtml $iarray(width)]
+        append rss "<width>$element</width>\n"
+    }
+    if {[info exists iarray(height)]} {
+        set element [ad_quotehtml $iarray(height)]
+        append rss "<height>$element</height>\n"
+    }
+    if {[info exists iarray(description)]} {
+        set element [ad_quotehtml $iarray(description)]
+        append rss "<description>$element</description>\n"
+    }
+
+    append rss "</image>\n"
 
     # now top level items
     foreach item $items {
@@ -484,15 +522,15 @@ ad_proc rss_gen {
                             -channel_description $channel_description \
                             -image $image \
                             -items $items \
-                            -channel_language "en-us" \
-                            -channel_copyright "" \
-                            -channel_managingEditor "" \
-                            -channel_webMaster "" \
-                            -channel_rating "" \
-                            -channel_pubDate "" \
-                            -channel_lastBuildDate "" \
-                            -channel_skipDays "" \
-                            -channel_skipHours ""]
+                            -channel_language $channel_language \
+                            -channel_copyright $channel_copyright \
+                            -channel_managingEditor $channel_managingEditor \
+                            -channel_webMaster $channel_webMaster \
+                            -channel_rating $channel_rating \
+                            -channel_pubDate $channel_pubDate \
+                            -channel_lastBuildDate $channel_lastBuildDate \
+                            -channel_skipDays $channel_skipDays \
+                            -channel_skipHours $channel_skipHours]
         }
         100 -
         1.00 -
