@@ -11,6 +11,80 @@ ad_library {
 }
 
 
+ad_proc rss_gen_200 {
+    {-channel_title ""}
+    {-channel_link ""}
+    {-channel_description ""}
+    {-image ""}
+    {-items ""}
+    {-channel_language "en-us"}
+    {-channel_copyright ""}
+    {-channel_managingEditor ""}
+    {-channel_webMaster ""}
+    {-channel_pubDate ""}
+    {-channel_rating ""}
+    {-channel_pubDate ""}
+    {-channel_lastBuildDate ""}
+    {-channel_skipDays ""}
+    {-channel_skipHours ""}
+
+} { 
+    generate an rss 2.0 xml feed
+} {
+
+    set rss ""
+
+    if {[empty_string_p $channel_title]} {
+        error "argument channel_title not provided"
+    }
+    if {[empty_string_p $channel_link]} {
+        error "argument channel_link not provided"
+    }
+    if {[empty_string_p $channel_description]} {
+        error "argument channel_description not provided"
+    }
+
+    set date_format "%a, %d %b %Y %H:%M:%S %Z"
+    set channel_date [clock format [clock seconds] -format $date_format]
+
+    append rss {<rss version="2.0">} \n
+    append rss {<channel>} \n
+
+    append rss "<title>[ad_quotehtml $channel_title]</title>" \n
+    append rss "<link>$channel_link</link>" \n
+    append rss "<description>[ad_quotehtml $channel_description]</description>" \n
+
+    append rss {<generator>OpenACS 5.0</generator>} \n
+    append rss "<lastBuildDate>[ad_quotehtml $channel_date]</lastBuildDate>" \n
+
+    # now top level items
+    foreach item $items {
+        array unset iarray
+        array set iarray $item
+        append rss {<item>} \n 
+
+        append rss "<title>[ad_quotehtml $iarray(title)]</title>" \n
+
+        append rss "<link>[ad_quotehtml $iarray(link)]</link>" \n
+        append rss {<guid isPermaLink="true">} [ad_quotehtml $iarray(link)] {</guid>} \n
+
+        if {[info exists iarray(description)]} {
+            append rss "<description>[ad_quotehtml $iarray(description)]</description>" \n
+        }
+
+        if {[info exists iarray(timestamp)]} {
+            append rss "<pubDate>[ad_quotehtml $iarray(timestamp)]</pubDate>" \n
+        }
+        
+        append rss {</item>} \n
+    }
+
+    append rss {</channel>} \n
+    append rss {</rss>} \n
+ 
+   return $rss
+}
+
 ad_proc rss_gen_100 {
     {
         -channel_title                  ""
@@ -389,6 +463,26 @@ ad_proc rss_gen {
 } {
     set rss "<?xml version=\"1.0\"?>\n"
     switch $version {
+        200 -
+        2.00 -
+        2.0 -
+        2 {
+            append rss [rss_gen_200 \
+                            -channel_title $channel_title \
+                            -channel_link $channel_link \
+                            -channel_description $channel_description \
+                            -image $image \
+                            -items $items \
+                            -channel_language "en-us" \
+                            -channel_copyright "" \
+                            -channel_managingEditor "" \
+                            -channel_webMaster "" \
+                            -channel_rating "" \
+                            -channel_pubDate "" \
+                            -channel_lastBuildDate "" \
+                            -channel_skipDays "" \
+                            -channel_skipHours ""]
+        }
         100 -
         1.00 -
         1.0 -
