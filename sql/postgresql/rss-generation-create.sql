@@ -115,6 +115,9 @@ create table rss_gen_subscrs (
 				  constraint rss_gen_subscrs_timeout_nn
 				  not null,
    lastbuild			  timestamp,
+   last_ttb                       integer,
+   channel_title                  varchar(200),
+   channel_link                   varchar(1000),
    constraint rss_gen_subscrs_impl_con_un
    unique (impl_id,summary_context_id)
 );
@@ -147,6 +150,18 @@ comment on column rss_gen_subscrs.timeout is '
 
 comment on column rss_gen_subscrs.lastbuild is '
    Accounting column for use by rss generation service.
+';
+
+comment on column rss_gen_subscrs.last_ttb is '
+   Another accounting column.  The last time to build (in seconds).
+';
+
+comment on column rss_gen_subscrs.channel_title is '
+   Used for display purposes.
+';
+
+comment on column rss_gen_subscrs.channel_link is '
+   Used for display purposes.
 ';
 
 create function rss_gen_subscr__new (integer,integer,varchar,integer,timestamp,varchar,timestamp,integer,varchar,integer)

@@ -45,7 +45,9 @@ if [info exists subscr_id] {
     db_1row subscr_info {
 	select impl_id,
 	       summary_context_id,
-	       timeout
+	       timeout,
+               channel_title,
+               channel_link
 	from rss_gen_subscrs
 	where subscr_id = :subscr_id
     }
@@ -67,20 +69,23 @@ process your request.  Please contact this site's technical team for
 assistance."
 }
 
-if !$meta {
-    set channel_title "Summary Context $summary_context_id"
-    set channel_link ""
-} else {
-    # Pull out channel data by generating a summary.
-    # This is a convenient way to use a contracted operation
-    # but is not terribly efficient since we only need the channel title
-    # and link, and not the whole summary.
-    foreach {name val} [acs_sc_call RssGenerationSubscriber datasource \
-	    $summary_context_id $impl_name] {
-	if { [lsearch {channel_title channel_link} $name] >= 0 } {
-	    set $name $val
+if { [string equal $channel_title ""] || [string equal $channel_link ""] } {
+    if !$meta {
+	if [string equal $channel_title ""] {
+	    set channel_title "Summary Context $summary_context_id"
 	}
-    } 
+    } else {
+	# Pull out channel data by generating a summary.
+	# This is a convenient way to use a contracted operation
+	# but is not terribly efficient since we only need the channel title
+	# and link, and not the whole summary.
+	foreach {name val} [acs_sc_call RssGenerationSubscriber datasource \
+		$summary_context_id $impl_name] {
+	    if { [lsearch {channel_title channel_link} $name] >= 0 } {
+		set $name $val
+	    }
+	} 
+    }
 }
 
 set formvars [export_form_vars subscr_id           \

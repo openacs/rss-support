@@ -15,12 +15,13 @@
  <th>Actions</th>
 </tr>
 <multiple name="subscrs">
-<tr><td>Subscription #@subscrs.subscr_id@</td>
+<tr bgcolor=efefef><td><if @subscrs.channel_link@ eq "">@subscrs.channel_title@</if><else><a href="@subscrs.channel_link@">@subscrs.channel_title@</a></else></else></td>
     <td>@subscrs.timeout@s</td>
-    <td></td>
-    <td></td>
+    <td><nobr><small>@subscrs.lastbuild@</small></nobr></td>
+    <td>@subscrs.last_ttb@</td>
     <td>@subscrs.creator@</td>
-    <td>edit,run,delete</td>
+    <td><a href="../subscr-ae?subscr_id=@subscrs.subscr_id@">edit</a> |
+        <a href="../subscr-run?subscr_id=@subscrs.subscr_id@&return_url=@enc_url@">run</a> | delete</td>
 </tr>
 </multiple>
 </table>
