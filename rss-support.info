@@ -12,17 +12,24 @@
         <owner url="mailto:dave@thedesignexperience.org">Dave Bauer</owner>
         <owner url="mailto:jerry@theashergroup.com">Jerry Asher</owner>
         <owner url="mailto:aegrumet@alum.mit.edu">Andrew Grumet</owner>
-        <summary>Basic support for RSS generation (and parsing).  RDF Site Summary (RSS) is a lightweight multipurpose extensible metadata description and syndication format.  This package can be used to publish ACS objects in a manner useful to other websites and webservices.
-</summary>
+        <summary>Service contracts and support for generating RSS feeds</summary>
         <release-date>2003-11-10</release-date>
-        <description format="text/html">For each item (news event, ticket, bboard message, ...) that you want to publish, you create a property list that describes that item (url to item, title of item, description of item, etc.). You pass a list of those items 
-(and some other parameters) to rss_gen, and it will generate your XML for you.
+        <description format="text/html"> Basic support for RSS
+generation and parsing.  RDF Site Summary (RSS) is a lightweight
+multipurpose extensible metadata description and syndication format.
+This package can be used to publish site content in a manner useful to
+other websites and webservices.  &lt;p&gt; For each item (news event,
+ticket, bboard message, ...) that you want to publish, you create a
+property list that describes that item (url to item, title of item,
+description of item, etc.). You pass a list of those items (and some
+other parameters) to rss_gen, and it will generate your XML for you.
+You can also implenent a set of functions that satisfy the RSS service
+contracts and the RSS can be recreated from a scheduled procedure.
 
 &lt;ul&gt;
 &lt;li&gt; &lt;a href='http://www.google.com/search?q=rss+0.91'&gt;RSS 0.91 specification&lt;/a&gt;
 &lt;li&gt; &lt;a href='http://groups.yahoo.com/group/rss-dev/files/specification.html'&gt;RSS 1.0 specification&lt;/a&gt;
 &lt;/ul&gt;
-
 </description>
 
         <provides url="rss-support" version="0.3d1"/>
