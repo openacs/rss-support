@@ -64,7 +64,7 @@
             <file type="content_page" path="www/subscrs-include.tcl"/>
         </files>
         <parameters>
-            <parameter datatype="string"  min_n_values="1"  max_n_values="1"  name="RssGenOutputDirectory"  default="rss" description="The directory to which RSS files will be written, relative to the pageroot."/>
+            <parameter datatype="string"  min_n_values="1"  max_n_values="1"  name="RssGenOutputDirectory"  default="rss" description="The directory to which RSS files will be written, relative to the server root."/>
         </parameters>
 
     </version>

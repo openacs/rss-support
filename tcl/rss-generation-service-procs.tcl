@@ -63,6 +63,7 @@ ad_proc -private rss_gen_report subscr_id {
 	    $summary_context_id $impl_name]
     set args ""
     foreach {name val} $datasource {
+	regsub -all {[\]\[\{\}""\\$]} $val {\\&} val
 	append args "-$name \"$val\" "
 	if { [lsearch [list channel_link channel_title] $name] >= 0 } {
 	    set $name $val
@@ -167,10 +168,10 @@ ad_proc -private rss_gen_report_dir {
 	}
     }
 
-    set report_dir /[ad_parameter -package_id [rss_package_id] RssGenOutputDirectory rss-support rss]/$impl_name/${summary_context_id}
+    set report_dir [acs_root_dir]/[ad_parameter -package_id [rss_package_id] RssGenOutputDirectory rss-support rss]/$impl_name/${summary_context_id}
 
     if $assert_p {
-	rss_assert_dir [ns_info pageroot]$report_dir
+	rss_assert_dir $report_dir
     }
 
     return $report_dir
@@ -181,7 +182,6 @@ ad_proc -public rss_gen_report_file {
     -impl_name
     -subscr_id
     -assert:boolean
-    -url:boolean
 } {
     Return a file path for the rss subscription with subscr_id
     or impl_name + summary_context_id provided.
@@ -217,11 +217,7 @@ ad_proc -public rss_gen_report_file {
 		-impl_name $impl_name]
     }
 
-    set report_url $report_dir/rss.xml
+    set report_file $report_dir/rss.xml
 
-    if $url_p {
-	return $report_url
-    } else {
-	return [ns_url2file $report_url]
-    }
+    return $report_file
 }
