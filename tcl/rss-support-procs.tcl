@@ -48,12 +48,14 @@ ad_proc -public ::rss_support::add_subscription {
     }
 
     set impl_id [db_string get_impl_id ""]
+    set sysdate [dt_sysdate]
 
     set var_list [list \
                       [list p_subscr_id ""] \
                       [list p_impl_id $impl_id] \
                       [list p_summary_context_id $summary_context_id] \
                       [list p_timeout $timeout] \
+		      [list p_lastbuild $sysdate] \
                       [list p_object_type $object_type] \
                       [list p_creation_user $creation_user ] \
                       [list p_creation_ip $creation_ip] \
