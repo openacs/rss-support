@@ -113,7 +113,7 @@ ad_proc rss_gen_100 {
     foreach item $items {
         array unset iarray
         array set iarray $item
-        append rss "<rdf:li resource=\"[ad_quotehtml $iarray(link)]\" />\n"
+        append rss "<rdf:li rdf:resource=\"[ad_quotehtml $iarray(link)]\" />\n"
     }
 
     append rss "</rdf:Seq>\n"
