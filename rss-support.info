@@ -37,9 +37,16 @@
             <file type="data_model" db_type="postgresql" path="sql/postgresql/rss-generation-sc-drop.sql"/>
             <file type="data_model_create" db_type="postgresql" path="sql/postgresql/rss-support-create.sql"/>
             <file type="data_model_drop" db_type="postgresql" path="sql/postgresql/rss-support-drop.sql"/>
+            <file type="tcl_init" path="tcl/rss-generation-init.tcl"/>
             <file type="tcl_procs" path="tcl/rss-generation-procs.tcl"/>
             <file type="tcl_procs" path="tcl/rss-generation-service-procs.tcl"/>
+            <file type="tcl_procs" path="tcl/rss-utilities-procs.tcl"/>
+            <file type="documentation" path="www/doc/bboard-rss-sc-create-sql.txt"/>
+            <file type="documentation" path="www/doc/bboard-rss-sc-procs-tcl.txt"/>
+            <file type="documentation" path="www/doc/bboard.html"/>
+            <file type="documentation" path="www/doc/design.html"/>
             <file type="documentation" path="www/doc/index.html"/>
+            <file type="content_page" path="www/images/openacs_logo_rss.gif"/>
         </files>
         <parameters>
             <parameter datatype="string"  min_n_values="1"  max_n_values="1"  name="RssGenOutputDirectory"  default="rss" description="The directory to which RSS files will be written, relative to the webroot."/>

@@ -2,6 +2,9 @@ ad_proc -private rss_gen_service {} {
 
     ns_log Debug "rss_gen_service: starting"
 
+    # Bind any unbound implementations
+    rss_gen_bind
+
     set n 0
 
     db_foreach timed_out_subscriptions {
@@ -53,7 +56,7 @@ ad_proc -private rss_gen_service {} {
 
 }
 
-ad_proc rss_assert_dir path {
+ad_proc -private rss_assert_dir path {
     <pre>
     # Steps through path creating each new directory as needed.
     # Accepts full path or relative path, but you probably want
@@ -66,6 +69,38 @@ ad_proc rss_assert_dir path {
 	append running_path ${dir}/
 	if ![file exists $running_path] {
 	    ns_mkdir $running_path
+	}
+    }
+}
+
+ad_proc -private rss_gen_bind {} {
+    <pre>
+    # Creates bindings for unbound implementations for RssGenerationSubscriber.
+    </pre>
+} {
+    set contract_id [db_string get_contract_id {
+	select acs_sc_contract__get_id('RssGenerationSubscriber')
+    }]
+
+    db_foreach get_unbound_impls {
+	select impl_id
+        from acs_sc_impls i
+        where impl_contract_name = 'RssGenerationSubscriber'
+          and not exists (select 1
+                          from acs_sc_bindings b
+                          where b.impl_id = i.impl_id
+                            and b.contract_id = :contract_id)
+
+    } {
+	ns_log Notice "rss_gen_bind: binding impl $impl_id for contract $contract_id"
+	# Don't ask me why, but bind variables don't appear to work
+	# in this nested db operation.  
+	if [catch {
+	    db_exec_plsql bind_impl "
+	        select acs_sc_binding__new($contract_id,$impl_id)
+	    "
+	} errMsg] {
+	    ns_log Notice "rss_gen_bind: error binding impl $impl_id for contract $contract_id: $errMsg"
 	}
     }
 }
