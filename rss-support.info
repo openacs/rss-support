@@ -32,13 +32,17 @@
         <files>
             <file type="package_spec" path="rss-support.info"/>
             <file type="data_model" db_type="postgresql" path="sql/postgresql/rss-generation-create.sql"/>
+            <file type="data_model" db_type="postgresql" path="sql/postgresql/rss-generation-drop.sql"/>
             <file type="data_model" db_type="postgresql" path="sql/postgresql/rss-generation-sc-create.sql"/>
+            <file type="data_model" db_type="postgresql" path="sql/postgresql/rss-generation-sc-drop.sql"/>
             <file type="data_model_create" db_type="postgresql" path="sql/postgresql/rss-support-create.sql"/>
+            <file type="data_model_drop" db_type="postgresql" path="sql/postgresql/rss-support-drop.sql"/>
             <file type="tcl_procs" path="tcl/rss-generation-procs.tcl"/>
+            <file type="tcl_procs" path="tcl/rss-generation-service-procs.tcl"/>
             <file type="documentation" path="www/doc/index.html"/>
         </files>
         <parameters>
-        <!-- No version parameters -->
+            <parameter datatype="string"  min_n_values="1"  max_n_values="1"  name="RssGenOutputDirectory"  default="rss" description="The directory to which RSS files will be written, relative to the webroot."/>
         </parameters>
 
     </version>
