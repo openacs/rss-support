@@ -4,7 +4,7 @@ ad_library {
      @author jerry@theashergroup.com [jerry@theashergroup.com]
      @author aegrumet@alum.mit.edu
      @creation-date Fri Oct 26 11:43:26 2001
-     @cvs-id $Id
+     @cvs-id $Id$
 }
 
 
