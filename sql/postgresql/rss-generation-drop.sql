@@ -18,4 +18,5 @@ select acs_object_type__drop_type('rss_gen_subscr','f');
 drop table rss_gen_subscrs;
 drop function rss_gen_subscr__new (integer,integer,varchar,integer,timestamptz,varchar,timestamptz,integer,varchar,integer);
 drop function rss_gen_subscr__name (integer);
+drop function rss_gen_subscr__del (integer);
 drop function rss_gen_subscr__delete (integer);
