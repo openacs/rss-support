@@ -9,12 +9,12 @@
                r.timeout,
                r.summary_context_id,
                i.impl_name,
-               nvl2(r.lastbuild, date_part('epoch',r.lastbuild), 0) as lastbuild
+               nvl2(r.lastbuild, r.lastbuild*60*60*24, 0) as lastbuild
         from rss_gen_subscrs r,
              acs_sc_impls i
         where i.impl_id = r.impl_id
           and (r.lastbuild is null
-               or sysdate > r.lastbuild + r.timeout/(60*60*24)
+               or sysdate > r.lastbuild + r.timeout/(60*60*24))
     </querytext>
   </fullquery>
 
