@@ -5,7 +5,7 @@
 <form action=subscr-ae-2>
 <table cellpadding=2 cellspacing=2 border=0 bgcolor=e0e0e0>
 <tr bgcolor=efefef align=left valign=top><th>Channel:</th>
-<td><if @channel_link@ eq "">@channel_title@</if><else>
+<td><if @channel_link@ nil>@channel_title@</if><else>
 <a href="@channel_link@">@channel_title@</a></else></td></tr>
 <tr bgcolor=efefef align=left valign=top><th>Impl Name:</th>
 <td><code>@impl_name@</code></td></tr>

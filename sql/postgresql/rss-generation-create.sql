@@ -114,7 +114,7 @@ create table rss_gen_subscrs (
    timeout			  integer
 				  constraint rss_gen_subscrs_timeout_nn
 				  not null,
-   lastbuild			  timestamp,
+   lastbuild			  timestamptz,
    last_ttb                       integer,
    channel_title                  varchar(200),
    channel_link                   varchar(1000),
@@ -169,9 +169,9 @@ create function rss_gen_subscr__new (
     integer,                   -- impl_id
     varchar,                   -- summary_context_id
     integer,                   -- timeout
-    timestamp with time zone,  -- lastbuild
+    timestamptz,               -- lastbuild
     varchar,                   -- object_type
-    timestamp with time zone,  -- creation_date
+    timestamptz,               -- creation_date
     integer,                   -- creation_user
     varchar,                   -- creation_ip
     integer                    -- context_id

@@ -7,13 +7,7 @@ ad_page_contract {
 
 ad_require_permission $subscr_id admin
 
-db_1row subscr_info {
-    select summary_context_id,
-           channel_title,
-           channel_link
-    from rss_gen_subscrs
-    where subscr_id = :subscr_id
-}
+db_1row subscr_info {}
 
 if [string equal $channel_title ""] {
     set channel_title "Summary Context $summary_context_id"
@@ -23,7 +17,7 @@ set context [list Delete]
 
 if [file exists [rss_gen_report_file -subscr_id $subscr_id]] {
     set offer_file 1
-    set report_url [rss_gen_report_file -subscr_id $subscr_id -url]
+    set report_url [rss_gen_report_file -subscr_id $subscr_id]
 } else {
     set offer_file 0
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <queryset>
-  <rdbms><type>oracle</type><version>8.1.6</version></rdbms>
+   <rdbms><type>postgresql</type><version>7.1</version></rdbms>
 
   <fullquery name="rss_gen_service.timed_out_subscriptions">      
     <querytext>
@@ -9,30 +9,33 @@
                r.timeout,
                r.summary_context_id,
                i.impl_name,
-               nvl2(r.lastbuild, date_part('epoch',r.lastbuild), 0) as lastbuild
+               case when r.lastbuild = null
+                    then 0
+                    else date_part('epoch',r.lastbuild)
+                    end as lastbuild
         from rss_gen_subscrs r,
              acs_sc_impls i
         where i.impl_id = r.impl_id
           and (r.lastbuild is null
-               or sysdate > r.lastbuild + r.timeout/(60*60*24)
+               or now() - r.lastbuild > cast(r.timeout || ' seconds' as interval))	
     </querytext>
   </fullquery>
 
   <fullquery name="rss_gen_report.update_timestamp">  
     <querytext>
         update rss_gen_subscrs
-        set lastbuild = sysdate,
+        set lastbuild = now(),
             last_ttb = :last_ttb $extra_sql
             where subscr_id = :subscr_id
     </querytext>
   </fullquery>
 
-  <fullquery name="rss_gen_bind.get_contract_id">      
+
+  <fullquery name="rss_gen_bind.get_contract_id">  
     <querytext>
-	select acs_sc_contract.get_id('RssGenerationSubscriber') from dual
+       	select acs_sc_contract__get_id('RssGenerationSubscriber')
     </querytext>
   </fullquery>
-
 
   <fullquery name="rss_gen_bind.get_unbound_impls">  
     <querytext>
@@ -48,13 +51,9 @@
 
   <fullquery name="rss_gen_bind.bind_impl">
     <querytext>
-         begin  
-             acs_sc_binding.new(
-                 contract_id => $contract_id,
-                impl_id => $impl_id
-             );
-         end;
+         select acs_sc_binding__new($contract_id,$impl_id)
     </querytext>
   </fullquery>
+
 
 </queryset>
