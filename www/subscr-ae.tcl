@@ -96,5 +96,5 @@ set formvars [export_form_vars subscr_id           \
 			       return_url          \
 			       meta]
 
-set context_bar [ad_context_bar Add/Edit]
+set context [list Add/Edit]
 

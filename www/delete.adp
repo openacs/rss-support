@@ -1,11 +1,7 @@
 <master>
-<property name="title">Delete a Subcription</property>
+<property name="title">Delete Subcription</property>
+<property name="context">@context@</property>
 
-<h2>Delete Subscription</h2>
-@context_bar@
-<hr>
-
-<blockquote>
 Channel: <if @channel_link@ eq "">@channel_title@</if><else>
 <a href="@channel_link@">@channel_title@</a></else>
 <form action=delete-2>
@@ -18,4 +14,4 @@ Channel: <if @channel_link@ eq "">@channel_title@</if><else>
 <input type=submit value="Really delete?">
 <input type=button onclick="history.back()" value="No, I want to go back">
 </form>
-</blockquote>
+

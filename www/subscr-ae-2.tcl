@@ -51,6 +51,6 @@ if [db_0or1row subscr_exists_p {
 }
 
 
-set context_bar [ad_context_bar]
+set context [list]
 
 set review_url subscr-ae?[export_url_vars impl_id summary_context_id return_url meta]

@@ -1,9 +1,6 @@
 <master>
 <property name="title">Your Report Generation Subscriptions</property>
-
-<h2>Report Generation Subscriptions</h2>
-@context_bar@
-<hr>
+<property name="context">@context@</property>
 
 <small><em>Subscriptions created by you.</em></small>
 

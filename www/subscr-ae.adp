@@ -1,9 +1,6 @@
 <master>
-<property name="title">Add or Edit a Subcription</property>
-
-<h2>@pretty_action@ a Subscription</h2>
-@context_bar@
-<hr>
+<property name="title">@pretty_action@ a Subcription</property>
+<property name="context">@context@</property>
 
 <form action=subscr-ae-2>
 <table cellpadding=2 cellspacing=2 border=0 bgcolor=e0e0e0>

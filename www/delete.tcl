@@ -18,7 +18,7 @@ if [string equal $channel_title ""] {
     set channel_title "Summary Context $summary_context_id"
 }
 
-set context_bar [ad_context_bar Delete]
+set context [list Delete]
 
 if [file exists [rss_gen_report_file -subscr_id $subscr_id]] {
     set offer_file 1

@@ -1,15 +1,12 @@
 <master>
 <property name="title">Rss Support Home</property>
-
-<h2>Rss Support Home</h2>
-<%= [ad_context_bar] %>
-<hr>
+<property name="context"></property>
 
 <ul>
-<li><a href="doc/">Documentation</a>
-<li><a href="my-subscrs">Your Report Generation Subscriptions</a>
+<li><a href="doc/">Documentation</a></li>
+<li><a href="my-subscrs">Your Report Generation Subscriptions</a></li>
 
 <p>
 
-<li><a href="admin">Administration Homepage (requires permission)</a>
+<li><a href="admin">Administration Homepage (requires permission)</a></li>
 </ul>
