@@ -9,6 +9,7 @@ db_multirow subscrs get_subscrs {
     from rss_gen_subscrs s,
          acs_objects o
     where o.object_id = s.subscr_id
+    order by s.last_ttb desc
 } {
     if [string equal $channel_title ""] {
 	set channel_title "Subscription #$subscr_id"

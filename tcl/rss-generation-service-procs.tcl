@@ -61,13 +61,11 @@ ad_proc -private rss_gen_report subscr_id {
 	}
     }
     set xml [apply rss_gen $args]
-    set report_dir [ns_info pageroot]/[ad_parameter -package_id [rss_package_id] RssGenOutputDirectory rss-support rss]/$impl_name/${summary_context_id}
-
-    # Create directory if needed.
-    rss_assert_dir $report_dir
 
     # Write report.
-    set fh [open $report_dir/rss.xml w]
+    set report_file [rss_gen_report_file -summary_context_id $summary_context_id -impl_name $impl_name -assert -url]
+
+    set fh [open $report_file w]
     puts $fh $xml
     close $fh
 
@@ -135,5 +133,90 @@ ad_proc -private rss_gen_bind {} {
 	} errMsg] {
 	    ns_log Notice "rss_gen_bind: error binding impl $impl_id for contract $contract_id: $errMsg"
 	}
+    }
+}
+
+ad_proc -private rss_gen_report_dir {
+    -summary_context_id
+    -impl_name
+    -subscr_id
+    {-assert:boolean f}
+} {
+    Return a directory path, relative to the pageroot, for the rss
+    subscription with subscr_id or impl_name + summary_context_id
+    provided.
+} {
+    if {!([info exists summary_context_id] && \
+	    [info exists impl_name])} {
+	if ![info exists subscr_id] {
+	    error "rss_gen_report_dir needs either subscr_id or impl_id+summary_context_id"
+	} else {
+	    db_1row subscr_context_and_impl {
+		select s.summary_context_id,
+                       i.impl_name
+                from rss_gen_subscrs s,
+                     acs_sc_impls i
+                where i.impl_id = s.impl_id
+                  and s.subscr_id = :subscr_id
+	    }
+	}
+    }
+
+    set report_dir /[ad_parameter -package_id [rss_package_id] RssGenOutputDirectory rss-support rss]/$impl_name/${summary_context_id}
+
+    if $assert_p {
+	rss_assert_dir $report_dir
+    }
+
+    return $report_dir
+}
+
+ad_proc -private rss_gen_report_file {
+    -summary_context_id
+    -impl_name
+    -subscr_id
+    {-assert:boolean f}
+    {-url:boolean t}
+} {
+    Return a file path for the rss subscription with subscr_id
+    or impl_name + summary_context_id provided.
+    If the -assert flag is set, the parent directory is created if
+    it doesn't exist (default: false).
+    If the -url flag is set, return a url (default: true); otherwise
+    return a Unix file path.  
+} {
+    if {!([info exists summary_context_id] && \
+	    [info exists impl_name])} {
+	if ![info exists subscr_id] {
+	    error "rss_gen_report_file needs either subscr_id or impl_id+summary_context_id"
+	} else {
+	    db_1row subscr_context_and_impl {
+		select s.summary_context_id,
+                       i.impl_name
+                from rss_gen_subscrs s,
+                     acs_sc_impls i
+                where i.impl_id = s.impl_id
+                  and s.subscr_id = :subscr_id
+	    }
+	}
+    }
+
+    if $assert_p {
+	set report_dir [rss_gen_report_dir              \
+		-summary_context_id $summary_context_id \
+		-impl_name $impl_name                   \
+		-assert] 
+    } else {
+	set report_dir [rss_gen_report_dir              \
+		-summary_context_id $summary_context_id \
+		-impl_name $impl_name]
+    }
+
+    set report_url $report_dir/rss.xml
+
+    if $url_p {
+	return $report_url
+    } else {
+	return [ns_url2file $report_url]
     }
 }
