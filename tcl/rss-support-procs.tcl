@@ -50,15 +50,15 @@ ad_proc -public ::rss_support::add_subscription {
     set impl_id [db_string get_impl_id ""]
 
     set var_list [list \
-                      [list subscr_id ""] \
-                      [list impl_id $impl_id] \
-                      [list summary_context_id $summary_context_id] \
-                      [list timeout $timeout] \
-                      [list lastbuild $lastbuild] \
-                      [list object_type $object_type] \
-                      [list creation_user $creation_user ] \
-                      [list creation_ip $creation_ip] \
-                      [list context_id $context_id]
+                      [list p_subscr_id ""] \
+                      [list p_impl_id $impl_id] \
+                      [list p_summary_context_id $summary_context_id] \
+                      [list p_timeout $timeout] \
+                      [list p_lastbuild $lastbuild] \
+                      [list p_object_type $object_type] \
+                      [list p_creation_user $creation_user ] \
+                      [list p_creation_ip $creation_ip] \
+                      [list p_context_id $context_id]
                   ]
     if {[exists_and_not_null creation_date]} {
         lappend var_list [list creation_date $creation_date]
