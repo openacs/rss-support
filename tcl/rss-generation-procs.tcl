@@ -97,7 +97,7 @@ ad_proc rss_gen_100 {
 
     if {[empty_string_p $image]} {
         set logo_rss "/graphics/openacs_logo_rss.gif"
-        set url      [ad_parameter systemurl ""]
+        set url      [ad_url]
         append       url $logo_rss
         set title    $channel_title
         set link     $channel_link
@@ -271,7 +271,7 @@ ad_proc rss_gen_091 {
 
     if {[empty_string_p $image]} {
         set logo_rss "/graphics/openacs_logo_rss.gif"
-        set url      [ad_parameter systemurl ""]
+        set url      [ad_url]
         append       url $logo_rss
         set title    $channel_title
         set link     $channel_link
