@@ -13,9 +13,9 @@
     <td><nobr><small>@subscrs.lastbuild@</small></nobr></td>
     <td>@subscrs.last_ttb@ seconds</td>
     <td>@subscrs.creator@</td>
-    <td><a href="../subscr-ae?subscr_id=@subscrs.subscr_id@">edit</a> |
-        <a href="../subscr-run?subscr_id=@subscrs.subscr_id@&return_url=@enc_url@">run</a> | 
-	<a href="../delete?subscr_id=@subscrs.subscr_id@&return_url=@enc_url@">delete</a></td>
+    <td><a href="@rel_path@/subscr-ae?subscr_id=@subscrs.subscr_id@">edit</a> |
+        <a href="@rel_path@/subscr-run?subscr_id=@subscrs.subscr_id@&return_url=@enc_url@">run</a> | 
+	<a href="@rel_path@/delete?subscr_id=@subscrs.subscr_id@&return_url=@enc_url@">delete</a></td>
 </tr>
 </multiple>
 </table>

@@ -5,4 +5,4 @@
 @context_bar@
 <hr>
 
-<include src="../subscrs-include" enc_url="@enc_url@">
+<include src="../subscrs-include" enc_url="@enc_url@" rel_path="..">
