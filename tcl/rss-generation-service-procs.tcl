@@ -45,7 +45,12 @@ ad_proc -private rss_gen_report subscr_id {
         ns_log Error "Empty datasource returned from $impl_name for context $summary_context_id in rss_gen_report. Probably because the implementation hasn't been bound."
         return
     }
-
+    ns_log notice "
+DB --------------------------------------------------------------------------------
+DB DAVE debugging procedure rss_gen_report
+DB --------------------------------------------------------------------------------
+DB datasource = '${datasource}' 
+DB --------------------------------------------------------------------------------"
     set args ""
     foreach {name val} $datasource {
 	regsub -all {[\]\[\{\}""\\$]} $val {\\&} val
