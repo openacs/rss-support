@@ -152,7 +152,8 @@ as
         p_context_id		in acs_objects.context_id%TYPE default null
     ) return acs_objects.object_id%TYPE
     is
-	v_subscr_id		rss_gen_subscrs.subscr_id%TYPE;
+      v_subscr_id		rss_gen_subscrs.subscr_id%TYPE;
+      v_summary_context_id    rss_gen_subscrs.summary_context_id%TYPE;
     begin
 	v_subscr_id := acs_object.new (
 		p_subscr_id,
@@ -163,10 +164,16 @@ as
 		p_context_id
 	);
 
+        if p_summary_context_id is null then
+          v_summary_context_id := v_subscr_id;
+        else
+          v_summary_context_id := p_summary_context_id;
+        end if;
+
 	insert into rss_gen_subscrs
 	  (subscr_id, impl_id, summary_context_id, timeout, lastbuild)
 	values
-	  (v_subscr_id, p_impl_id, p_summary_context_id, p_timeout, p_lastbuild);
+	  (v_subscr_id, p_impl_id, v_summary_context_id, p_timeout, p_lastbuild);
 
 	return v_subscr_id;
     end new;

@@ -121,7 +121,10 @@ ad_proc rss_gen_200 {
         if { [exists_and_not_null iarray(category)] } {
             append rss "<category>[ad_quotehtml $iarray(category)]</category>" \n
         }
-        
+
+        if { [exists_and_not_null iarray(enclosure_url)] && [exists_and_not_null iarray(enclosure_length)] && [exists_and_not_null iarray(enclosure_type)]  } {
+	    append rss "<enclosure url=\"[ad_quotehtml $iarray(enclosure_url)]\" length=\"$iarray(enclosure_length)\" type=\"$iarray(enclosure_type)\"/>"
+	}
         append rss {</item>} \n
     }
 

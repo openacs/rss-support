@@ -188,6 +188,7 @@ declare
   p_creation_ip			alias for $9;		-- default null
   p_context_id			alias for $10;		-- default null
   v_subscr_id			rss_gen_subscrs.subscr_id%TYPE;
+  v_summary_context_id  rss_gen_subscrs.summary_context_id%TYPE;
 begin
 	v_subscr_id := acs_object__new (
 		p_subscr_id,
@@ -198,10 +199,16 @@ begin
 		p_context_id
 	);
 
+        if p_summary_context_id is null then
+          v_summary_context_id := v_subscr_id;
+        else
+          v_summary_context_id := p_summary_context_id;
+        end if;
+
 	insert into rss_gen_subscrs
 	  (subscr_id, impl_id, summary_context_id, timeout, lastbuild)
 	values
-	  (v_subscr_id, p_impl_id, p_summary_context_id, p_timeout, p_lastbuild);
+	  (v_subscr_id, p_impl_id, v_summary_context_id, p_timeout, p_lastbuild);
 
 	return v_subscr_id;
 
