@@ -9,7 +9,3 @@ select acs_sc_operation__delete ('RssGenerationSubscriber','LastUpdated');
 
 select acs_sc_contract__delete('RssGenerationSubscriber');
 
-
-
-
-select acs_sc_msg_type__delete

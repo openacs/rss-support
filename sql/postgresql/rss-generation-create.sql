@@ -187,7 +187,7 @@ begin
 		   where object_id = p_subscr_id;
 
 	delete from rss_gen_subscrs
-		   where note_id = p_subscr_id;
+		   where subscr_id = p_subscr_id;
 
 	raise NOTICE ''Deleting subscription...'';
 	PERFORM acs_object__delete(p_subscr_id);
