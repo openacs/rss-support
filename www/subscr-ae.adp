@@ -1,6 +1,6 @@
 <master>
-<property name="title">@pretty_action@ a Subscription</property>
-<property name="context">@context@</property>
+<property name="title">@pretty_action;noquote@ a Subscription</property>
+<property name="context">@context;noquote@</property>
 
 <form action=subscr-ae-2>
 <table cellpadding=2 cellspacing=2 border=0 bgcolor=e0e0e0>
