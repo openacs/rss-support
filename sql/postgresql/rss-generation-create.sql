@@ -42,7 +42,7 @@ begin
 
     PERFORM acs_attribute__create_attribute (
 	  ''rss_gen_subscr'',			-- object_type
-	  ''CONTEXT_IDENTIFIER'',		-- attribute_name
+	  ''SUMMARY_CONTEXT_ID'',		-- attribute_name
 	  ''integer'',				-- datatype
 	  ''Context Identifier'',		-- pretty_name
 	  ''Context Identifiers'',		-- pretty_plural
@@ -90,7 +90,7 @@ create table rss_gen_subscrs (
 				  not null
 				  constraint rss_gen_subscrs_impl_fk
 				  references acs_sc_impls(impl_id),
-   context_identifier		  varchar(100)
+   summary_context_id		  varchar(100)
 				  constraint rss_gen_subscrs_ctx_nn
 				  not null,
    timeout			  integer
@@ -113,7 +113,7 @@ comment on column rss_gen_subscrs.impl_id is '
    update status.
 ';
 
-comment on column rss_gen_subscrs.context_identifier is '
+comment on column rss_gen_subscrs.summary_context_id is '
    An identifier unique to the site section whose content is to be
    summarized.  A context identifier need not be a package instance
    id.  We will suggest a convention but the format is entirely up to
@@ -123,3 +123,53 @@ comment on column rss_gen_subscrs.context_identifier is '
 comment on column rss_gen_subscrs.timeout is '
    The minimum number of seconds between summary builds. 
 ';
+
+create function rss_gen_subscr__new (integer,integer,varchar,integer,varchar,timestamp,integer,varchar,integer)
+returns integer as '
+declare
+  p_subscr_id			alias for $1;
+  p_impl_id			alias for $2;
+  p_summary_context_id		alias for $3;
+  p_timeout			alias for $4;
+  p_object_type			alias for $5;           -- default ''rss_gen_subscr''
+  p_creation_date		alias for $6;		-- default now()
+  p_creation_user		alias for $7;		-- default null
+  p_creation_ip			alias for $8;		-- default null
+  p_context_id			alias for $9;		-- default null
+  v_subscr_id			rss_gen_subscrs.subscr_id%TYPE;
+begin
+	v_subscr_id := acs_object__new (
+		p_subscr_id,
+		p_object_type,
+		p_creation_date,
+		p_creation_user,
+		p_creation_ip,
+		p_context_id
+	);
+
+	insert into rss_gen_subscrs
+	  (subscr_id, impl_id, summary_context_id, timeout)
+	values
+	  (v_subscr_id, p_impl_id, p_summary_context_id, p_timeout);
+
+	return v_subscr_id;
+
+end;' language 'plpgsql';
+
+create function rss_gen_subscr__delete (integer)
+returns integer as '
+declare
+  p_subscr_id				alias for $1;
+begin
+	delete from acs_permissions
+		   where object_id = p_subscr_id;
+
+	delete from rss_gen_subscrs
+		   where note_id = p_subscr_id;
+
+	raise NOTICE ''Deleting subscription...'';
+	PERFORM acs_object__delete(p_subscr_id);
+
+	return 0;
+
+end;' language 'plpgsql';

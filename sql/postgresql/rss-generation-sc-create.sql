@@ -9,7 +9,7 @@ select acs_sc_contract__new (
 
 select acs_sc_msg_type__new (
        'RssGenerationSubscriber.Datasource.InputType',
-       'context_identifier:string'  
+       'summary_context_id:string'  
 );
 
 select acs_sg_msg_type__new (
@@ -29,7 +29,7 @@ select acs_sc_operation__new (
 
 select acs_sc_msg_type__new (
        'RssGenerationSubscriber.LastUpdated.InputType',
-       'context_identifier:string'  
+       'summary_context_id:string'  
 );
 
 select acs_sg_msg_type__new (
