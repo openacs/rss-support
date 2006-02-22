@@ -66,6 +66,7 @@ DB -----------------------------------------------------------------------------
 
     set fh [open $report_file w]
     puts $fh $xml
+    fconfigure $fh -encoding [ns_config "ns/parameters" OutputCharset]
     close $fh
 
     # Copy some useful display information into the
