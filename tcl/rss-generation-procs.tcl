@@ -521,7 +521,8 @@ ad_proc rss_gen {
     
     </pre>
 } {
-    set rss "<?xml version=\"1.0\"?>\n"
+    set encoding "iso-8859-1"
+    set rss "<?xml version=\"1.0\" encoding=\"${encoding}\"?>\n"
     switch $version {
         200 -
         2.00 -
