@@ -522,7 +522,7 @@ ad_proc rss_gen {
     </pre>
 } {
 
-    set encoding [ns_config ns/parameters OutputCharset [ad_conn charset]]
+    set encoding [ns_config ns/parameters OutputCharset "utf-8"]
 
     set rss "<?xml version=\"1.0\" encoding=\"${encoding}\"?>\n"
     switch $version {
