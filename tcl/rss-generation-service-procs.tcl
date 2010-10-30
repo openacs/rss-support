@@ -53,7 +53,7 @@ ad_proc -private rss_gen_report subscr_id {
 	    set $name $val
 	}
     }
-    set xml [apply rss_gen $args]
+    set xml [ad_apply rss_gen $args]
 
     # Write report.
     set report_file [rss_gen_report_file -summary_context_id $summary_context_id -impl_name $impl_name -assert]
