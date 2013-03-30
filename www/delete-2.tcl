@@ -9,7 +9,7 @@ ad_page_contract  {
 ad_require_permission $subscr_id admin
 
 if [info exists delete_file_p] {
-    ns_unlink -nocomplain [rss_gen_report_file -subscr_id $subscr_id]
+    file delete [rss_gen_report_file -subscr_id $subscr_id]
 }
 
 db_exec_plsql delete_subscr {}
