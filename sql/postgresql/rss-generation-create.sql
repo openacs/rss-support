@@ -1,95 +1,96 @@
-create function inline_0 ()
-returns integer as '
-begin
+
+CREATE OR REPLACE FUNCTION inline_0 () RETURNS integer AS $$
+BEGIN
     PERFORM acs_object_type__create_type (
-	''rss_gen_subscr'',		 	-- object_type
-	''RSS Generation Subscription'',	-- pretty_name
-	''RSS Generation Subscriptions'',	-- pretty_plural
-	''acs_object'',				-- supertype
-	''rss_gen_subscrs'',			-- table_name
-	''subscr_id'',				-- id_column
+	'rss_gen_subscr',		 	-- object_type
+	'RSS Generation Subscription',	-- pretty_name
+	'RSS Generation Subscriptions',	-- pretty_plural
+	'acs_object',				-- supertype
+	'rss_gen_subscrs',			-- table_name
+	'subscr_id',				-- id_column
 	null,					-- package_name
-	''f'',					-- abstract_p
+	'f',					-- abstract_p
 	null,					-- type_extension_table
-	''rss_gen_subscr__name''		-- name_method
+	'rss_gen_subscr__name'		-- name_method
 	);
 
     return 0;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 select inline_0 ();
 
 drop function inline_0 ();
 
-create function inline_1 ()
-returns integer as '
-begin
+CREATE OR REPLACE FUNCTION inline_1 () RETURNS integer AS $$
+BEGIN
     PERFORM acs_attribute__create_attribute (
-	  ''rss_gen_subscr'',			-- object_type
-	  ''IMPL_ID'',				-- attribute_name
-	  ''integer'',				-- datatype
-	  ''Implementation ID'',		-- pretty_name
-	  ''Implementation IDs'',		-- pretty_plural
+	  'rss_gen_subscr',			-- object_type
+	  'IMPL_ID',				-- attribute_name
+	  'integer',				-- datatype
+	  'Implementation ID',		-- pretty_name
+	  'Implementation IDs',		-- pretty_plural
 	  null,					-- table_name
 	  null,					-- column_name
 	  null,					-- default_value
 	  1,					-- min_n_values
 	  1,					-- max_n_values
 	  null,					-- sort_order
-	  ''type_specific'',			-- storage
-	  ''f''					-- static_p
+	  'type_specific',			-- storage
+	  'f'					-- static_p
 	);
 
     PERFORM acs_attribute__create_attribute (
-	  ''rss_gen_subscr'',			-- object_type
-	  ''SUMMARY_CONTEXT_ID'',		-- attribute_name
-	  ''integer'',				-- datatype
-	  ''Context Identifier'',		-- pretty_name
-	  ''Context Identifiers'',		-- pretty_plural
+	  'rss_gen_subscr',			-- object_type
+	  'SUMMARY_CONTEXT_ID',		-- attribute_name
+	  'integer',				-- datatype
+	  'Context Identifier',		-- pretty_name
+	  'Context Identifiers',		-- pretty_plural
 	  null,					-- table_name
 	  null,					-- column_name
 	  null,					-- default_value
 	  1,					-- min_n_values
 	  1,					-- max_n_values
 	  null,					-- sort_order
-	  ''type_specific'',			-- storage
-	  ''f''					-- static_p
+	  'type_specific',			-- storage
+	  'f'					-- static_p
 	);
 
     PERFORM acs_attribute__create_attribute (
-	  ''rss_gen_subscr'',			-- object_type
-	  ''TIMEOUT'',				-- attribute_name
-	  ''integer'',				-- datatype
-	  ''Timeout'',				-- pretty_name
-	  ''Timeouts'',				-- pretty_plural
+	  'rss_gen_subscr',			-- object_type
+	  'TIMEOUT',				-- attribute_name
+	  'integer',				-- datatype
+	  'Timeout',				-- pretty_name
+	  'Timeouts',				-- pretty_plural
 	  null,					-- table_name
 	  null,					-- column_name
 	  null,					-- default_value
 	  1,					-- min_n_values
 	  1,					-- max_n_values
 	  null,					-- sort_order
-	  ''type_specific'',			-- storage
-	  ''f''					-- static_p
+	  'type_specific',			-- storage
+	  'f'					-- static_p
 	);
 
     PERFORM acs_attribute__create_attribute (
-	  ''rss_gen_subscr'',			-- object_type
-	  ''LASTBUILD'',				-- attribute_name
-	  ''integer'',				-- datatype
-	  ''Last Build'',			-- pretty_name
-	  ''Last Builds'',			-- pretty_plural
+	  'rss_gen_subscr',			-- object_type
+	  'LASTBUILD',				-- attribute_name
+	  'integer',				-- datatype
+	  'Last Build',			-- pretty_name
+	  'Last Builds',			-- pretty_plural
 	  null,					-- table_name
 	  null,					-- column_name
 	  null,					-- default_value
 	  1,					-- min_n_values
 	  1,					-- max_n_values
 	  null,					-- sort_order
-	  ''type_specific'',			-- storage
-	  ''f''					-- static_p
+	  'type_specific',			-- storage
+	  'f'					-- static_p
 	);
 
     return 0;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 select inline_1 ();
 
@@ -164,33 +165,33 @@ comment on column rss_gen_subscrs.channel_link is '
    Used for display purposes.
 ';
 
-select define_function_args ('rss_gen_subscr__new','p_subscr_id,p_impl_id,p_summary_context_id,p_timeout,p_lastbuild;now,p_object_type,p_creation_date;now,p_creation_user,p_creation_ip,p_context_id');
-create function rss_gen_subscr__new (
-    integer,                   -- subscr_id
-    integer,                   -- impl_id
-    varchar,                   -- summary_context_id
-    integer,                   -- timeout
-    timestamptz,               -- lastbuild
-    varchar,                   -- object_type
-    timestamptz,               -- creation_date
-    integer,                   -- creation_user
-    varchar,                   -- creation_ip
-    integer                    -- context_id
-) returns integer as '
-declare
-  p_subscr_id			alias for $1;
-  p_impl_id			alias for $2;
-  p_summary_context_id		alias for $3;
-  p_timeout			alias for $4;
-  p_lastbuild			alias for $5;
-  p_object_type			alias for $6;           -- default ''rss_gen_subscr''
-  p_creation_date		alias for $7;		-- default now()
-  p_creation_user		alias for $8;		-- default null
-  p_creation_ip			alias for $9;		-- default null
-  p_context_id			alias for $10;		-- default null
+
+-- old define_function_args ('rss_gen_subscr__new','p_subscr_id,p_impl_id,p_summary_context_id,p_timeout,p_lastbuild;now,p_object_type,p_creation_date;now,p_creation_user,p_creation_ip,p_context_id')
+-- new
+select define_function_args('rss_gen_subscr__new','p_subscr_id,p_impl_id,p_summary_context_id,p_timeout,p_lastbuild;now,p_object_type;rss_gen_subscr,p_creation_date;now,p_creation_user;null,p_creation_ip;null,p_context_id;null');
+
+
+
+--
+-- procedure rss_gen_subscr__new/10
+--
+CREATE OR REPLACE FUNCTION rss_gen_subscr__new(
+   p_subscr_id integer,
+   p_impl_id integer,
+   p_summary_context_id varchar,
+   p_timeout integer,
+   p_lastbuild timestamptz,     -- default 'now'
+   p_object_type varchar,       -- default 'rss_gen_subscr'
+   p_creation_date timestamptz, -- default now() -- default 'now'
+   p_creation_user integer,     -- default null
+   p_creation_ip varchar,       -- default null
+   p_context_id integer         -- default null
+
+) RETURNS integer AS $$
+DECLARE
   v_subscr_id			rss_gen_subscrs.subscr_id%TYPE;
   v_summary_context_id  rss_gen_subscrs.summary_context_id%TYPE;
-begin
+BEGIN
 	v_subscr_id := acs_object__new (
 		p_subscr_id,
 		p_object_type,
@@ -213,39 +214,64 @@ begin
 
 	return v_subscr_id;
 
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
-create function rss_gen_subscr__name (integer)
-returns varchar as '
-declare
-  p_subscr_id				alias for $1;
-begin
-	return ''RSS Generation Subscription #'' || p_subscr_id;
-end;' language 'plpgsql';
+
+
+-- added
+select define_function_args('rss_gen_subscr__name','subscr_id');
+
+--
+-- procedure rss_gen_subscr__name/1
+--
+CREATE OR REPLACE FUNCTION rss_gen_subscr__name(
+   p_subscr_id integer
+) RETURNS varchar AS $$
+DECLARE
+BEGIN
+	return 'RSS Generation Subscription #' || p_subscr_id;
+END;
+$$ LANGUAGE plpgsql;
 
 select define_function_args('rss_gen_subscr__del','subscr_id');
-create or replace function rss_gen_subscr__del (integer)
-returns integer as '
-declare
-  p_subscr_id     alias for $1;
-begin
+
+
+--
+-- procedure rss_gen_subscr__del/1
+--
+CREATE OR REPLACE FUNCTION rss_gen_subscr__del(
+   p_subscr_id integer
+) RETURNS integer AS $$
+DECLARE
+BEGIN
 	delete from acs_permissions
 		   where object_id = p_subscr_id;
 
 	delete from rss_gen_subscrs
 		   where subscr_id = p_subscr_id;
 
-	raise NOTICE ''Deleting subscription...'';
+	raise NOTICE 'Deleting subscription...';
 	PERFORM acs_object__delete(p_subscr_id);
 
 	return 0;
 
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
-create or replace function rss_gen_subscr__delete (integer)
-returns integer as '
-declare
-  p_subscr_id     alias for $1;
-begin
+
+
+-- added
+select define_function_args('rss_gen_subscr__delete','subscr_id');
+
+--
+-- procedure rss_gen_subscr__delete/1
+--
+CREATE OR REPLACE FUNCTION rss_gen_subscr__delete(
+   p_subscr_id integer
+) RETURNS integer AS $$
+DECLARE
+BEGIN
   return rss_gen_subscr__del (p_subscr_id);
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;

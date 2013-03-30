@@ -6,31 +6,50 @@
 -- @arch-tag: 2abf85db-45a1-4444-856d-683a01be7937
 -- @cvs-id $Id$
 --
-select define_function_args ('rss_gen_subscr__new','subscr_id,impl_id,summary_context_id,timeout,lastbuild,object_type,creation_date;now,creation_user,creation_ip,context_id');
+
+-- old define_function_args ('rss_gen_subscr__new','subscr_id,impl_id,summary_context_id,timeout,lastbuild,object_type,creation_date;now,creation_user,creation_ip,context_id')
+-- new
+select define_function_args('rss_gen_subscr__new','p_subscr_id,p_impl_id,p_summary_context_id,p_timeout,p_lastbuild;now,p_object_type;rss_gen_subscr,p_creation_date;now,p_creation_user;null,p_creation_ip;null,p_context_id;null');
+
 
 select define_function_args('rss_gen_subscr__del','subscr_id');
-create or replace function rss_gen_subscr__del (integer)
-returns integer as '
-declare
-  p_subscr_id     alias for $1;
-begin
+
+
+--
+-- procedure rss_gen_subscr__del/1
+--
+CREATE OR REPLACE FUNCTION rss_gen_subscr__del(
+   p_subscr_id integer
+) RETURNS integer AS $$
+DECLARE
+BEGIN
 	delete from acs_permissions
 		   where object_id = p_subscr_id;
 
 	delete from rss_gen_subscrs
 		   where subscr_id = p_subscr_id;
 
-	raise NOTICE ''Deleting subscription...'';
+	raise NOTICE 'Deleting subscription...';
 	PERFORM acs_object__delete(p_subscr_id);
 
 	return 0;
 
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
-create or replace function rss_gen_subscr__delete (integer)
-returns integer as '
-declare
-  p_subscr_id     alias for $1;
-begin
+
+
+-- added
+select define_function_args('rss_gen_subscr__delete','subscr_id');
+
+--
+-- procedure rss_gen_subscr__delete/1
+--
+CREATE OR REPLACE FUNCTION rss_gen_subscr__delete(
+   p_subscr_id integer
+) RETURNS integer AS $$
+DECLARE
+BEGIN
   return rss_gen_subscr__del (p_subscr_id);
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;

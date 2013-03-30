@@ -1,14 +1,19 @@
-create function inline_0 ()
-returns integer as '
-declare
+--
+-- procedure inline_0/0
+--
+CREATE OR REPLACE FUNCTION inline_0(
+
+) RETURNS integer AS $$
+DECLARE
  subscr record;
  v_result integer;
-begin
+BEGIN
  for subscr in select subscr_id from rss_gen_subscrs loop
    select rss_gen_subscr__delete(subscr.subscr_id) into v_result;
  end loop;
  return 0;
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 select inline_0 ();
 drop function inline_0 ();

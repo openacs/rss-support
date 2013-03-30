@@ -16,32 +16,35 @@ drop function rss_gen_subscr__new (
     integer                    -- context_id
 );
 
-create function rss_gen_subscr__new (
-    integer,                   -- subscr_id
-    integer,                   -- impl_id
-    varchar,                   -- summary_context_id
-    integer,                   -- timeout
-    timestamptz,               -- lastbuild
-    varchar,                   -- object_type
-    timestamptz,               -- creation_date
-    integer,                   -- creation_user
-    varchar,                   -- creation_ip
-    integer                    -- context_id
-) returns integer as '
-declare
-  p_subscr_id			alias for $1;
-  p_impl_id			alias for $2;
-  p_summary_context_id		alias for $3;
-  p_timeout			alias for $4;
-  p_lastbuild			alias for $5;
-  p_object_type			alias for $6;           -- default ''rss_gen_subscr''
-  p_creation_date		alias for $7;		-- default now()
-  p_creation_user		alias for $8;		-- default null
-  p_creation_ip			alias for $9;		-- default null
-  p_context_id			alias for $10;		-- default null
+
+
+-- added
+
+-- old define_function_args('rss_gen_subscr__new','subscr_id,impl_id,summary_context_id,timeout,lastbuild,object_type;rss_gen_subscr,creation_date;now(),creation_user;null,creation_ip;null,context_id;null')
+-- new
+select define_function_args('rss_gen_subscr__new','p_subscr_id,p_impl_id,p_summary_context_id,p_timeout,p_lastbuild;now,p_object_type;rss_gen_subscr,p_creation_date;now,p_creation_user;null,p_creation_ip;null,p_context_id;null');
+
+
+--
+-- procedure rss_gen_subscr__new/10
+--
+CREATE OR REPLACE FUNCTION rss_gen_subscr__new(
+   p_subscr_id integer,
+   p_impl_id integer,
+   p_summary_context_id varchar,
+   p_timeout integer,
+   p_lastbuild timestamptz,
+   p_object_type varchar,       -- default 'rss_gen_subscr'
+   p_creation_date timestamptz, -- default now()
+   p_creation_user integer,     -- default null
+   p_creation_ip varchar,       -- default null
+   p_context_id integer         -- default null
+
+) RETURNS integer AS $$
+DECLARE
   v_subscr_id			rss_gen_subscrs.subscr_id%TYPE;
   v_summary_context_id  rss_gen_subscrs.summary_context_id%TYPE;
-begin
+BEGIN
 	v_subscr_id := acs_object__new (
 		p_subscr_id,
 		p_object_type,
@@ -64,4 +67,5 @@ begin
 
 	return v_subscr_id;
 
-end;' language 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
