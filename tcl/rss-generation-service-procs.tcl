@@ -87,7 +87,7 @@ ad_proc -private rss_assert_dir path {
     foreach dir [split $path /] {
 	append running_path ${dir}/
 	if ![file exists $running_path] {
-	    ns_mkdir $running_path
+	    file mkdir $running_path
 	}
     }
 }
