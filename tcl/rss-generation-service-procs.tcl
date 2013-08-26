@@ -18,8 +18,7 @@ ad_proc -private rss_gen_service {} {
     set n 0
 
     db_foreach timed_out_subscriptions {} {
-	set lastupdate [acs_sc_call RssGenerationSubscriber lastUpdated \
-		$summary_context_id $impl_name]
+	set lastupdate [acs_sc::invoke -contract RssGenerationSubscriber -operation lastUpdated -call_args $summary_context_id -impl $impl_name]
 	if { $lastupdate > $lastbuild } {
 	    # Old report is stale.  Build a new one.
 	    rss_gen_report $subscr_id
@@ -38,8 +37,7 @@ ad_proc -private rss_gen_report subscr_id {
 
     db_1row subscr_info {}
 
-    set datasource [acs_sc_call RssGenerationSubscriber datasource \
-	    $summary_context_id $impl_name]
+    set datasource [acs_sc::invoke -contract RssGenerationSubscriber -operation datasource -call_args $summary_context_id -impl $impl_name]
 
     if { [empty_string_p $datasource] } {
         ns_log Error "Empty datasource returned from $impl_name for context $summary_context_id in rss_gen_report. Probably because the implementation hasn't been bound."

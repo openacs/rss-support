@@ -64,8 +64,7 @@ if { ![info exists channel_title] || [string equal $channel_title ""] || [string
 	# This is a convenient way to use a contracted operation
 	# but is not terribly efficient since we only need the channel title
 	# and link, and not the whole summary.
-	foreach {name val} [acs_sc_call RssGenerationSubscriber datasource \
-		$summary_context_id $impl_name] {
+	foreach {name val} [acs_sc::invoke -contract RssGenerationSubscriber -operation datasource -call_args $summary_context_id -impl $impl_name] {
 	    if { [lsearch {channel_title channel_link} $name] >= 0 } {
 		set $name $val
 	    }
