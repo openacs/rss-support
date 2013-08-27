@@ -34,7 +34,7 @@ if { [info exists impl_id] && [info exists summary_context_id] } {
     db_0or1row subscr_id_from_impl_and_context {}
 }
 
-if [info exists subscr_id] {
+if {[info exists subscr_id]} {
     set action edit
     set pretty_action Edit
     ad_require_permission $subscr_id admin
@@ -48,15 +48,15 @@ if [info exists subscr_id] {
 }
 
 # Validate the impl_id and get its name
-if ![db_0or1row get_impl_name_and_count {}] {
+if {![db_0or1row get_impl_name_and_count {}]} {
     ad_return_error "No implementation found for this id." "We were unable to
 process your request.  Please contact this site's technical team for
 assistance."
 }
 
-if { ![info exists channel_title] || [string equal $channel_title ""] || [string equal $channel_link ""] } {
-    if !$meta {
-	if [string equal $channel_title ""] {
+if { ![info exists channel_title] || $channel_title eq "" || $channel_link eq "" } {
+    if {!$meta} {
+	if {$channel_title eq ""} {
 	    set channel_title "Summary Context $summary_context_id"
 	}
     } else {

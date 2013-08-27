@@ -61,10 +61,10 @@ ad_proc -public ::rss_support::add_subscription {
                       [list p_creation_ip $creation_ip] \
                       [list p_context_id $context_id]
                   ]
-    if {[exists_and_not_null creation_date]} {
+    if {([info exists creation_date] && $creation_date ne "")} {
         lappend var_list [list creation_date $creation_date]
     }
-    if {[exists_and_not_null lastbuild]} {
+    if {([info exists lastbuild] && $lastbuild ne "")} {
         lappend var_list [list p_lastbuild $lastbuild]
     }    
     

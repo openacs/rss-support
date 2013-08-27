@@ -11,16 +11,16 @@ ad_page_contract {
 }
 
 switch $timeout_units {
-    m { set timeout [expr $timeout * 60] }
-    h { set timeout [expr $timeout * 3600] }
-    d { set timeout [expr $timeout * 86400] }
+    m { set timeout [expr {$timeout * 60}] }
+    h { set timeout [expr {$timeout * 3600}] }
+    d { set timeout [expr {$timeout * 86400}] }
 }
 
-if [db_0or1row subscr_exists_p {
+if {[db_0or1row subscr_exists_p {
     select 1
     from acs_objects
     where object_id = :subscr_id
-}] {
+}]} {
     # Subscription exists
     ad_require_permission $subscr_id admin
     db_dml update_subscr {}

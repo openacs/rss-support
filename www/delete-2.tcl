@@ -8,7 +8,7 @@ ad_page_contract  {
 
 ad_require_permission $subscr_id admin
 
-if [info exists delete_file_p] {
+if {[info exists delete_file_p]} {
     file delete [rss_gen_report_file -subscr_id $subscr_id]
 }
 

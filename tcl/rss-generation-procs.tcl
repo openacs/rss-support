@@ -33,17 +33,17 @@ ad_proc rss_gen_200 {
 
     set rss ""
 
-    if {[empty_string_p $channel_title]} {
+    if {$channel_title eq ""} {
         error "argument channel_title not provided"
     }
-    if {[empty_string_p $channel_link]} {
+    if {$channel_link eq ""} {
         error "argument channel_link not provided"
     }
-    if {[empty_string_p $channel_description]} {
+    if {$channel_description eq ""} {
         error "argument channel_description not provided"
     }
 
-    if { [empty_string_p $channel_lastBuildDate] } {
+    if { $channel_lastBuildDate eq "" } {
         set now_ansi [clock format [clock seconds] -format "%Y-%m-%d %H:%M:%S"]
         set now_ansi [lc_time_tz_convert -from [lang::system::timezone] -to "Etc/GMT" -time_value $now_ansi]
         set channel_lastBuildDate "[clock format [clock scan $now_ansi] -format "%a, %d %b %Y %H:%M:%S"] GMT"
@@ -58,11 +58,11 @@ ad_proc rss_gen_200 {
 
     append rss {<generator>OpenACS 5.0</generator>} \n
     append rss "<lastBuildDate>[ad_quotehtml $channel_lastBuildDate]</lastBuildDate>" \n
-    if { ![empty_string_p $channel_pubDate] } {
+    if { $channel_pubDate ne "" } {
 	append rss "<pubDate>[ad_quotehtml $channel_pubDate]</pubDate>" \n
     }
 
-    if {[empty_string_p $image]} {
+    if {$image eq ""} {
 	set base     images/openacs_logo_rss.gif
         set url      [ad_url][rss_package_url]$base
         set title    $channel_title
@@ -110,19 +110,19 @@ ad_proc rss_gen_200 {
         append rss "<link>[ad_quotehtml $iarray(link)]</link>" \n
         append rss {<guid isPermaLink="true">} [ad_quotehtml $iarray(link)] {</guid>} \n
 
-        if { [exists_and_not_null iarray(description) ]} {
+        if { ([info exists iarray(description)] && $iarray(description) ne "")} {
             append rss "<description>[ad_quotehtml $iarray(description)]</description>" \n
         }
 
-        if { [exists_and_not_null iarray(timestamp)] } {
+        if { ([info exists iarray(timestamp)] && $iarray(timestamp) ne "") } {
             append rss "<pubDate>[ad_quotehtml $iarray(timestamp)]</pubDate>" \n
         }
         
-        if { [exists_and_not_null iarray(category)] } {
+        if { ([info exists iarray(category)] && $iarray(category) ne "") } {
             append rss "<category>[ad_quotehtml $iarray(category)]</category>" \n
         }
 
-        if { [exists_and_not_null iarray(enclosure_url)] && [exists_and_not_null iarray(enclosure_length)] && [exists_and_not_null iarray(enclosure_type)]  } {
+        if { ([info exists iarray(enclosure_url)] && $iarray(enclosure_url) ne "") && ([info exists iarray(enclosure_length)] && $iarray(enclosure_length) ne "") && ([info exists iarray(enclosure_type)] && $iarray(enclosure_type) ne "")  } {
 	    append rss "<enclosure url=\"[ad_quotehtml $iarray(enclosure_url)]\" length=\"$iarray(enclosure_length)\" type=\"$iarray(enclosure_type)\"/>"
 	}
         append rss {</item>} \n
@@ -153,13 +153,13 @@ ad_proc rss_gen_100 {
 
     set rss ""
 
-    if {[empty_string_p $channel_title]} {
+    if {$channel_title eq ""} {
         error "argument channel_title not provided"
     }
-    if {[empty_string_p $channel_link]} {
+    if {$channel_link eq ""} {
         error "argument channel_link not provided"
     }
-    if {[empty_string_p $channel_description]} {
+    if {$channel_description eq ""} {
         error "argument channel_description not provided"
     }
 
@@ -184,32 +184,32 @@ ad_proc rss_gen_100 {
     append rss [ad_quotehtml $channel_description]
     append rss "</description>\n"
 
-    if {[empty_string_p $channel_pubDate]} {
+    if {$channel_pubDate eq ""} {
         append rss "<dc:date>$channel_date</dc:date>\n"
     } else {
         append rss "<dc:date>[ad_quotehtml $channel_pubDate]</dc:date>\n"
     }
 
-    if {![empty_string_p $channel_copyright]} {
+    if {$channel_copyright ne ""} {
         append rss "<dc:rights>"
         append rss [ad_quotehtml $channel_copyright]
         append rss "</dc:rights>\n"
     }
 
-    if {![empty_string_p $channel_managingEditor]} {
+    if {$channel_managingEditor ne ""} {
         append rss "<dc:creator>"
         append rss [ad_quotehtml $channel_managingEditor]
         append rss "</dc:creator>\n"
     }
 
-    if {![empty_string_p $channel_webMaster]} {
+    if {$channel_webMaster ne ""} {
         append rss "<dc:publisher>"
         append rss [ad_quotehtml $channel_webMaster]
         append rss "</dc:publisher>\n"
     }
 
 
-    if {[empty_string_p $image]} {
+    if {$image eq ""} {
 	set base     images/openacs_logo_rss.gif
         set url      [ad_url][rss_package_url]$base
         set title    $channel_title
@@ -310,13 +310,13 @@ ad_proc rss_gen_091 {
 
     set rss ""
 
-    if {[empty_string_p $channel_title]} {
+    if {$channel_title eq ""} {
         error "argument channel_title not provided"
     }
-    if {[empty_string_p $channel_link]} {
+    if {$channel_link eq ""} {
         error "argument channel_link not provided"
     }
-    if {[empty_string_p $channel_description]} {
+    if {$channel_description eq ""} {
         error "argument channel_description not provided"
     }
 
@@ -339,37 +339,37 @@ ad_proc rss_gen_091 {
     append rss [ad_quotehtml $channel_language]
     append rss "</language>\n"
 
-    if {![empty_string_p $channel_copyright]} {
+    if {$channel_copyright ne ""} {
         append rss "<copyright>"
         append rss [ad_quotehtml $channel_copyright]
         append rss "</copyright>\n"
     }
 
-    if {![empty_string_p $channel_managingEditor]} {
+    if {$channel_managingEditor ne ""} {
         append rss "<managingEditor>"
         append rss [ad_quotehtml $channel_managingEditor]
         append rss "</managingEditor>\n"
     }
 
-    if {![empty_string_p $channel_webMaster]} {
+    if {$channel_webMaster ne ""} {
         append rss "<webMaster>"
         append rss [ad_quotehtml $channel_webMaster]
         append rss "</webMaster>\n"
     }
 
-    if {![empty_string_p $channel_rating]} {
+    if {$channel_rating ne ""} {
         append rss "<rating>"
         append rss [ad_quotehtml $channel_rating]
         append rss "</rating>\n"
     }
 
-    if {![empty_string_p $channel_pubDate]} {
+    if {$channel_pubDate ne ""} {
         append rss "<pubDate>"
         append rss [ad_quotehtml $channel_pubDate]
         append rss "</pubDate>\n"
     }
 
-    if {![empty_string_p $channel_lastBuildDate]} {
+    if {$channel_lastBuildDate ne ""} {
         append rss "<lastBuildDate>"
         append rss [ad_quotehtml $channel_lastBuildDate]
         append rss "</lastBuildDate>\n"
@@ -379,19 +379,19 @@ ad_proc rss_gen_091 {
     append rss "http://backend.userland.com/stories/rss091"
     append rss "</docs>\n"
 
-    if {![empty_string_p $channel_skipDays]} {
+    if {$channel_skipDays ne ""} {
         append rss "<skipDays>"
         append rss [ad_quotehtml $channel_skipDays]
         append rss "</skipDays>\n"
     }
 
-    if {![empty_string_p $channel_skipHours]} {
+    if {$channel_skipHours ne ""} {
         append rss "<skipHours>"
         append rss [ad_quotehtml $channel_skipHours]
         append rss "</skipHours>\n"
     }
 
-    if {[empty_string_p $image]} {
+    if {$image eq ""} {
 	set base     images/openacs_logo_rss.gif
         set url      [ad_url][rss_package_url]$base
         set title    $channel_title

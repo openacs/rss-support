@@ -9,7 +9,7 @@ ad_require_permission $subscr_id admin
 
 db_1row subscr_info {}
 
-if [string equal $channel_title ""] {
+if {$channel_title eq ""} {
     set channel_title "Summary Context $summary_context_id"
 }
 

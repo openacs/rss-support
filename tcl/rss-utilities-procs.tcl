@@ -16,7 +16,7 @@ ad_proc -public rss_package_id {} {
     # Returns 0 otherwise.
     </pre>
 } {
-    if ![db_0or1row get_package_id {}] {
+    if {![db_0or1row get_package_id {}]} {
 	return 0
     } else {
 	return $package_id
@@ -52,7 +52,7 @@ ad_proc -private rss_first_url_for_package_id_helper {
 } {
     set url ""
 
-    if [db_0or1row first_node_id {}] {
+    if {[db_0or1row first_node_id {}]} {
 	db_foreach url_parts {} {
 	    append url ${name}
 	}
