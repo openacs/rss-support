@@ -35,7 +35,8 @@ contracts and the RSS can be recreated from a scheduled procedure.
         <maturity>0</maturity>
 
         <provides url="rss-support" version="0.4d2"/>
-        <requires url="acs-kernel" version="5.5.0"/>
+	<requires url="acs-kernel" version="5.8.0"/>
+        
 
         <callbacks>
         </callbacks>
