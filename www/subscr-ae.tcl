@@ -37,12 +37,12 @@ if { [info exists impl_id] && [info exists summary_context_id] } {
 if {[info exists subscr_id]} {
     set action edit
     set pretty_action Edit
-    ad_require_permission $subscr_id admin
+    permission::require_permission -object_id $subscr_id -privilege admin
     db_1row subscr_info {}
 } else {
     set action add
     set pretty_action Add
-    ad_require_permission $summary_context_id admin
+    permission::require_permission -object_id $summary_context_id -privilege admin
     set subscr_id [db_nextval acs_object_id_seq]
     set timeout 3600
 }

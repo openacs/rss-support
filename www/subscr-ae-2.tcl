@@ -22,11 +22,11 @@ if {[db_0or1row subscr_exists_p {
     where object_id = :subscr_id
 }]} {
     # Subscription exists
-    ad_require_permission $subscr_id admin
+    permission::require_permission -object_id $subscr_id -privilege admin
     db_dml update_subscr {}
 } else {
     # Create a new subscription.
-    ad_require_permission $summary_context_id admin
+    permission::require_permission -object_id $summary_context_id -privilege admin
 
     set creation_user [ad_conn user_id]
     set creation_ip [ns_conn peeraddr]

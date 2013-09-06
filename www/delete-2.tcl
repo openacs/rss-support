@@ -6,7 +6,7 @@ ad_page_contract  {
     delete_file_p:optional
 }
 
-ad_require_permission $subscr_id admin
+permission::require_permission -object_id $subscr_id -privilege admin
 
 if {[info exists delete_file_p]} {
     file delete [rss_gen_report_file -subscr_id $subscr_id]

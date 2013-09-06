@@ -5,7 +5,7 @@ ad_page_contract {
     return_url:notnull
 }
 
-ad_require_permission $subscr_id admin
+permission::require_permission -object_id $subscr_id -privilege admin
 
 db_1row subscr_info {}
 
