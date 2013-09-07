@@ -126,7 +126,7 @@ ad_proc -private rss_gen_report_dir {
 	}
     }
 
-    set report_dir [acs_root_dir]/[ad_parameter -package_id [rss_package_id] RssGenOutputDirectory rss-support rss]/$impl_name/${summary_context_id}
+    set report_dir [acs_root_dir]/[parameter::get -package_id [rss_package_id] -parameter RssGenOutputDirectory -default rss]/$impl_name/${summary_context_id}
 
     if {$assert_p} {
 	rss_assert_dir $report_dir
