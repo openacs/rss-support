@@ -34,7 +34,7 @@ if {[db_0or1row subscr_exists_p {
 }
 
 
-set review_url subscr-ae?[export_url_vars subscr_id impl_id summary_context_id return_url meta]
+set review_url subscr-ae?[export_vars -url {subscr_id impl_id summary_context_id return_url meta}]
 
 set context [list [list $review_url "Edit subscription"] "Done"]
 
