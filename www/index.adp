@@ -1,5 +1,5 @@
 <master>
-<property name="title">RSS Support Home</property>
+<property name="doc(title)">RSS Support Home</property>
 <property name="context"></property>
 
 <ul>

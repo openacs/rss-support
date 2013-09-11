@@ -1,5 +1,5 @@
 <master>
-<property name="title">Subscription Change Complete</property>
+<property name="doc(title)">Subscription Change Complete</property>
 <property name="context">@context;noquote@</property>
 
 You may now
