@@ -32,7 +32,7 @@ contracts and the RSS can be recreated from a scheduled procedure.
 &lt;li&gt; &lt;a href='http://groups.yahoo.com/group/rss-dev/files/specification.html'&gt;RSS 1.0 specification&lt;/a&gt;
 &lt;/ul&gt;
 </description>
-        <maturity>0</maturity>
+        <maturity>2</maturity>
 
         <provides url="rss-support" version="0.4d2"/>
 	<requires url="acs-kernel" version="5.8.1d1"/>
