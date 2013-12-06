@@ -135,18 +135,16 @@ ad_proc rss_gen_200 {
 }
 
 ad_proc rss_gen_100 {
-    {
-        -channel_title                  ""
-        -channel_link                   ""
-        -channel_description            ""
-        -image                          ""
-        -items                          ""
-        -channel_copyright              ""
-        -channel_managingEditor         ""
-        -channel_webMaster              ""
-        -channel_pubDate                ""
-    }
-} { 
+    {-channel_title          ""}
+    {-channel_link           ""}
+    {-channel_description    ""}
+    {-image                  ""}
+    {-items                  ""}
+    {-channel_copyright      ""}
+    {-channel_managingEditor ""}
+    {-channel_webMaster      ""}
+    {-channel_pubDate        ""}
+} {
     generate an rss 1.0 xml feed
     very basic rss 1.0, with no modules implemented....
 } {
@@ -288,23 +286,21 @@ ad_proc rss_gen_100 {
 }
 
 ad_proc rss_gen_091 {
-    {
-        -channel_title                  ""
-        -channel_link                   ""
-        -channel_description            ""
-        -channel_language               "en-us"
-        -channel_copyright              ""
-        -channel_managingEditor         ""
-        -channel_webMaster              ""
-        -channel_rating                 ""
-        -channel_pubDate                ""
-        -channel_lastBuildDate          ""
-        -channel_skipDays               ""
-        -channel_skipHours              ""
-        -image                          ""
-        -items                          ""
-    }
-} { 
+    {-channel_title          ""}
+    {-channel_link           ""}
+    {-channel_description    ""}
+    {-channel_language       "en-us"}
+    {-channel_copyright      ""}
+    {-channel_managingEditor ""}
+    {-channel_webMaster      ""}
+    {-channel_rating         ""}
+    {-channel_pubDate        ""}
+    {-channel_lastBuildDate  ""}
+    {-channel_skipDays       ""}
+    {-channel_skipHours      ""}
+    {-image                  ""}
+    {-items                  ""}
+} {
     generate an rss 0.91 xml feed
 } {
 
@@ -461,24 +457,22 @@ ad_proc rss_gen_091 {
 }
 
 ad_proc rss_gen {
-    {
-        -version                        "2.0"
-        -channel_title                  ""
-        -channel_link                   ""
-        -channel_description            ""
-        -image                          ""
-        -items                          ""
-        -channel_language               "en-us"
-        -channel_copyright              ""
-        -channel_managingEditor         ""
-        -channel_webMaster              ""
-        -channel_rating                 ""
-        -channel_pubDate                ""
-        -channel_lastBuildDate          ""
-        -channel_skipDays               ""
-        -channel_skipHours              ""
-    }
-} { 
+    {-version                "2.0"}
+    {-channel_title          ""}
+    {-channel_link           ""}
+    {-channel_description    ""}
+    {-image                  ""}
+    {-items                  ""}
+    {-channel_language       "en-us"}
+    {-channel_copyright      ""}
+    {-channel_managingEditor ""}
+    {-channel_webMaster      ""}
+    {-channel_rating         ""}
+    {-channel_pubDate        ""}
+    {-channel_lastBuildDate  ""}
+    {-channel_skipDays       ""}
+    {-channel_skipHours      ""}
+} {
     <pre>
     Generates an RSS XML doc given channel information and item
     information.  Supports versions .91 and 1.0.
