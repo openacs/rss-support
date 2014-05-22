@@ -42,7 +42,7 @@ ad_proc -public rss_first_url_for_package_id {
     relative url for that node.  Returns empty string
     if the package is not mounted.
 } {
-    return [util_memoize "rss_first_url_for_package_id_helper $package_id"]
+    return [util_memoize [list rss_first_url_for_package_id_helper $package_id]]
 }
 
 ad_proc -private rss_first_url_for_package_id_helper {
