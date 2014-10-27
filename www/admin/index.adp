@@ -1,5 +1,5 @@
 <master>
-<property name="title">Rss Support Admin Home</property>
+<property name="doc(title)">Rss Support Admin Home</property>
 <property name="context"></property>
 
 <ul>

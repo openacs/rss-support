@@ -9,7 +9,7 @@ ad_page_contract {
     we pull out channel title and link.
 
     It would be very tempting to accept impl_name as an argument
-    instead of impl_id.  However, the "apply" call in acs_sc_call
+    instead of impl_id.  However, the "ad_apply" call in acs_sc::invoke
     raises the ugly possibility of code-smuggling through the url,
     so we will force the use of the easily validated impl_id
     instead.
@@ -34,29 +34,29 @@ if { [info exists impl_id] && [info exists summary_context_id] } {
     db_0or1row subscr_id_from_impl_and_context {}
 }
 
-if [info exists subscr_id] {
+if {[info exists subscr_id]} {
     set action edit
     set pretty_action Edit
-    ad_require_permission $subscr_id admin
+    permission::require_permission -object_id $subscr_id -privilege admin
     db_1row subscr_info {}
 } else {
     set action add
     set pretty_action Add
-    ad_require_permission $summary_context_id admin
+    permission::require_permission -object_id $summary_context_id -privilege admin
     set subscr_id [db_nextval acs_object_id_seq]
     set timeout 3600
 }
 
 # Validate the impl_id and get its name
-if ![db_0or1row get_impl_name_and_count {}] {
+if {![db_0or1row get_impl_name_and_count {}]} {
     ad_return_error "No implementation found for this id." "We were unable to
 process your request.  Please contact this site's technical team for
 assistance."
 }
 
-if { ![info exists channel_title] || [string equal $channel_title ""] || [string equal $channel_link ""] } {
-    if !$meta {
-	if [string equal $channel_title ""] {
+if { ![info exists channel_title] || $channel_title eq "" || $channel_link eq "" } {
+    if {!$meta} {
+	if {$channel_title eq ""} {
 	    set channel_title "Summary Context $summary_context_id"
 	}
     } else {
@@ -64,8 +64,7 @@ if { ![info exists channel_title] || [string equal $channel_title ""] || [string
 	# This is a convenient way to use a contracted operation
 	# but is not terribly efficient since we only need the channel title
 	# and link, and not the whole summary.
-	foreach {name val} [acs_sc_call RssGenerationSubscriber datasource \
-		$summary_context_id $impl_name] {
+	foreach {name val} [acs_sc::invoke -contract RssGenerationSubscriber -operation datasource -call_args $summary_context_id -impl $impl_name] {
 	    if { [lsearch {channel_title channel_link} $name] >= 0 } {
 		set $name $val
 	    }
@@ -73,11 +72,11 @@ if { ![info exists channel_title] || [string equal $channel_title ""] || [string
     }
 }
 
-set formvars [export_form_vars subscr_id           \
+set formvars [export_vars -form {subscr_id           \
 			       impl_id             \
 			       summary_context_id  \
 			       return_url          \
-			       meta]
+			       meta}]
 
 set context [list Add/Edit]
 

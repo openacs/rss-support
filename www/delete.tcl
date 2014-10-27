@@ -5,11 +5,11 @@ ad_page_contract {
     return_url:notnull
 }
 
-ad_require_permission $subscr_id admin
+permission::require_permission -object_id $subscr_id -privilege admin
 
 db_1row subscr_info {}
 
-if [string equal $channel_title ""] {
+if {$channel_title eq ""} {
     set channel_title "Summary Context $summary_context_id"
 }
 
