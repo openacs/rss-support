@@ -3,7 +3,7 @@ ad_page_contract  {
 } {
     subscr_id:notnull,naturalnum
     return_url:notnull
-    delete_file_p:optional
+    delete_file_p:boolean,optional
 }
 
 permission::require_permission -object_id $subscr_id -privilege admin
