@@ -1,6 +1,6 @@
 <master>
 <property name="doc(title)">Your Report Generation Subscriptions</property>
-<property name="context">@context;noquote@</property>
+<property name="context">@context;literal@</property>
 
 <small><em>Subscriptions created by you.</em></small>
 

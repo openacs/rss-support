@@ -1,6 +1,6 @@
 <master>
 <property name="doc(title)">Delete Subscription</property>
-<property name="context">@context;noquote@</property>
+<property name="context">@context;literal@</property>
 
 Channel: <if @channel_link@ eq "">@channel_title@</if><else>
 <a href="@channel_link@">@channel_title@</a></else>

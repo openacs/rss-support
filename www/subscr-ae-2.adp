@@ -1,6 +1,6 @@
 <master>
 <property name="doc(title)">Subscription Change Complete</property>
-<property name="context">@context;noquote@</property>
+<property name="context">@context;literal@</property>
 
 You may now
 <ul>
