@@ -4,4 +4,4 @@
 
 <small><em>Subscriptions created by you.</em></small>
 
-<include src="subscrs-include" enc_url="@enc_url;noquote@" user_id="@user_id;noquote@" rel_path=".">
+<include src="subscrs-include" enc_url="@enc_url;literal@" user_id="@user_id;literal@" rel_path=".">
