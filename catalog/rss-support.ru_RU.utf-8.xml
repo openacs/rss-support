@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<message_catalog package_key="rss-support" locale="ru_RU" charset="utf-8">
+
+  <msg key="Create_feed">Создать новостную ленту</msg>
+  <msg key="Remove_feed">Удалить новостную ленту</msg>
+  <msg key="Rss_feed_active">Активная новостная лента</msg>
+  <msg key="Rss_feed_inactive">Неактивная новостная лента</msg>
+  <msg key="Syndication_Feed">Объединённая лента</msg>
+</message_catalog>
