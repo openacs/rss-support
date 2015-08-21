@@ -4,7 +4,7 @@
 <master>
 
 <body>
-<h2>RSS Support</h2>
+<h1>RSS Support</h1>
 by <a href="mailto:aegrumet\@alum.mit.edu">Andrew Grumet</a>,
 <a href="mailto:jerry\@theashergroup.com">Jerry Asher</a> and
 <a href="mailto:dave\@thedesignexperience.org">Dave Bauer</a><ul>
@@ -13,7 +13,7 @@ by <a href="mailto:aegrumet\@alum.mit.edu">Andrew Grumet</a>,
 <li>Exception handling</li><li>Testing</li><li>Port to Oracle</li>
 </ol>
 </li>
-</ul><hr><address>
+</ul><h2>Release Notes</h2><p>Please file bugs in the <a href="http://openacs.org/bugtracker/openacs/">Bug Tracker</a>.</p><hr><address>
 <a href="mailto:aegrumet\@alum.mit.edu">aegrumet\@alum.mit.edu</a>, <a href="mailto:jerry\@theashergroup.com">jerry\@theashergroup.com</a>,
 <a href="mailto:dave\@thedesignexperience.org">dave\@thedesignexperience.org</a>
 </address>
