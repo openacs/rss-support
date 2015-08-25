@@ -2,11 +2,13 @@
 <property name="context">{/doc/rss-support {RSS Support}} {RSS Support: Bboard Sample Implementation}</property>
 <property name="doc(title)">RSS Support: Bboard Sample Implementation</property>
 <master>
-
-<body>
 <h2>Bboard Sample Implementation</h2>
+
 by <a href="mailto:aegrumet\@alum.mit.edu">Andrew Grumet</a>
-Back to <a href="index">RSS Support</a><p>The steps:</p><ol>
+
+Back to <a href="index">RSS Support</a>
+<p>The steps:</p>
+<ol>
 <li>Install the rss-support package, and mount a single instance at
 a convenient location (e.g. <code>/rss</code>). Note that
 rss-support is a service package and a singleton.</li><li>Create one or more implentations Of the RssGenerationSubscriber
@@ -29,5 +31,6 @@ build and if the time returned by lastUpdated is greater than the
 time of the last report built).</li><li>Summaries can be found at
 <code>/${RssGenOutputDirectory}/${ImplementationName}/${summary_context_id}/rss.xml</code>
 </li>
-</ol><hr><address><a href="mailto:aegrumet\@alum.mit.edu">aegrumet\@alum.mit.edu</a></address>
-</body>
+</ol>
+<hr>
+<address><a href="mailto:aegrumet\@alum.mit.edu">aegrumet\@alum.mit.edu</a></address>
