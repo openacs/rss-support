@@ -38,3 +38,9 @@ set review_url subscr-ae?[export_vars -url {subscr_id impl_id summary_context_id
 
 set context [list [list $review_url "Edit subscription"] "Done"]
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

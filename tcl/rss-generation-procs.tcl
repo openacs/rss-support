@@ -575,3 +575,9 @@ ad_proc rss_gen {
     }
     return $rss
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -21,3 +21,9 @@ if [file exists [rss_gen_report_file -subscr_id $subscr_id]] {
 } else {
     set offer_file 0
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

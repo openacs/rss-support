@@ -147,3 +147,9 @@ ad_proc -public rss_support::get_subscr_id {
     set impl_id [db_string get_impl_id ""]
     return [db_string get_subscr_id ""]
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

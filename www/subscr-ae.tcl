@@ -80,3 +80,9 @@ set formvars [export_vars -form {subscr_id           \
 
 set context [list Add/Edit]
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

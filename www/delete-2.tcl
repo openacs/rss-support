@@ -15,3 +15,9 @@ if {[info exists delete_file_p]} {
 db_exec_plsql delete_subscr {}
 
 ad_returnredirect $return_url
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

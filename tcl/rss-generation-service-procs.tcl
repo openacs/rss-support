@@ -171,3 +171,9 @@ ad_proc -public rss_gen_report_file {
 
     return $report_file
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

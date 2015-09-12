@@ -16,3 +16,9 @@ db_multirow -extend { lastbuild_pretty } subscrs get_subscrs {} {
 	set channel_title "Subscription #$subscr_id"
     }
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:
