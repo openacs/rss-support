@@ -52,14 +52,14 @@ ad_proc rss_gen_200 {
     append rss {<rss version="2.0">} \n
     append rss {<channel>} \n
 
-    append rss "<title>[ad_quotehtml $channel_title]</title>" \n
+    append rss "<title>[ns_quotehtml $channel_title]</title>" \n
     append rss "<link>$channel_link</link>" \n
-    append rss "<description>[ad_quotehtml $channel_description]</description>" \n
+    append rss "<description>[ns_quotehtml $channel_description]</description>" \n
 
     append rss {<generator>OpenACS 5.0</generator>} \n
-    append rss "<lastBuildDate>[ad_quotehtml $channel_lastBuildDate]</lastBuildDate>" \n
+    append rss "<lastBuildDate>[ns_quotehtml $channel_lastBuildDate]</lastBuildDate>" \n
     if { $channel_pubDate ne "" } {
-	append rss "<pubDate>[ad_quotehtml $channel_pubDate]</pubDate>" \n
+	append rss "<pubDate>[ns_quotehtml $channel_pubDate]</pubDate>" \n
     }
 
     if {$image eq ""} {
@@ -81,19 +81,19 @@ ad_proc rss_gen_200 {
     append rss "<image>\n"
     array set iarray $image
 
-    append rss "<title>[ad_quotehtml $iarray(title)]</title>\n"
+    append rss "<title>[ns_quotehtml $iarray(title)]</title>\n"
     append rss "<url>$iarray(url)</url>\n"
-    append rss "<link>[ad_quotehtml $iarray(link)]</link>\n"
+    append rss "<link>[ns_quotehtml $iarray(link)]</link>\n"
     if {[info exists iarray(width)]} {
-        set element [ad_quotehtml $iarray(width)]
+        set element [ns_quotehtml $iarray(width)]
         append rss "<width>$element</width>\n"
     }
     if {[info exists iarray(height)]} {
-        set element [ad_quotehtml $iarray(height)]
+        set element [ns_quotehtml $iarray(height)]
         append rss "<height>$element</height>\n"
     }
     if {[info exists iarray(description)]} {
-        set element [ad_quotehtml $iarray(description)]
+        set element [ns_quotehtml $iarray(description)]
         append rss "<description>$element</description>\n"
     }
 
@@ -105,25 +105,25 @@ ad_proc rss_gen_200 {
         array set iarray $item
         append rss {<item>} \n 
 
-        append rss "<title>[ad_quotehtml $iarray(title)]</title>" \n
+        append rss "<title>[ns_quotehtml $iarray(title)]</title>" \n
 
-        append rss "<link>[ad_quotehtml $iarray(link)]</link>" \n
-        append rss {<guid isPermaLink="true">} [ad_quotehtml $iarray(link)] {</guid>} \n
+        append rss "<link>[ns_quotehtml $iarray(link)]</link>" \n
+        append rss {<guid isPermaLink="true">} [ns_quotehtml $iarray(link)] {</guid>} \n
 
         if { ([info exists iarray(description)] && $iarray(description) ne "")} {
-            append rss "<description>[ad_quotehtml $iarray(description)]</description>" \n
+            append rss "<description>[ns_quotehtml $iarray(description)]</description>" \n
         }
 
         if { ([info exists iarray(timestamp)] && $iarray(timestamp) ne "") } {
-            append rss "<pubDate>[ad_quotehtml $iarray(timestamp)]</pubDate>" \n
+            append rss "<pubDate>[ns_quotehtml $iarray(timestamp)]</pubDate>" \n
         }
         
         if { ([info exists iarray(category)] && $iarray(category) ne "") } {
-            append rss "<category>[ad_quotehtml $iarray(category)]</category>" \n
+            append rss "<category>[ns_quotehtml $iarray(category)]</category>" \n
         }
 
         if { ([info exists iarray(enclosure_url)] && $iarray(enclosure_url) ne "") && ([info exists iarray(enclosure_length)] && $iarray(enclosure_length) ne "") && ([info exists iarray(enclosure_type)] && $iarray(enclosure_type) ne "")  } {
-	    append rss "<enclosure url=\"[ad_quotehtml $iarray(enclosure_url)]\" length=\"$iarray(enclosure_length)\" type=\"$iarray(enclosure_type)\"/>"
+	    append rss "<enclosure url=\"[ns_quotehtml $iarray(enclosure_url)]\" length=\"$iarray(enclosure_length)\" type=\"$iarray(enclosure_type)\"/>"
 	}
         append rss {</item>} \n
     }
@@ -171,7 +171,7 @@ ad_proc rss_gen_100 {
     append rss "<channel rdf:about=\"$channel_link\">\n"
 
     append rss "<title>"
-    append rss [ad_quotehtml $channel_title]
+    append rss [ns_quotehtml $channel_title]
     append rss "</title>\n"
 
     append rss "<link>"
@@ -179,30 +179,30 @@ ad_proc rss_gen_100 {
     append rss "</link>\n"
 
     append rss "<description>"
-    append rss [ad_quotehtml $channel_description]
+    append rss [ns_quotehtml $channel_description]
     append rss "</description>\n"
 
     if {$channel_pubDate eq ""} {
         append rss "<dc:date>$channel_date</dc:date>\n"
     } else {
-        append rss "<dc:date>[ad_quotehtml $channel_pubDate]</dc:date>\n"
+        append rss "<dc:date>[ns_quotehtml $channel_pubDate]</dc:date>\n"
     }
 
     if {$channel_copyright ne ""} {
         append rss "<dc:rights>"
-        append rss [ad_quotehtml $channel_copyright]
+        append rss [ns_quotehtml $channel_copyright]
         append rss "</dc:rights>\n"
     }
 
     if {$channel_managingEditor ne ""} {
         append rss "<dc:creator>"
-        append rss [ad_quotehtml $channel_managingEditor]
+        append rss [ns_quotehtml $channel_managingEditor]
         append rss "</dc:creator>\n"
     }
 
     if {$channel_webMaster ne ""} {
         append rss "<dc:publisher>"
-        append rss [ad_quotehtml $channel_webMaster]
+        append rss [ns_quotehtml $channel_webMaster]
         append rss "</dc:publisher>\n"
     }
 
@@ -225,7 +225,7 @@ ad_proc rss_gen_100 {
     array set imarray $image
 
     # channel image handling
-    append rss "<image rdf:resource=\"[ad_quotehtml $imarray(url)]\" />\n"
+    append rss "<image rdf:resource=\"[ns_quotehtml $imarray(url)]\" />\n"
 
     append rss "<items>\n"
     append rss "<rdf:Seq>\n"
@@ -234,7 +234,7 @@ ad_proc rss_gen_100 {
     foreach item $items {
         array unset iarray
         array set iarray $item
-        append rss "<rdf:li rdf:resource=\"[ad_quotehtml $iarray(link)]\" />\n"
+        append rss "<rdf:li rdf:resource=\"[ns_quotehtml $iarray(link)]\" />\n"
     }
 
     append rss "</rdf:Seq>\n"
@@ -243,11 +243,11 @@ ad_proc rss_gen_100 {
 
     # now top level image
     append rss "<image rdf:about=\"$imarray(url)\">\n"
-    append rss "<title>[ad_quotehtml $imarray(title)]</title>\n"
+    append rss "<title>[ns_quotehtml $imarray(title)]</title>\n"
     append rss "<url>$imarray(url)</url>\n"
-    append rss "<link>[ad_quotehtml $imarray(link)]</link>\n"
+    append rss "<link>[ns_quotehtml $imarray(link)]</link>\n"
     if {[info exists iarray(width)]} {
-        set element [ad_quotehtml $iarray(width)]
+        set element [ns_quotehtml $iarray(width)]
         append rss "<width>$element</width>\n"
     }
     append rss "</image>\n"
@@ -256,24 +256,24 @@ ad_proc rss_gen_100 {
     foreach item $items {
         array unset iarray
         array set iarray $item
-        append rss "<item rdf:about=\"[ad_quotehtml $iarray(link)]\">\n"
-        set element [ad_quotehtml $iarray(title)]
+        append rss "<item rdf:about=\"[ns_quotehtml $iarray(link)]\">\n"
+        set element [ns_quotehtml $iarray(title)]
         append rss "<title>$element</title>\n"
-        append rss "<link>[ad_quotehtml $iarray(link)]</link>\n"
+        append rss "<link>[ns_quotehtml $iarray(link)]</link>\n"
         if {[info exists iarray(description)]} {
-            set element [ad_quotehtml $iarray(description)]
+            set element [ns_quotehtml $iarray(description)]
             append rss "<description>$element</description>\n"
         }
         if {[info exists iarray(timestamp)]} {
-            set element [ad_quotehtml $iarray(timestamp)]
+            set element [ns_quotehtml $iarray(timestamp)]
             append rss "<dc:date>$element</dc:date>\n"
         }
         if {[info exists iarray(author)]} {
-            set element [ad_quotehtml $iarray(author)]
+            set element [ns_quotehtml $iarray(author)]
             append rss "<dc:creator>$element</dc:creator>\n"
         }
         if {[info exists iarray(category)]} {
-            set element [ad_quotehtml $iarray(category)]
+            set element [ns_quotehtml $iarray(category)]
             append rss "<dc:subject>$element</dc:subject>\n"
         }
 
@@ -320,54 +320,54 @@ ad_proc rss_gen_091 {
     append rss "<channel>\n"
 
     append rss "<title>"
-    append rss [ad_quotehtml $channel_title]
+    append rss [ns_quotehtml $channel_title]
     append rss "</title>\n"
 
     append rss "<link>"
-    append rss [ad_quotehtml $channel_link]
+    append rss [ns_quotehtml $channel_link]
     append rss "</link>\n"
 
     append rss "<description>"
-    append rss [ad_quotehtml $channel_description]
+    append rss [ns_quotehtml $channel_description]
     append rss "</description>\n"
 
     append rss "<language>"
-    append rss [ad_quotehtml $channel_language]
+    append rss [ns_quotehtml $channel_language]
     append rss "</language>\n"
 
     if {$channel_copyright ne ""} {
         append rss "<copyright>"
-        append rss [ad_quotehtml $channel_copyright]
+        append rss [ns_quotehtml $channel_copyright]
         append rss "</copyright>\n"
     }
 
     if {$channel_managingEditor ne ""} {
         append rss "<managingEditor>"
-        append rss [ad_quotehtml $channel_managingEditor]
+        append rss [ns_quotehtml $channel_managingEditor]
         append rss "</managingEditor>\n"
     }
 
     if {$channel_webMaster ne ""} {
         append rss "<webMaster>"
-        append rss [ad_quotehtml $channel_webMaster]
+        append rss [ns_quotehtml $channel_webMaster]
         append rss "</webMaster>\n"
     }
 
     if {$channel_rating ne ""} {
         append rss "<rating>"
-        append rss [ad_quotehtml $channel_rating]
+        append rss [ns_quotehtml $channel_rating]
         append rss "</rating>\n"
     }
 
     if {$channel_pubDate ne ""} {
         append rss "<pubDate>"
-        append rss [ad_quotehtml $channel_pubDate]
+        append rss [ns_quotehtml $channel_pubDate]
         append rss "</pubDate>\n"
     }
 
     if {$channel_lastBuildDate ne ""} {
         append rss "<lastBuildDate>"
-        append rss [ad_quotehtml $channel_lastBuildDate]
+        append rss [ns_quotehtml $channel_lastBuildDate]
         append rss "</lastBuildDate>\n"
     }
 
@@ -377,13 +377,13 @@ ad_proc rss_gen_091 {
 
     if {$channel_skipDays ne ""} {
         append rss "<skipDays>"
-        append rss [ad_quotehtml $channel_skipDays]
+        append rss [ns_quotehtml $channel_skipDays]
         append rss "</skipDays>\n"
     }
 
     if {$channel_skipHours ne ""} {
         append rss "<skipHours>"
-        append rss [ad_quotehtml $channel_skipHours]
+        append rss [ns_quotehtml $channel_skipHours]
         append rss "</skipHours>\n"
     }
 
@@ -406,19 +406,19 @@ ad_proc rss_gen_091 {
     append rss "<image>\n"
     array set iarray $image
 
-    append rss "<title>[ad_quotehtml $iarray(title)]</title>\n"
+    append rss "<title>[ns_quotehtml $iarray(title)]</title>\n"
     append rss "<url>$iarray(url)</url>\n"
-    append rss "<link>[ad_quotehtml $iarray(link)]</link>\n"
+    append rss "<link>[ns_quotehtml $iarray(link)]</link>\n"
     if {[info exists iarray(width)]} {
-        set element [ad_quotehtml $iarray(width)]
+        set element [ns_quotehtml $iarray(width)]
         append rss "<width>$element</width>\n"
     }
     if {[info exists iarray(height)]} {
-        set element [ad_quotehtml $iarray(height)]
+        set element [ns_quotehtml $iarray(height)]
         append rss "<height>$element</height>\n"
     }
     if {[info exists iarray(description)]} {
-        set element [ad_quotehtml $iarray(description)]
+        set element [ns_quotehtml $iarray(description)]
         append rss "<description>$element</description>\n"
     }
 
@@ -429,11 +429,11 @@ ad_proc rss_gen_091 {
         array unset iarray
         array set iarray $item
         append rss "<item>\n"
-        set element [ad_quotehtml $iarray(title)]
+        set element [ns_quotehtml $iarray(title)]
         append rss "<title>$element</title>\n"
-        append rss "<link>[ad_quotehtml $iarray(link)]</link>\n"
+        append rss "<link>[ns_quotehtml $iarray(link)]</link>\n"
         if {[info exists iarray(description)]} {
-            set element [ad_quotehtml $iarray(description)]
+            set element [ns_quotehtml $iarray(description)]
             if {[info exists iarray(timestamp)]} {
                 # if {[info exists iarray(timeformat)]} {
                     # set timeformat $iarray(timeformat)
