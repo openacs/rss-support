@@ -117,8 +117,7 @@ ad_proc -private rss_gen_report_dir {
     subscription with subscr_id or impl_name + summary_context_id
     provided.  If the assert flag is set, create the directory.
 } {
-    if {!([info exists summary_context_id] && \
-	    [info exists impl_name])} {
+    if {!([info exists summary_context_id] && [info exists impl_name]) } {
 	if {![info exists subscr_id]} {
 	    error "rss_gen_report_dir needs either subscr_id or impl_id+summary_context_id"
 	} else {
@@ -147,8 +146,7 @@ ad_proc -public rss_gen_report_file {
     it doesn't exist
     @return a Unix file path.  
 } {
-    if {!([info exists summary_context_id] && \
-	    [info exists impl_name])} {
+    if {!([info exists summary_context_id] && [info exists impl_name])} {
 	if {![info exists subscr_id]} {
 	    error "rss_gen_report_file needs either subscr_id or impl_id+summary_context_id"
 	} else {
