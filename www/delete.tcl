@@ -2,7 +2,7 @@ ad_page_contract {
     Confirm deletion of a subscription.
 } {
     subscr_id:notnull,naturalnum
-    return_url:notnull
+    return_url:localurl,notnull
 }
 
 permission::require_permission -object_id $subscr_id -privilege admin

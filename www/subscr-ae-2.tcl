@@ -4,7 +4,7 @@ ad_page_contract {
     subscr_id:notnull,naturalnum
     impl_id:optional,naturalnum
     summary_context_id:optional,naturalnum
-    return_url:optional
+    return_url:localurl,optional
     timeout:notnull,naturalnum
     timeout_units:notnull
     {meta:optional 1}

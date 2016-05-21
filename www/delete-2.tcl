@@ -2,7 +2,7 @@ ad_page_contract  {
     Delete the subscription, and maybe the report.
 } {
     subscr_id:notnull,naturalnum
-    return_url:notnull
+    return_url:localurl,notnull
     delete_file_p:boolean,optional
 }
 
