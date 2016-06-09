@@ -31,7 +31,7 @@ built</li><li>how often to rebuild the summary (if changes are present)</li>
 The last item is included with an eye toward performance. In the
 event that a particular summary is expensive to produce, we may opt
 to rebuild at most every N minutes (or hours, or days).
-<p><b>Usage scenarios</b></p>
+<p><strong>Usage scenarios</strong></p>
 <ul>
 <li>Publisher wishes to syndicate the Bar Forum in the Foo Bboard
 package instance.</li><li>Luckily, the bboard package implements the summary service
@@ -40,7 +40,7 @@ with the summary service, indicating that the summary should be
 built no more than once per hour.</li><li>Summary is available at
 /some/url/specific/to/bar/forum/summary.xml</li>
 </ul>
-<p><b>Service contract</b></p>
+<p><strong>Service contract</strong></p>
 <p>The feed generation service contract is called
 <code>RssGenerationSubscriber</code> and consists of two
 operations.</p>
@@ -56,7 +56,7 @@ timestamp that is used to determine if the live summary is out of
 date. The timestamp is given as the number of seconds since
 midnight on January 1, 1970, i.e. Unix time.</li>
 </ol>
-<p><b>Under the hood</b></p>
+<p><strong>Under the hood</strong></p>
 <p>
 <em>RSS files.</em>All summaries are static files. They are
 served from a static directory under the webroot specific by the
