@@ -87,12 +87,13 @@ subscription is allowed per summary context.</p>
 <p>
 <em>Service.</em> A scheduled proc runs through all subscribed
 contexts, checking to see if the live summary is stale and also if
-the minimum "quiet time" has elapsed. If the conditions for rebuild
-are met for a context, the scheduled proc pulls out the context's
-summary data via <code>Datasource</code> and uses the information
-to build a new summary page. This generic and simple scheme can be
-used to dispatch different versions of the summary builder as well
-as to support extensibility via modules. <font color="red">Warning:</font> This design expects the output of
+the minimum "quiet time" has elapsed. If the conditions
+for rebuild are met for a context, the scheduled proc pulls out the
+context&#39;s summary data via <code>Datasource</code> and uses the
+information to build a new summary page. This generic and simple
+scheme can be used to dispatch different versions of the summary
+builder as well as to support extensibility via modules.
+<font color="red">Warning:</font> This design expects the output of
 <code>Datasource</code> to be reasonably small, as we will have to
 parse this list-of-lists to generate a summary.</p>
 <hr>
