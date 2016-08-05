@@ -10,7 +10,7 @@
 <tr bgcolor="efefef" align="left" valign="top"><th>Impl Name:</th>
 <td><code>@impl_name@</code></td></tr>
 <tr bgcolor="efefef" align="left" valign="top"><th>Timeout:</th>
-<td><input type=text name="timeout" value="@timeout@"><br>
+<td><input type="text" name="timeout" value="@timeout@"><br>
 <input type="radio" name="timeout_units" value="s" checked>secs
 <input type="radio" name="timeout_units" value="m">mins
 <input type="radio" name="timeout_units" value="h">hours
