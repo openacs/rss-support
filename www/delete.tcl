@@ -22,6 +22,8 @@ if [file exists [rss_gen_report_file -subscr_id $subscr_id]] {
     set offer_file 0
 }
 
+template::add_event_listener -id "cancel" -script {history.back();}
+
 # Local variables:
 #    mode: tcl
 #    tcl-indent-level: 4

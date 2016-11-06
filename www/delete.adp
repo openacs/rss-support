@@ -12,6 +12,6 @@ Channel: <if @channel_link@ eq "">@channel_title@</if><else>
 </if>
 <p>
 <input type="submit" value="Really delete?">
-<input type="button" onclick="history.back()" value="No, I want to go back">
+<input type="button" id="cancel" value="No, I want to go back">
 </form>
 
