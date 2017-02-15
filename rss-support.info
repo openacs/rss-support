@@ -13,7 +13,7 @@
         <owner url="mailto:jerry@theashergroup.com">Jerry Asher</owner>
         <owner url="mailto:dave@thedesignexperience.org">Dave Bauer</owner>
         <summary>Service contracts and support for generating RSS feeds</summary>
-        <release-date>2015-10-04</release-date>
+        <release-date>2016-05-21</release-date>
         <vendor>OpenACS</vendor>
         <description format="text/html"> Basic support for RSS
 generation and parsing.  RDF Site Summary (RSS) is a lightweight
@@ -35,8 +35,8 @@ contracts and the RSS can be recreated from a scheduled procedure.
         <maturity>2</maturity>
 
         <provides url="rss-support" version="0.4d3"/>
-	<requires url="acs-kernel" version="5.9.0"/>
-	<requires url="acs-tcl" version="5.9.1d7"/>
+	<requires url="acs-kernel" version="5.9.1b1"/>
+	<requires url="acs-tcl" version="5.9.1b1"/>
 
         <callbacks>
         </callbacks>
