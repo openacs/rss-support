@@ -99,7 +99,7 @@ ad_proc -public rss_support::del_subscription {
 		       -owner $owner]   
     set report_dir [rss_gen_report_dir -subscr_id $subscr_id]
     # remove generated RSS reports for this subscription
-    file delete -force $report_dir
+    file delete -force -- $report_dir
     package_exec_plsql \
         -var_list [list [list subscr_id $subscr_id]] \
         rss_gen_subscr del
