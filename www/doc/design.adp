@@ -12,7 +12,7 @@ by <a href="mailto:aegrumet\@alum.mit.edu">Andrew Grumet</a>
 <p>From the <a href="http://groups.yahoo.com/group/rss-dev/files/specification.html">specification</a>,</p>
 <blockquote><em>RDF Site Summary (RSS) is a lightweight
 multipurpose extensible metadata description and syndication
-format. RSS is an XML application, conforms to the W3C's RDF
+format. RSS is an XML application, conforms to the W3C&#39;s RDF
 Specification and is extensible via XML-namespace and/or RDF based
 modularization.</em></blockquote>
 
