@@ -60,3 +60,9 @@ ad_proc -private rss_first_url_for_package_id_helper {
 
     return $url
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

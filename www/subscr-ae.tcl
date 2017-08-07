@@ -18,7 +18,7 @@ ad_page_contract {
     subscr_id:optional,naturalnum
     impl_id:optional,naturalnum
     summary_context_id:optional,naturalnum
-    return_url:optional
+    return_url:localurl,optional
     {meta:optional 1}
 } -validate {
     subscr_or_context {
@@ -80,3 +80,9 @@ set formvars [export_vars -form {subscr_id           \
 
 set context [list Add/Edit]
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

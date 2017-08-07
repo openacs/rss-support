@@ -4,7 +4,7 @@ ad_page_contract {
     subscr_id:notnull,naturalnum
     impl_id:optional,naturalnum
     summary_context_id:optional,naturalnum
-    return_url:optional
+    return_url:localurl,optional
     timeout:notnull,naturalnum
     timeout_units:notnull
     {meta:optional 1}
@@ -34,7 +34,13 @@ if {[db_0or1row subscr_exists_p {
 }
 
 
-set review_url subscr-ae?[export_vars -url {subscr_id impl_id summary_context_id return_url meta}]
+set review_url [export_vars -base subscr-ae {subscr_id impl_id summary_context_id return_url meta}]
 
 set context [list [list $review_url "Edit subscription"] "Done"]
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:
