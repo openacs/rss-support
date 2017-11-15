@@ -21,31 +21,9 @@
     </querytext>
   </fullquery>
 
-  <fullquery name="rss_gen_report.update_timestamp">  
-    <querytext>
-        update rss_gen_subscrs
-        set lastbuild = now(),
-            last_ttb = :last_ttb $extra_sql
-            where subscr_id = :subscr_id
-    </querytext>
-  </fullquery>
-
-
   <fullquery name="rss_gen_bind.get_contract_id">  
     <querytext>
        	select acs_sc_contract__get_id('RssGenerationSubscriber')
-    </querytext>
-  </fullquery>
-
-  <fullquery name="rss_gen_bind.get_unbound_impls">  
-    <querytext>
-        select impl_id
-        from acs_sc_impls i
-        where impl_contract_name = 'RssGenerationSubscriber'
-          and not exists (select 1
-                          from acs_sc_bindings b
-                          where b.impl_id = i.impl_id
-                            and b.contract_id = :contract_id)
     </querytext>
   </fullquery>
 
@@ -54,6 +32,5 @@
          select acs_sc_binding__new($contract_id,$impl_id)
     </querytext>
   </fullquery>
-
 
 </queryset>
