@@ -52,6 +52,7 @@ if {![db_0or1row get_impl_name_and_count {}]} {
     ad_return_error "No implementation found for this id." "We were unable to
 process your request.  Please contact this site's technical team for
 assistance."
+    ad_script_abort
 }
 
 if { ![info exists channel_title] || $channel_title eq "" || $channel_link eq "" } {
