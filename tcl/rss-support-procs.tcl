@@ -86,7 +86,7 @@ ad_proc -public rss_support::del_subscription {
     
     @param summary_context_id summary context id to delete
  
-    @param impl_name implemenation name to delete
+    @param impl_name implementation name to delete
 
     @param owner owner package of implementation
     @return 
