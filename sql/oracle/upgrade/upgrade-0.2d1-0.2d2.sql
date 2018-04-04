@@ -1,7 +1,7 @@
 --
 -- Upgrade script
 --
--- Change service contract operation names to use lowercase like the PosgreSQL version.
+-- Change service contract operation names to use lowercase like the PostgreSQL version.
 --
 -- $Id$
 --
