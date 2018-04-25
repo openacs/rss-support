@@ -33,7 +33,7 @@ ad_proc -private bboard__rss_datasource {
 
     set last_n_days 0
 
-    set items [list]
+    set items {}
     set i 0
     
     db_foreach bboard_rss_items "
