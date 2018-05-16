@@ -67,7 +67,7 @@ ad_proc rss_gen_200 {
         set url      [ad_url][rss_package_url]$base
         set title    $channel_title
         set link     $channel_link
-        set size     [ns_gifsize [get_server_root]/packages/rss-support/www/$base]
+        set size     [ns_gifsize [acs_root_dir]/packages/rss-support/www/$base]
 
         set image [list                                          \
                 url $url                                         \
@@ -212,7 +212,7 @@ ad_proc rss_gen_100 {
         set url      [ad_url][rss_package_url]$base
         set title    $channel_title
         set link     $channel_link
-        set size     [ns_gifsize [get_server_root]/packages/rss-support/www/$base]
+        set size     [ns_gifsize [acs_root_dir]/packages/rss-support/www/$base]
 
         set image [list                                          \
                 url $url                                         \
@@ -392,7 +392,7 @@ ad_proc rss_gen_091 {
         set url      [ad_url][rss_package_url]$base
         set title    $channel_title
         set link     $channel_link
-        set size     [ns_gifsize [get_server_root]/packages/rss-support/www/$base]
+        set size     [ns_gifsize [acs_root_dir]/packages/rss-support/www/$base]
 
         set image [list                                          \
                 url $url                                         \
