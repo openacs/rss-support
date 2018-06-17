@@ -64,7 +64,7 @@ ad_proc -public ::rss_support::add_subscription {
     if {([info exists creation_date] && $creation_date ne "")} {
         lappend var_list [list creation_date $creation_date]
     }
-    if {([info exists lastbuild] && $lastbuild ne "")} {
+    if { $lastbuild ne "" } {
         lappend var_list [list p_lastbuild $lastbuild]
     }    
     
