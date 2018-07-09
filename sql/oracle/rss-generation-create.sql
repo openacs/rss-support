@@ -81,7 +81,7 @@ begin
     attribute_name => 'LASTBUILD', 
     pretty_name    => 'Last Build', 
     pretty_plural  => 'Last Builds', 
-    datatype       => 'integer' ,
+    datatype       => 'timestamp' ,
     storage	   => 'type_specific',
     static_p	   => 'f',
     min_n_values   => 1,

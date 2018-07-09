@@ -75,8 +75,8 @@ BEGIN
     PERFORM acs_attribute__create_attribute (
 	  'rss_gen_subscr',			-- object_type
 	  'LASTBUILD',				-- attribute_name
-	  'integer',				-- datatype
-	  'Last Build',			-- pretty_name
+	  'timestamp',				-- datatype
+	  'Last Build',			        -- pretty_name
 	  'Last Builds',			-- pretty_plural
 	  null,					-- table_name
 	  null,					-- column_name
