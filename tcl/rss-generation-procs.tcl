@@ -110,19 +110,22 @@ ad_proc rss_gen_200 {
         append rss "<link>[ns_quotehtml $iarray(link)]</link>" \n
         append rss {<guid isPermaLink="true">} [ns_quotehtml $iarray(link)] {</guid>} \n
 
-        if { ([info exists iarray(description)] && $iarray(description) ne "")} {
+        if { [info exists iarray(description)] && $iarray(description) ne ""} {
             append rss "<description>[ns_quotehtml $iarray(description)]</description>" \n
         }
 
-        if { ([info exists iarray(timestamp)] && $iarray(timestamp) ne "") } {
+        if { [info exists iarray(timestamp)] && $iarray(timestamp) ne "" } {
             append rss "<pubDate>[ns_quotehtml $iarray(timestamp)]</pubDate>" \n
         }
         
-        if { ([info exists iarray(category)] && $iarray(category) ne "") } {
+        if { [info exists iarray(category)] && $iarray(category) ne "" } {
             append rss "<category>[ns_quotehtml $iarray(category)]</category>" \n
         }
 
-        if { ([info exists iarray(enclosure_url)] && $iarray(enclosure_url) ne "") && ([info exists iarray(enclosure_length)] && $iarray(enclosure_length) ne "") && ([info exists iarray(enclosure_type)] && $iarray(enclosure_type) ne "")  } {
+        if { [info exists iarray(enclosure_url)] && $iarray(enclosure_url) ne ""
+             && [info exists iarray(enclosure_length)] && $iarray(enclosure_length) ne ""
+             && [info exists iarray(enclosure_type)] && $iarray(enclosure_type) ne ""
+         } {
 	    append rss "<enclosure url=\"[ns_quotehtml $iarray(enclosure_url)]\" length=\"$iarray(enclosure_length)\" type=\"$iarray(enclosure_type)\"/>"
 	}
         append rss {</item>} \n
