@@ -1,12 +1,9 @@
-#
-
 ad_library {
 
     Procedure to add subscriptions
 
     @author Dave Bauer (dave@thedesignexperience.org)
     @creation-date 2005-01-22
-    @arch-tag: 601774f4-7b83-4eee-9b36-97c278ba1bd4
     @cvs-id $Id$
 }
 
