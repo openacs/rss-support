@@ -29,7 +29,7 @@
 
   <fullquery name="rss_gen_bind.bind_impl">
     <querytext>
-         select acs_sc_binding__new($contract_id,$impl_id)
+         select acs_sc_binding__new(:contract_id,:impl_id)
     </querytext>
   </fullquery>
 
