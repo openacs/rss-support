@@ -10,24 +10,28 @@ ad_library {
 
 ad_proc -private rss_gen_service {} {
 
-    ns_log Debug "rss_gen_service: starting"
+    if {[parameter::get_global_value -package_key rss-support -parameter RssGenActiveP]} {
 
-    # Bind any unbound implementations
-    rss_gen_bind
+        ns_log Debug "rss_gen_service: starting"
 
-    set n 0
+        # Bind any unbound implementations
+        rss_gen_bind
 
-    db_foreach timed_out_subscriptions {} {
-	set lastupdate [acs_sc::invoke -contract RssGenerationSubscriber -operation lastUpdated -call_args $summary_context_id -impl $impl_name]
-	if { $lastupdate > $lastbuild } {
-	    # Old report is stale.  Build a new one.
-	    rss_gen_report $subscr_id
-	    incr n
-	}
+        set n 0
+
+        db_foreach timed_out_subscriptions {} {
+            set lastupdate [acs_sc::invoke -contract RssGenerationSubscriber -operation lastUpdated -call_args $summary_context_id -impl $impl_name]
+            if { $lastupdate > $lastbuild } {
+                # Old report is stale.  Build a new one.
+                rss_gen_report $subscr_id
+                incr n
+            }
+        }
+
+        ns_log Debug "rss_gen_service: built $n reports"
+    } {
+        ns_log Debug "rss_gen_service: disabled by RssGenActiveP global parameter"
     }
-
-    ns_log Debug "rss_gen_service: built $n reports"
-
 }
 
 ad_proc -private rss_gen_report subscr_id {
