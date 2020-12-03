@@ -49,11 +49,11 @@ ad_proc -private rss_gen_report subscr_id {
     }
     set args ""
     foreach {name val} $datasource {
-	regsub -all {[\]\[\{\}""\\$]} $val {\\&} val
-	append args "-$name \"$val\" "
-	if { [lsearch [list channel_link channel_title] $name] >= 0 } {
-	    set $name $val
-	}
+        regsub -all {[\]\[\{\}""\\$]} $val {\\&} val
+        append args "-$name \"$val\" "
+        if { [lsearch [list channel_link channel_title] $name] >= 0 } {
+            set $name $val
+        }
     }
     set xml [ad_apply rss_gen $args]
 
@@ -69,9 +69,9 @@ ad_proc -private rss_gen_report subscr_id {
     # subscriptions table.
     set extra_sql ""
     foreach col [list channel_title channel_link] {
-	if {[info exists $col]} {
-	    append extra_sql ", $col = :$col"
-	}
+        if {[info exists $col]} {
+            append extra_sql ", $col = :$col"
+        }
     }
 
     set last_ttb [expr {[clock seconds] - $start}]
@@ -87,10 +87,10 @@ ad_proc -private rss_assert_dir path {
 } {
     set running_path ""
     foreach dir [split $path /] {
-	append running_path ${dir}/
-	if {![file exists $running_path]} {
-	    file mkdir $running_path
-	}
+        append running_path ${dir}/
+        if {![file exists $running_path]} {
+            file mkdir $running_path
+        }
     }
 }
 
@@ -100,14 +100,14 @@ ad_proc -private rss_gen_bind {} {
     set contract_id [db_string get_contract_id {}]
 
     db_foreach get_unbound_impls {} {
-	ns_log Debug "rss_gen_bind: binding impl $impl_id for contract $contract_id"
-	# Don't ask me why, but bind variables don't appear to work
-	# in this nested db operation.  
-	if {[catch {
-	    db_exec_plsql bind_impl {}
-	} errMsg]} {
-	    ns_log Warning "rss_gen_bind: error binding impl $impl_id for contract $contract_id: $errMsg"
-	}
+        ns_log Debug "rss_gen_bind: binding impl $impl_id for contract $contract_id"
+        # Don't ask me why, but bind variables don't appear to work
+        # in this nested db operation.
+        if {[catch {
+            db_exec_plsql bind_impl {}
+        } errMsg]} {
+            ns_log Warning "rss_gen_bind: error binding impl $impl_id for contract $contract_id: $errMsg"
+        }
     }
 }
 
@@ -122,17 +122,17 @@ ad_proc -private rss_gen_report_dir {
     provided.  If the assert flag is set, create the directory.
 } {
     if {!([info exists summary_context_id] && [info exists impl_name]) } {
-	if {![info exists subscr_id]} {
-	    error "rss_gen_report_dir needs either subscr_id or impl_id+summary_context_id"
-	} else {
-	    db_1row subscr_context_and_impl {}
-	}
+        if {![info exists subscr_id]} {
+            error "rss_gen_report_dir needs either subscr_id or impl_id+summary_context_id"
+        } else {
+            db_1row subscr_context_and_impl {}
+        }
     }
 
     set report_dir [acs_root_dir]/[parameter::get -package_id [rss_package_id] -parameter RssGenOutputDirectory -default rss]/$impl_name/${summary_context_id}
 
     if {$assert_p} {
-	rss_assert_dir $report_dir
+        rss_assert_dir $report_dir
     }
 
     return $report_dir
@@ -148,25 +148,25 @@ ad_proc -public rss_gen_report_file {
     or impl_name + summary_context_id provided.
     If the -assert flag is set, the parent directory is created if
     it doesn't exist
-    @return a Unix file path.  
+    @return a Unix file path.
 } {
     if {!([info exists summary_context_id] && [info exists impl_name])} {
-	if {![info exists subscr_id]} {
-	    error "rss_gen_report_file needs either subscr_id or impl_id+summary_context_id"
-	} else {
-	    db_1row subscr_context_and_impl {}
-	}
+        if {![info exists subscr_id]} {
+            error "rss_gen_report_file needs either subscr_id or impl_id+summary_context_id"
+        } else {
+            db_1row subscr_context_and_impl {}
+        }
     }
 
     if {$assert_p} {
-	set report_dir [rss_gen_report_dir              \
-		-summary_context_id $summary_context_id \
-		-impl_name $impl_name                   \
-		-assert] 
-    } else {
-	set report_dir [rss_gen_report_dir              \
-		-summary_context_id $summary_context_id \
-		-impl_name $impl_name]
+        set report_dir [rss_gen_report_dir \
+            -summary_context_id $summary_context_id \
+            -impl_name $impl_name \
+            -assert]
+        } else {
+        set report_dir [rss_gen_report_dir \
+            -summary_context_id $summary_context_id \
+            -impl_name $impl_name]
     }
 
     set report_file $report_dir/rss.xml
