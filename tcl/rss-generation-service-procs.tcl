@@ -10,7 +10,10 @@ ad_library {
 
 ad_proc -private rss_gen_service {} {
 
-    if {[parameter::get_global_value -package_key rss-support -parameter RssGenActiveP -default 1]} {
+    if {[parameter::get_global_value \
+             -package_key rss-support \
+             -parameter RssGenActiveP \
+             -default 1]} {
 
         ns_log Debug "rss_gen_service: starting"
 
@@ -20,7 +23,11 @@ ad_proc -private rss_gen_service {} {
         set n 0
 
         db_foreach timed_out_subscriptions {} {
-            set lastupdate [acs_sc::invoke -contract RssGenerationSubscriber -operation lastUpdated -call_args $summary_context_id -impl $impl_name]
+            set lastupdate [acs_sc::invoke \
+                                -contract RssGenerationSubscriber \
+                                -operation lastUpdated \
+                                -call_args $summary_context_id \
+                                -impl $impl_name]
             if { $lastupdate > $lastbuild } {
                 # Old report is stale.  Build a new one.
                 rss_gen_report $subscr_id
@@ -41,10 +48,16 @@ ad_proc -private rss_gen_report subscr_id {
 
     db_1row subscr_info {}
 
-    set datasource [acs_sc::invoke -contract RssGenerationSubscriber -operation datasource -call_args $summary_context_id -impl $impl_name]
+    set datasource [acs_sc::invoke \
+                        -contract RssGenerationSubscriber \
+                        -operation datasource \
+                        -call_args $summary_context_id \
+                        -impl $impl_name]
 
     if { $datasource eq "" } {
-        ns_log Error "Empty datasource returned from $impl_name for context $summary_context_id in rss_gen_report. Probably because the implementation hasn't been bound."
+        ns_log Error "Empty datasource returned from $impl_name for context \
+               $summary_context_id in rss_gen_report. Probably because the \
+               implementation hasn't been bound."
         return
     }
     set args ""
@@ -58,7 +71,10 @@ ad_proc -private rss_gen_report subscr_id {
     set xml [ad_apply rss_gen $args]
 
     # Write report.
-    set report_file [rss_gen_report_file -summary_context_id $summary_context_id -impl_name $impl_name -assert]
+    set report_file [rss_gen_report_file \
+                         -summary_context_id $summary_context_id \
+                         -impl_name $impl_name \
+                         -assert]
 
     set fh [open $report_file w]
     puts $fh $xml
@@ -129,7 +145,10 @@ ad_proc -private rss_gen_report_dir {
         }
     }
 
-    set report_dir [acs_root_dir]/[parameter::get -package_id [rss_package_id] -parameter RssGenOutputDirectory -default rss]/$impl_name/${summary_context_id}
+    set report_dir [acs_root_dir]/[parameter::get \
+                                       -package_id [rss_package_id] \
+                                       -parameter RssGenOutputDirectory \
+                                       -default rss]/$impl_name/$summary_context_id
 
     if {$assert_p} {
         rss_assert_dir $report_dir
