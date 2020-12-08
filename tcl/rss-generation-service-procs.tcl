@@ -10,7 +10,7 @@ ad_library {
 
 ad_proc -private rss_gen_service {} {
 
-    if {[parameter::get_global_value -package_key rss-support -parameter RssGenActiveP]} {
+    if {[parameter::get_global_value -package_key rss-support -parameter RssGenActiveP -default 1]} {
 
         ns_log Debug "rss_gen_service: starting"
 
