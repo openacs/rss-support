@@ -41,7 +41,9 @@ ad_proc -private rss_gen_service {} {
     }
 }
 
-ad_proc -private rss_gen_report subscr_id {
+ad_proc -public rss_gen_report {
+    subscr_id
+} {
     Build a report, write it out, log it.
 } {
     set start [clock seconds]
