@@ -88,16 +88,25 @@ ad_proc -public rss_support::del_subscription {
 
     @error
 } {
-    set subscr_id [rss_support::get_subscr_id \
-                       -summary_context_id $summary_context_id \
-                       -impl_name $impl_name \
-                       -owner $owner]
-    set report_dir [rss_gen_report_dir -subscr_id $subscr_id]
-    # remove generated RSS reports for this subscription
-    file delete -force -- $report_dir
-    package_exec_plsql \
-        -var_list [list [list subscr_id $subscr_id]] \
-        rss_gen_subscr del
+    if {[rss_support::subscription_exists \
+            -summary_context_id $summary_context_id \
+            -impl_name $impl_name]
+    } {
+        set subscr_id [rss_support::get_subscr_id \
+                           -summary_context_id $summary_context_id \
+                           -impl_name $impl_name \
+                           -owner $owner]
+        set report_dir [rss_gen_report_dir -subscr_id $subscr_id]
+        # remove generated RSS reports for this subscription
+        file delete -force -- $report_dir
+        package_exec_plsql \
+            -var_list [list [list subscr_id $subscr_id]] \
+            rss_gen_subscr del
+    } else {
+        ns_log Warning "rss_support::del_subscription \
+            (summary_context_id $summary_context_id -impl_name $impl_name) \
+            does not exist!"
+    }
 }
 
 ad_proc -public rss_support::subscription_exists {
