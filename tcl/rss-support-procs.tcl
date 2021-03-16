@@ -148,8 +148,16 @@ ad_proc -public rss_support::get_subscr_id {
 
     @error
 } {
-    set impl_id [db_string get_impl_id ""]
-    return [db_string get_subscr_id ""]
+    return [db_string get_subscr_id {
+        select subscr_id
+         from rss_gen_subscrs
+        where impl_id = (select impl_id
+                          from acs_sc_impls
+                         where impl_name = :impl_name
+                           and impl_contract_name = 'RssGenerationSubscriber'
+                           and impl_owner_name = :owner)
+          and summary_context_id = :summary_context_id
+    }]
 }
 
 # Local variables:
