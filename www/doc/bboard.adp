@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/rss-support {RSS Support}} {RSS Support: Bboard Sample Implementation}</property>
+<property name="context">{/doc/rss-support/ {RSS Support}} {RSS Support: Bboard Sample Implementation}</property>
 <property name="doc(title)">RSS Support: Bboard Sample Implementation</property>
 <master>
 <h2>Bboard Sample Implementation</h2>
@@ -11,9 +11,9 @@ Back to <a href="index">RSS Support</a>
 <ol>
 <li>Install the rss-support package, and mount a single instance at
 a convenient location (e.g. <code>/rss</code>). Note that
-rss-support is a service package and a singleton.</li><li>Create one or more implementations Of the RssGenerationSubscriber
-interface. This <a href="bboard-rss-sc-create-sql.txt">example</a>
-registers an implementation for bboard forums.</li><li>Define the implementation procs. This <a href="bboard-rss-sc-procs-tcl.txt">example</a> implements the contracted
+rss-support is a service package and a singleton.</li><li>Create one or more implementations of the
+RssGenerationSubscriber interface. This <a href="bboard-rss-sc-create-sql.txt">example</a> registers an
+implementation for bboard forums.</li><li>Define the implementation procs. This <a href="bboard-rss-sc-procs-tcl.txt">example</a> implements the contracted
 procs.</li><li>Create a subscription for each forum to be summarized. This can
 be accomplished by querying for the implementation&#39;s
 <code>impl_id</code> as follows

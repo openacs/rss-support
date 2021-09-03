@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/rss-support {RSS Support}} {RSS Support}</property>
+<property name="context">{/doc/rss-support/ {RSS Support}} {RSS Support}</property>
 <property name="doc(title)">RSS Support</property>
 <master>
 <h1>RSS Support</h1>
