@@ -42,23 +42,7 @@ ad_proc -public rss_first_url_for_package_id {
     relative url for that node.  Returns empty string
     if the package is not mounted.
 } {
-    return [util_memoize [list rss_first_url_for_package_id_helper $package_id]]
-}
-
-ad_proc -private rss_first_url_for_package_id_helper {
-    package_id
-} {
-    Does the actual work for rss_first_url_for_package_id.
-} {
-    set url ""
-
-    if {[db_0or1row first_node_id {}]} {
-	db_foreach url_parts {} {
-	    append url ${name}
-	}
-    }
-
-    return $url
+    return [lindex [site_node::get_url_from_object_id -object_id $package_id] 0]
 }
 
 # Local variables:

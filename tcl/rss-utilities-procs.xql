@@ -8,11 +8,4 @@
     </querytext>
   </fullquery>
 
-  <fullquery name="rss_first_url_for_package_id_helper.first_node_id">
-    <querytext>
-        select min(node_id) from site_nodes
-        where object_id = :package_id
-    </querytext>
-  </fullquery>
-
 </queryset>
