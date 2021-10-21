@@ -8,6 +8,9 @@ aa_register_case \
         rss_gen_report_file
         rss_gen_report
         rss_support::get_subscr_id
+        rss_gen
+        rss_gen_091
+        rss_gen_200
     } \
     rss__gen_report {
         Test rss_gen_report and other api
