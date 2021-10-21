@@ -96,20 +96,17 @@ ad_proc -public rss_gen_report {
     db_dml update_timestamp {}
 }
 
-ad_proc -private rss_assert_dir path {
+ad_proc -deprecated rss_assert_dir path {
     Steps through path creating each new directory as needed.
     Accepts full path or relative path, but you probably want
     to specify the full path.
-    <p>
-    Makes no attempt to catch errors.
+
+    DEPRECATED: the tcl file mkdir subcommand will create the whole
+    missing folder structure without complaining
+
+    @see file
 } {
-    set running_path ""
-    foreach dir [split $path /] {
-        append running_path ${dir}/
-        if {![file exists $running_path]} {
-            file mkdir $running_path
-        }
-    }
+    file mkdir $path
 }
 
 ad_proc -private rss_gen_bind {} {
@@ -153,7 +150,7 @@ ad_proc -private rss_gen_report_dir {
                                        -default rss]/$impl_name/$summary_context_id
 
     if {$assert_p} {
-        rss_assert_dir $report_dir
+        file mkdir $report_dir
     }
 
     return $report_dir
