@@ -8,8 +8,10 @@ aa_register_case \
         rss_gen_report_file
         rss_gen_report
         rss_support::get_subscr_id
+        rss_support::subscription_exists
         rss_gen
         rss_gen_091
+        rss_gen_100
         rss_gen_200
     } \
     rss__gen_report {
@@ -29,6 +31,11 @@ aa_register_case \
             aa_log "No RSS subscription found, exiting..."
             return
         }
+
+        aa_true "rss_support::subscription_exists tells that a subscription exists" \
+            [rss_support::subscription_exists \
+                 -summary_context_id $summary_context_id \
+                 -impl_name $impl_name]
 
         set report_file [rss_gen_report_file \
                              -summary_context_id $summary_context_id \
