@@ -1,6 +1,6 @@
 ad_library {
     RSS feed generation procs
-    
+
     generates an rss feed given channel information
     and item information
 
@@ -27,7 +27,7 @@ ad_proc rss_gen_200 {
     {-channel_skipDays ""}
     {-channel_skipHours ""}
 
-} { 
+} {
     generate an rss 2.0 xml feed
 } {
 
@@ -103,7 +103,7 @@ ad_proc rss_gen_200 {
     foreach item $items {
         array unset iarray
         array set iarray $item
-        append rss {<item>} \n 
+        append rss {<item>} \n
 
         append rss "<title>[ns_quotehtml $iarray(title)]</title>" \n
 
@@ -117,7 +117,7 @@ ad_proc rss_gen_200 {
         if { [info exists iarray(timestamp)] && $iarray(timestamp) ne "" } {
             append rss "<pubDate>[ns_quotehtml $iarray(timestamp)]</pubDate>" \n
         }
-        
+
         if { [info exists iarray(category)] && $iarray(category) ne "" } {
             append rss "<category>[ns_quotehtml $iarray(category)]</category>" \n
         }
@@ -133,7 +133,7 @@ ad_proc rss_gen_200 {
 
     append rss {</channel>} \n
     append rss {</rss>} \n
- 
+
    return $rss
 }
 
@@ -454,7 +454,7 @@ ad_proc rss_gen_091 {
 
     append rss "</channel>\n"
     append rss "</rss>\n"
-    
+
     return $rss
 
 }
@@ -488,16 +488,16 @@ ad_proc rss_gen {
     Merely creates the XML doc.  GIGO and caveat emptor.
 
     version is 0.91 or 1.0.  If not present, defaults to 0.91
-    
-    the default image is openacs/www/graphics/openacs_logo_rss.gif 
 
-    For 0.91, 
+    the default image is openacs/www/graphics/openacs_logo_rss.gif
+
+    For 0.91,
     pubdate, copyright, lastbuildate, skipdays, skiphours,
     webmaster, managingeditor fields,
     if not specified are not included in the xml.
 
     the image parameter is a property list of:
-      url $url title $title link $link 
+      url $url title $title link $link
           [width $width] [height $height] [description $description]
       where the elements within brackets are optional
 
@@ -506,16 +506,16 @@ ad_proc rss_gen {
 
     Spec/channel docs url for 0.91 is
     http://backend.userland.com/stories/rss091
-    
+
     For 1.0
     Spec can be found at
     http://groups.yahoo.com/group/rss-dev/files/specification.html
     The 1.0 spec is very primitive: my needs are primitive as of yet,
     and I don't grok the rss 1.0 modules stuff as yet.  Whoops p'gazonga.
 
-    For 2.0, the spec is at 
+    For 2.0, the spec is at
     http://blogs.law.harvard.edu/tech/rss
-    
+
     </pre>
 } {
 
