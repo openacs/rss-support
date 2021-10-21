@@ -176,16 +176,10 @@ ad_proc -public rss_gen_report_file {
         }
     }
 
-    if {$assert_p} {
-        set report_dir [rss_gen_report_dir \
-            -summary_context_id $summary_context_id \
-            -impl_name $impl_name \
-            -assert]
-        } else {
-        set report_dir [rss_gen_report_dir \
-            -summary_context_id $summary_context_id \
-            -impl_name $impl_name]
-    }
+    set report_dir [rss_gen_report_dir \
+                        -summary_context_id $summary_context_id \
+                        -impl_name $impl_name \
+                        -assert=$assert_p]
 
     set report_file $report_dir/rss.xml
 
