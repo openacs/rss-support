@@ -1,5 +1,5 @@
 <master>
-<property name="doc(title)">@pretty_action;noquote@ a Subscription</property>
+<property name="doc(title)">@pretty_action;literal@ a Subscription</property>
 <property name="context">@context;literal@</property>
 
 <form action=subscr-ae-2>
