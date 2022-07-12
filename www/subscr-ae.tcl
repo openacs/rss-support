@@ -9,10 +9,9 @@ ad_page_contract {
     we pull out channel title and link.
 
     It would be very tempting to accept impl_name as an argument
-    instead of impl_id.  However, the "ad_apply" call in acs_sc::invoke
-    raises the ugly possibility of code-smuggling through the url,
-    so we will force the use of the easily validated impl_id
-    instead.
+    instead of impl_id.  However, the expanded call in acs_sc::invoke
+    raises the ugly possibility of code-smuggling through the url, so
+    we will force the use of the easily validated impl_id instead.
 
 } {
     subscr_id:optional,naturalnum
