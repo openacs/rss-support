@@ -70,6 +70,7 @@ ad_proc -public rss_gen_report {
             set $name $val
         }
     }
+    #ns_log notice "FORMER ad_apply [list rss_gen {*}$args]"
     set xml [rss_gen {*}$args]
 
     # Write report.
