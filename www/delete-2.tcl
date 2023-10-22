@@ -3,12 +3,12 @@ ad_page_contract  {
 } {
     subscr_id:notnull,naturalnum
     return_url:localurl,notnull
-    delete_file_p:boolean,optional
+    {delete_file_p:boolean,optional,notnull 0}
 }
 
 permission::require_permission -object_id $subscr_id -privilege admin
 
-if {[info exists delete_file_p]} {
+if {$delete_file_p} {
     file delete -- [rss_gen_report_file -subscr_id $subscr_id]
 }
 
