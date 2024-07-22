@@ -45,7 +45,7 @@ ad_proc -public ::rss_support::add_subscription {
     }
 
     set impl_id [db_string get_impl_id ""]
-    set sysdate [dt_sysdate]
+    set sysdate [clock format [clock seconds] -format "%Y-%m-%d"]
 
     set var_list [list \
                       [list p_subscr_id ""] \
