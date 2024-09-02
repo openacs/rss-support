@@ -2,6 +2,10 @@
 <property name="context">{/doc/rss-support/ {RSS Support}} {RSS Support: Bboard Sample Implementation}</property>
 <property name="doc(title)">RSS Support: Bboard Sample Implementation</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Bboard Sample Implementation</h2>
 
 by <a href="mailto:aegrumet\@alum.mit.edu">Andrew Grumet</a>

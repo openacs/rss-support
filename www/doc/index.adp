@@ -2,6 +2,10 @@
 <property name="context">{/doc/rss-support/ {RSS Support}} {RSS Support}</property>
 <property name="doc(title)">RSS Support</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h1>RSS Support</h1>
 
 by <a href="mailto:aegrumet\@alum.mit.edu">Andrew Grumet</a>
