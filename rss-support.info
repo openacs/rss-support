@@ -8,12 +8,12 @@
     <singleton-p>t</singleton-p>
     <auto-mount>rss-support</auto-mount>
 
-    <version name="0.5d3" url="http://openacs.org/repository/download/apm/rss-support-0.5d3.apm">
+    <version name="0.5" url="http://openacs.org/repository/download/apm/rss-support-0.5.apm">
         <owner url="mailto:aegrumet@alum.mit.edu">Andrew Grumet</owner>
         <owner url="mailto:jerry@theashergroup.com">Jerry Asher</owner>
         <owner url="mailto:dave@thedesignexperience.org">Dave Bauer</owner>
         <summary>Service contracts and support for generating RSS feeds</summary>
-        <release-date>2023-05-09</release-date>
+        <release-date>2024-09-02</release-date>
         <vendor>OpenACS</vendor>
         <description format="text/html"> Basic support for RSS
 generation and parsing.  RDF Site Summary (RSS) is a lightweight
@@ -34,9 +34,9 @@ contracts and the RSS can be recreated from a scheduled procedure.
 </description>
         <maturity>2</maturity>
 
-        <provides url="rss-support" version="0.5d3"/>
-        <requires url="acs-kernel" version="5.10.1b1"/>
-        <requires url="acs-tcl" version="5.10.1b1"/>
+        <provides url="rss-support" version="0.5"/>
+        <requires url="acs-kernel" version="5.10.1"/>
+        <requires url="acs-tcl" version="5.10.1"/>
 
         <callbacks>
         </callbacks>
