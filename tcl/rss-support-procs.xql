@@ -27,23 +27,4 @@
     </querytext>
   </fullquery>
 
-  <fullquery name="rss_support::get_subscr_id.get_impl_id">
-    <querytext>
-      select impl_id
-      from acs_sc_impls
-      where impl_name=:impl_name
-      and impl_contract_name='RssGenerationSubscriber'
-      and impl_owner_name=:owner
-    </querytext>
-  </fullquery>
-  
-  <fullquery name="rss_support::get_subscr_id.get_subscr_id">
-    <querytext>
-      select subscr_id
-      from rss_gen_subscrs
-      where impl_id=:impl_id
-      and summary_context_id=:summary_context_id
-    </querytext>
-  </fullquery>
-  
 </queryset>

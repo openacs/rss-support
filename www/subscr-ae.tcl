@@ -9,10 +9,10 @@ ad_page_contract {
     we pull out channel title and link.
 
     It would be very tempting to accept impl_name as an argument
-    instead of impl_id.  However, the "ad_apply" call in acs_sc::invoke
-    raises the ugly possibility of code-smuggling through the url,
-    so we will force the use of the easily validated impl_id
-    instead.
+    instead of impl_id.  However, the direct application of the
+    procname in acs_sc::invoke raises the ugly possibility of
+    code-smuggling through the URL, so we will force the use of the
+    easily validated impl_id instead.
 
 } {
     subscr_id:optional,naturalnum
@@ -22,11 +22,11 @@ ad_page_contract {
     {meta:optional 1}
 } -validate {
     subscr_or_context {
-	if { !(([info exists subscr_id]) || ([info exists impl_id] && [info exists summary_context_id])) } {
-	    ad_complain "We were unable to
-	    process your request.  Please contact this site's
-	    technical team for assistance."
-	}
+        if { !([info exists subscr_id] || ([info exists impl_id] && [info exists summary_context_id])) } {
+            ad_complain "We were unable to
+            process your request.  Please contact this site's
+            technical team for assistance."
+        }
     }
 }
 
@@ -57,27 +57,27 @@ assistance."
 
 if { ![info exists channel_title] || $channel_title eq "" || $channel_link eq "" } {
     if {!$meta} {
-	if {$channel_title eq ""} {
-	    set channel_title "Summary Context $summary_context_id"
-	}
+        if {$channel_title eq ""} {
+            set channel_title "Summary Context $summary_context_id"
+        }
     } else {
-	# Pull out channel data by generating a summary.
-	# This is a convenient way to use a contracted operation
-	# but is not terribly efficient since we only need the channel title
-	# and link, and not the whole summary.
-	foreach {name val} [acs_sc::invoke -contract RssGenerationSubscriber -operation datasource -call_args $summary_context_id -impl $impl_name] {
-	    if { [lsearch {channel_title channel_link} $name] >= 0 } {
-		set $name $val
-	    }
-	} 
+        # Pull out channel data by generating a summary.
+        # This is a convenient way to use a contracted operation
+        # but is not terribly efficient since we only need the channel title
+        # and link, and not the whole summary.
+        foreach {name val} [acs_sc::invoke -contract RssGenerationSubscriber -operation datasource -call_args $summary_context_id -impl $impl_name] {
+            if { [lsearch {channel_title channel_link} $name] >= 0 } {
+                set $name $val
+            }
+        }
     }
 }
 
 set formvars [export_vars -form {subscr_id           \
-			       impl_id             \
-			       summary_context_id  \
-			       return_url          \
-			       meta}]
+                               impl_id             \
+                               summary_context_id  \
+                               return_url          \
+                               meta}]
 
 set context [list Add/Edit]
 

@@ -28,8 +28,8 @@
     <querytext>
          begin  
              acs_sc_binding.new(
-                 contract_id => $contract_id,
-                impl_id => $impl_id
+                 contract_id => :contract_id,
+                impl_id => :impl_id
              );
          end;
     </querytext>

@@ -123,6 +123,8 @@ create table rss_gen_subscrs (
    unique (impl_id,summary_context_id)
 );
 
+create index rss_gen_subscrs_lastbuild_idx on rss_gen_subscrs(lastbuild);
+
 comment on table rss_gen_subscrs is '
    Table for storing the different parts of the site we will generate
    summaries for.

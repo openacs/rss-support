@@ -19,14 +19,14 @@ The steps:
 convenient location (e.g. <code>/rss</code>).  Note that rss-support
 is a service package and a singleton.
 
-<li>Create one or more implentations Of the RssGenerationSubscriber
+<li>Create one or more implementations of the RssGenerationSubscriber
 interface.  This <a href="bboard-rss-sc-create-sql.txt">example</a>
 registers an implementation for bboard forums.
 
 <li>Define the implementation procs.  This <a href="bboard-rss-sc-procs-tcl.txt">example</a> implements the contracted procs.
 
 <li>Create a subscription for each forum to be summarized.
-This can be accomplished by querying for the implentation's
+This can be accomplished by querying for the implementation's
 <code>impl_id</code> as follows
 
 <blockquote><pre>

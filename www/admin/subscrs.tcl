@@ -1,3 +1,7 @@
+ad_page_contract {
+    Report Generation Subscriptions
+}
+
 set context [list Subscriptions]
 
 set enc_url [ad_urlencode [ad_conn url]?[ad_conn query]]

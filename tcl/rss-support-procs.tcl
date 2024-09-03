@@ -45,7 +45,7 @@ ad_proc -public ::rss_support::add_subscription {
     }
 
     set impl_id [db_string get_impl_id ""]
-    set sysdate [dt_sysdate]
+    set sysdate [clock format [clock seconds] -format "%Y-%m-%d"]
 
     set var_list [list \
                       [list p_subscr_id ""] \
@@ -88,16 +88,25 @@ ad_proc -public rss_support::del_subscription {
 
     @error
 } {
-    set subscr_id [rss_support::get_subscr_id \
-                       -summary_context_id $summary_context_id \
-                       -impl_name $impl_name \
-                       -owner $owner]
-    set report_dir [rss_gen_report_dir -subscr_id $subscr_id]
-    # remove generated RSS reports for this subscription
-    file delete -force -- $report_dir
-    package_exec_plsql \
-        -var_list [list [list subscr_id $subscr_id]] \
-        rss_gen_subscr del
+    if {[rss_support::subscription_exists \
+            -summary_context_id $summary_context_id \
+            -impl_name $impl_name]
+    } {
+        set subscr_id [rss_support::get_subscr_id \
+                           -summary_context_id $summary_context_id \
+                           -impl_name $impl_name \
+                           -owner $owner]
+        set report_dir [rss_gen_report_dir -subscr_id $subscr_id]
+        # remove generated RSS reports for this subscription
+        file delete -force -- $report_dir
+        package_exec_plsql \
+            -var_list [list [list subscr_id $subscr_id]] \
+            rss_gen_subscr del
+    } else {
+        ns_log Warning "rss_support::del_subscription \
+            (summary_context_id $summary_context_id -impl_name $impl_name) \
+            does not exist!"
+    }
 }
 
 ad_proc -public rss_support::subscription_exists {
@@ -139,8 +148,16 @@ ad_proc -public rss_support::get_subscr_id {
 
     @error
 } {
-    set impl_id [db_string get_impl_id ""]
-    return [db_string get_subscr_id ""]
+    return [db_string get_subscr_id {
+        select subscr_id
+         from rss_gen_subscrs
+        where impl_id = (select impl_id
+                          from acs_sc_impls
+                         where impl_name = :impl_name
+                           and impl_contract_name = 'RssGenerationSubscriber'
+                           and impl_owner_name = :owner)
+          and summary_context_id = :summary_context_id
+    }]
 }
 
 # Local variables:
