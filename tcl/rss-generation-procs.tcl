@@ -101,7 +101,7 @@ ad_proc rss_gen_200 {
 
     # now top level items
     foreach item $items {
-        array unset iarray
+        unset -nocomplain iarray
         array set iarray $item
         append rss {<item>} \n
 
@@ -235,9 +235,7 @@ ad_proc rss_gen_100 {
 
     # channel item handling
     foreach item $items {
-        array unset iarray
-        array set iarray $item
-        append rss "<rdf:li rdf:resource=\"[ns_quotehtml $iarray(link)]\" />\n"
+        append rss "<rdf:li rdf:resource=\"[ns_quotehtml [dict get $item link]]\" />\n"
     }
 
     append rss "</rdf:Seq>\n"
@@ -257,7 +255,7 @@ ad_proc rss_gen_100 {
 
     # now top level items
     foreach item $items {
-        array unset iarray
+        unset -nocomplain iarray
         array set iarray $item
         append rss "<item rdf:about=\"[ns_quotehtml $iarray(link)]\">\n"
         set element [ns_quotehtml $iarray(title)]
@@ -429,7 +427,7 @@ ad_proc rss_gen_091 {
 
     # now do the items
     foreach item $items {
-        array unset iarray
+        unset -nocomplain iarray
         array set iarray $item
         append rss "<item>\n"
         set element [ns_quotehtml $iarray(title)]
