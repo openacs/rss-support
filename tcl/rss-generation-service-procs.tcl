@@ -81,7 +81,7 @@ ad_proc -public rss_gen_report {
 
     set fh [open $report_file w]
     puts $fh $xml
-    fconfigure $fh -encoding [ns_config "ns/parameters" OutputCharset]
+    fconfigure $fh -encoding [ns_config "ns/parameters" OutputCharset utf-8]
     close $fh
 
     # Copy some useful display information into the
